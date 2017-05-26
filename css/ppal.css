@@ -1,0 +1,60 @@
+/*Color del van*/
+.navbar{
+    background: #689F38;
+}
+
+/*Color texto en nav*/
+.navbar-default .navbar-nav > li > a {
+    color: #E3E3E3;
+}
+
+/*Estilos de los divs contenedores*/
+.container .col-md-3,
+.container .col-md-3 .col-md-offset-1,
+.col-md-8 .col-md-offset-1{
+    background: #DDDDDD;
+    padding: 0.5em 0.8em;
+    height: 100%;
+}
+
+
+.cont-titulo{
+    align-items: center;
+    display:  flex;
+    flex-direction: row;
+    padding: 3em;
+}
+.cont-titulo a{
+    color: #757575;
+}
+
+.cont-titulo a:hover{
+    color: #000;
+}
+
+.titulo{
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 1em;
+}
+
+.opciones{
+    display: flex;
+    flex-direction: column;
+    padding: 0 3em;
+}
+
+.subprod{
+    padding-left: 2em;
+}
+
+
+.opciones a{
+    color: #757575;
+    padding-bottom: 2em;
+}
+
+.opciones a:hover{
+    color: #000000;
+    font-weight: bold;
+}
