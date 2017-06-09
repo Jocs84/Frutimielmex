@@ -5,3 +5,24 @@ body{
 .jumbotron{
     background: #FFF;
 }
+
+
+#muajaja{
+    height: 2em;
+}
+
+
+#base{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 4em;
+}
+
+#centro{
+    display: flex;
+    justify-content: center;
+}
+
+.boton{
+    background: #8BC34A;
+}

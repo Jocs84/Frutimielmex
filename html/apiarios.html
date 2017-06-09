@@ -11,11 +11,16 @@
     <!-- CSS DE BOOTSTRAP -->
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <!-- CSS PERSONALIZADO -->
-    <link rel="stylesheet" href="../css/ppal.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/apiarios.css">
 
     <!-- JAVASCRIPT -->
+    <!-- JS JQUERY -->
+    <script src="../js/jquery-3.2.1.js"></script>
     <!-- JS BOOTSTRAP -->
-    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../js/cascaron.js"></script>
+    <script src="../js/alimentacion.js"></script>
 
     <title>Apiarios - Frutimielmex</title>
 </head>
@@ -29,7 +34,6 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <!-- <li class="active"><a href="#">Home</a></li> -->
                 <li><a href="#">Apiarios</a></li>
                 <li><a href="#">Producción</a></li>
                 <li><a href="#">Reportes</a></li>
@@ -43,58 +47,21 @@
         <div class="col-md-3">
             <div class="cont-titulo">
                 <img src="../img/apiario.png" alt="" class="ico-titulo">
-                <p class="titulo">Apiarios</p>
+                <a href="apiarios.html" class="titulo">Apiarios</a>
             </div>
             <div class="opciones">
-                <a href="">Detalles</a>
-                <a href="">Alimentación</a>
-                <a href="">Medicación</a>
-                <a href="">Movilidad</a>
-                <a href="">Productividad</a>
+                <a id="opc-detalles" href="">Detalles</a>
+                <a id="opc-alimentación" class ="activo" href="">Alimentación</a>
+                <a id="opc-medicacion" href="">Medicación</a>
+                <a id="opc-movilidad" href="">Movilidad</a>
+                <a id="opc-productividad" href="">Productividad</a>
             </div>
         </div>
 
-        <div class="col-md-8 col-md-offset-1">
-            <div class="cont-titulo col-md-5">
-                <div>
-                    <p class="titulo">Detalles</p>
-                </div>
-                <div>
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Zona</td>
-                            <th>Apiarios</td>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Centro</td>
-                                <td>45</td>
-                            </tr>
-                            <tr>
-                                <td>Centro</td>
-                                <td>45</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="col-md-5 col-md-offset-1">
-                <div>
-                    <p>Administrar apiario</p>
-                </div>
-                <div>
-                    <p>Cosecha anual</p>
-                    <div>
-                        GRAFICA
-                    </div>
-                </div>
-            </div>
+        <div id ="opc-contenedor" class="col-md-8 col-md-offset-1">
+            
 
         </div>
-
-
     </div>
 
 

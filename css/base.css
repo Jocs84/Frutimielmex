@@ -1,0 +1,104 @@
+
+/*Color del van*/
+.navbar{
+    background: #689F38;
+}
+
+/*Color texto en nav*/
+.navbar-default .navbar-nav > li > a {
+    color: #E3E3E3;
+}
+
+
+/*Estilos de los divs contenedores*/
+.container .col-md-3,
+.container .col-md-3 .col-md-offset-1,
+.col-md-8 .col-md-offset-1{
+    background: #DDDDDD;
+    padding: 0.5em 0.8em;
+    height: 100%;
+}
+
+/*Estilos de los títulos de las secciones*/
+.cont-titulo{
+    align-items: center;
+    display:  flex;
+    flex-direction: row;
+    padding: 3em;
+}
+
+/*Estilos de los enlaces de los titulos*/
+.cont-titulo a{
+    color: #000;
+    text-decoration: none;
+
+}
+
+/*efecto de los estilos de los enlaces de los titulos*/
+.cont-titulo a:hover{
+    color: #757575;
+}
+
+/*Estilos del hipervinculo del titulo de cada sección*/
+.titulo{
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 1em;
+}
+
+.opciones{
+    display: flex;
+    flex-direction: column;
+    padding: 0 3em;
+}
+
+
+.activo{
+    color: #000000;
+    font-weight: bold;
+}
+
+.opciones a{
+    color: #757575;
+    padding-bottom: 2em;
+    text-decoration: none;
+}
+
+.opciones a:hover{
+    color: #000000;
+    font-weight: bold;
+}
+
+
+
+.titulo-segmento{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.boton{
+    background: #8BC34A;
+    color: #FFF;
+}
+
+
+.contenedor-chico{
+    border: 1px solid #CCC;
+    padding: 0.8em;
+    margin: 1em 0;
+}
+
+.destacado{
+    font-weight: bold;
+}
+
+.mas-font{
+    font-size: 18px;
+}
+
+.cont-titulo-seg{
+    align-items: center;
+    display:  flex;
+    flex-direction: row;
+    padding: 1em;
+}
