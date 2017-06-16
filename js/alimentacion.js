@@ -1,28 +1,35 @@
 
 $( document ).ready(function() {
-    // $("#opc-alimentación").click(function(){
+
+    //
+    $(document).on('click','#opc-alimentacion',function(e){
+        e.preventDefault();
+        $("#opc-contenedor").empty();
         alimentacion();
-    // });
+    });
+
+
+
+    //Prueba de como se iniciaría la inserción
+    $(document).on('click','#opc-medicacion',function(e){
+        e.preventDefault();
+        $("#opc-contenedor").empty();
+        //Cambia la sentencia de abajo por el llamado a la función,
+        // como lo hice con alimentacion ;)
+        $("#opc-contenedor").append("<h2>MUAJAJA</h2>");
+    });
 
 });
 
 
-//Detecta cambio en el SELECT de tipos alimentos
-// (Natural o artificial), y pone los campos necesarios para
-// cada tipo de alimento
-$(document).on('change','#tipoAlimt',function(){
-    // Obtiene el valor del OPTION seleccionado y en base a este
-    // inserta el campo necesario
-    if($("#tipoAlimt").val() === "Artificial"){
-        $("#artinatu").empty();
-        $("#artinatu").append(HTMLAgregarArtificial);
-    }else{
-        $("#artinatu").empty();
-        $("#artinatu").append(HTMLAgregarNatural);
-    }
-});
 
 
+
+
+//************************* FUNCION ALIMENTACION
+
+// Manipula todos los eventos del apartado de alimentación
+// dentro de apiario.html
 
 
 alimentacion = function(){
@@ -61,6 +68,21 @@ alimentacion = function(){
     //         dataType: 'json'
     //    });
 
+    });
+
+    //Detecta cambio en el SELECT de tipos alimentos
+    // (Natural o artificial), y pone los campos necesarios para
+    // cada tipo de alimento
+    $(document).on('change','#tipoAlimt',function(){
+        // Obtiene el valor del OPTION seleccionado y en base a este
+        // inserta el campo necesario
+        if($("#tipoAlimt").val() === "Artificial"){
+            $("#artinatu").empty();
+            $("#artinatu").append(HTMLAgregarArtificial);
+        }else{
+            $("#artinatu").empty();
+            $("#artinatu").append(HTMLAgregarNatural);
+        }
     });
 
 
@@ -108,7 +130,7 @@ alimentacion = function(){
             dataType: 'json'
        });
     });
-    
+
 
     $(document).on('click', '.edElem', function(e) {
         e.preventDefault();
