@@ -42,7 +42,7 @@
             $consulta = "SELECT *
                         FROM alimentos
                         WHERE NombreAlimento
-                        LIKE  '" . $busqueda . "'";
+                        LIKE  '%" . $busqueda . "%'";
             try {
                 $comando = Database::getInstance()->getDb()->prepare($consulta);
                 // Ejecutar sentencia preparada

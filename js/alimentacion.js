@@ -23,6 +23,8 @@ $(document).on('change','#tipoAlimt',function(){
 });
 
 
+
+
 alimentacion = function(){
 
     // Inserta los controles para gestión de alimentos
@@ -45,19 +47,19 @@ alimentacion = function(){
         $("#seleccionantinatu").append(HTMLSelectTipoAlimentacion);
 
         // AJAX para cargar las unidades de medida de un select
-        $.ajax({
-            type: "POST",
-            url: "../php/llenadoDatosFormAlimentos.php",
-            data: {"tabla":"Alimentos","busqueda" : "UnidadMedicion"},
-            success: function(data){
-                // val insertar = HTMLAgregarOptionSelec.replace("**",data[eldato]);
-                // insertar = insertar.replace("%data%",data[eldato])
-                // $('#UnidadMedicion').append(insertar);
-
-
-            },
-            dataType: 'json'
-       });
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "../php/llenadoDatosFormAlimentos.php",
+    //         data: {"tabla":"Alimentos","busqueda" : "UnidadMedicion"},
+    //         success: function(data){
+    //             // val insertar = HTMLAgregarOptionSelec.replace("**",data[eldato]);
+    //             // insertar = insertar.replace("%data%",data[eldato])
+    //             // $('#UnidadMedicion').append(insertar);
+       //
+       //
+    //         },
+    //         dataType: 'json'
+    //    });
 
     });
 
@@ -65,28 +67,61 @@ alimentacion = function(){
     // Evento del boton Modificar Alimento, el cual buscador
     // para después proceder a editar los datos.
     $("#btnModificiarAlimento").click(function(){
+        //  Vacia el contenedor en caso de busquedas anteriores
         $("#insertar-gestion").empty();
+        //Inserta el formulario de busqueda de alimentos por nombre
         $("#insertar-gestion").append(HTMLModificarAlimento);
     });
 
-    $("#formBuscar").submit(function(e){
-    //     $(".table .table-striped").append(HTMLTablaBusqueda);
-    //     $("#insertarBusqueda").append(HTMLElementEncontrado);
-        e.preventDefault();
+    // Buscar alimentos por nombre e insertarlos
+    // al DOM.
+    $(document).on('submit', '#formBuscar', function(e) {
+        //Previene el trabajo por default del submit
+         e.preventDefault();
+
+        //  Método AJAX para enviar los datos de búsqueda en el form
+        //  e insertar el
         $.ajax({
             type: "POST",
             url: "../php/buscarPorNombre.php",
-            // data: $("#formBuscar").serialize(),
             data: $("#formBuscar").serialize(),
+            // data: {"buscarAlimento":"torta"},
             success: function(data){
-                console.log("Muajaja");
+                if(data.estado == '2'){
+                    //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    // Agregar en alert de que no se encontró informacion
+                    $("#insBusq").append(HTMLAlertaNoElementos.replace("%MENSAJE%","alimentos"));
+                }else{
+                   //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    //agrega la estructura de la tabla contenedora de la busqueda
+                    $("#insBusq").append(HTMLTablaBusqueda);
+                    for (var i = 0; i < data.length; i++) {
+                        var rem = HTMLElementEncontrado.replace("%NOMBRE%",data[i]["NombreAlimento"]);
+                        rem = rem.replace("%FECHA%",data[i]["DiaCadAli"] + "/" + data[i]["MesCadAli"] + "/" + data[i]["AnioCadAli"]);
+                        $("#insertarBusqueda").append(rem);
+                    }
+
+                }
             },
             dataType: 'json'
        });
+    });
+    
 
-        console.log("MUAJAJA");
+    $(document).on('click', '.edElem', function(e) {
+        e.preventDefault();
+        var padre = $(this).parent().parent();
+        var nom = $(padre).children(':first-child').text();
+        alert(nom);
+
     });
 
-    // $("#formBuscar").ajaxForm(url:'../php/buscarPorNombre.php', type: 'POST');
+    // $(".edElem").click(function(){
+    //     var padre = $(this).parent();
+    //     var nom = $(padre+":first").text();
+    //     alert(nom);
+    // });
 
 }

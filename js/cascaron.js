@@ -66,7 +66,7 @@ var HTMLAgregarArtificial = '<div class="form-group"><label for="tipoAlimento">T
 // MODIFICAR ALIMENTO
 // Variable que contiene toda la estructura para buscar el elemento a modificar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table class="table table-striped"></table></div>';
+var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="../php/buscarPorNombre.php" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
 
 // *insertar en .table .table-striped
@@ -74,7 +74,9 @@ var HTMLTablaBusqueda = '<thead><td>Nombre</td><td>Fecha cad</td><td>Modificar</
 
 
 // *insertar en #insertarBusqueda
-var HTMLElementEncontrado = '<tr><td>%NOMBRE%</td><td>%FECHA%</td><td><img src="../img/edit.png" alt=""></td></tr>';
+var HTMLElementEncontrado = '<tr><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="edElem" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
+
+var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
 
 
 

@@ -11,7 +11,6 @@
 
         $busqueda = $_POST['buscarAlimento'];
 
-
         $retorno = generar::buscarAlimentoNombre($busqueda);
         if ($retorno) {
             // $datos["estado"] = "1";
@@ -20,12 +19,12 @@
             print json_encode($retorno);
         }else {
             //enviar respuesta con un JSON
-            print json_encode(
-                array(
-                    'estado' => '2',
-                    'mensaje' => 'No se obtuvo registro'
-                )
+            $array = array(
+                'estado' => '2',
+                'mensaje' => 'No se obtuvo registro'
             );
+            print json_encode($array);
+
         }
 
     }
