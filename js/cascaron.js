@@ -47,7 +47,7 @@ var HTMLAgregarAlimento = '<div id="agregarAlimento"><div><p class="destacado ma
 //     *UnidadMedicion
 //     *FechaCaducidad
 //     *tipoAlimento
-var HTMLFormAgregarAlimento = '<form action="" method="post"><div class="form-group"><label for="NombreAlimento">Nombre</label><input type="text" class="form-control" name="nombreAli" value=""></div><div class="form-group"><label for="Consistencia">Consistencia</label><select class="form-control" name="Consistencia"><option value="Solida">Solida</option><option value="Liquida">Liquída</option></select></div><div class="form-group"><label for="UnidadMedicion">Unidad de medición</label><select id="unidadMedicion" class="form-control" name="UnidadMedicion"></select></div><div class="form-group"><label for="anioCad">Fecha de caducidad</label><input type="date" class="form-control" name="anioCad" value=""></div><div id="seleccionantinatu" class="form-group"></div><div id="artinatu" class="form-group"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guarda"></div></form>';
+var HTMLFormAgregarAlimento = '<form id="frmAgrAlimento" action="" method="POST"><div class="form-group"><label for="NombreAlimento">Nombre</label><input type="text" class="form-control" name="nombreAli" value=""></div><div class="form-group"><label for="Consistencia">Consistencia</label><select class="form-control" name="Consistencia"><option value="Solida">Solida</option><option value="Liquida">Liquída</option></select></div><div class="form-group"><label for="UnidadMedicion">Unidad de medición</label><select id="unidadMedicion" class="form-control" name="UnidadMedicion"></select></div><div class="form-group"><label for="anioCad">Fecha de caducidad</label><input type="date" class="form-control" name="anioCad" value=""></div><div id="seleccionantinatu" class="form-group"></div><div id="artinatu" class="form-group"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guarda"></div></form>';
 
 // var HTMLAgregarSelect = '<select name="%data%" class="form-control">xxx</select>';
 // var HTMLAgregarOptionSelect = '<option value="**">%data%</option>';
@@ -63,18 +63,18 @@ var HTMLAgregarNatural = '<div class="form-group"><label for="lugarObtAli">Lugar
 var HTMLAgregarArtificial = '<div class="form-group"><label for="tipoAlimento">Tipo de alimento</label><input type="text" class="form-control" name="tipoAlimento"></div>';
 
 
-// MODIFICAR ALIMENTO
+// *********************************************** MODIFICAR ALIMENTO
 // Variable que contiene toda la estructura para buscar el elemento a modificar
 // *Se inserta en el el contenedor #insertar-gestion
 var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="../php/buscarPorNombre.php" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
 
 // *insertar en .table .table-striped
-var HTMLTablaBusqueda = '<thead><td>Nombre</td><td>Fecha cad</td><td>Modificar</td></thead><tbody id="insertarBusqueda"></tbody>';
+var HTMLTablaBusqueda = '<thead><td>ID</td><td>Nombre</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
 
 
 // *insertar en #insertarBusqueda
-var HTMLElementEncontrado = '<tr><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="edElem" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
+var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="edElem" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
 
 var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
 
@@ -132,52 +132,14 @@ var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><stro
 
 
 
+// *********************************************** ELIMINAR ALIMENTO
 
+var HTMLEliminarAlimento = '<div id="eliminarAlimento"><div><p class="destacado mas-font">Eliminar alimento</p></div><form id="formBuscarEl" action="../php/buscarPorNombre.php" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
+var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="elElem" href=""><img src="../img/close.png" alt=""></a></td></tr>';
 
-//
-// var HTMLEliminarAlimento = '
-// <div id="eliminarAlimento">
-//     <div>
-//         <p class="destacado mas-font">Eliminar alimento</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label class="sr-only" for="buscarAli">Buscar</label>
-//             <input type="text" class="form-control" name="buscarAli" placeholder="Nombre">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Buscar">
-//         </div>
-//     </form>
-//     <table class="table table-striped">
-//         <thead>
-//             <td>Nombre</td>
-//             <td>Fecha cad</td>
-//             <td>Eliminar</td>
-//         </thead>
-//         <tbody id="insertarBusqueda">
-//             <tr>
-//                 <td>Torta 1</td>
-//                 <td>12/12/2017</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//             <tr>
-//                 <td>Torta proteínica</td>
-//                 <td>18/06/2017</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//             <tr>
-//                 <td>Torta proteínica 8</td>
-//                 <td>25/10/2017</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//         </tbody>
-//     </table>
-// </div>
-// ';
-//
-//
+var HTMLEliminarConf = '<tr class="alert alert-danger" role="alert"><td>  </td><td>¿Eliminar este %MENSAJE%</td><td><button type="button" data-dismiss="modal" class="btn btn-primary btn-danger eliElem">Eliminar</button></td><td><button type="button" data-dismiss="modal" class="btn btn-danger cancelarAccion">Cancelar</button></td></tr>';
+
 
 //
 //

@@ -95,38 +95,6 @@
 
 
         /**
-         * Obtiene los campos de un usuario con un identificador
-         * determinado
-         *
-         * @param $idUsuario Identificador del usuario
-         * @return mixed
-         */
-        public static function logIn($Usuario,$Contrasena)
-        {
-            // Consulta de la meta
-            $consulta = "SELECT *
-                                FROM users
-                                WHERE username = ?
-                                AND password = ?";
-
-            try {
-                // Preparar sentencia
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute(array($Usuario,$Contrasena));
-                // Capturar primera fila del resultado
-                $row = $comando->fetch(PDO::FETCH_ASSOC);
-                return $row;
-
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-
-
-
-        /**
          * Actualiza un registro de la bases de datos basado
          * en los nuevos valores relacionados con un identificador
          *
@@ -195,18 +163,27 @@
         /**
          * Eliminar el registro con el identificador especificado
          *
-         * @param $idMeta identificador de la meta
-         * @return bool Respuesta de la eliminación
+         * @param
+         * @return
          */
-        public static function delete($idMeta)
-        {
+        public static function eliminarReg($tabla,$elemento,$registro){
             // Sentencia DELETE
-            $comando = "DELETE FROM users WHERE id=?";
+            $consulta = "DELETE FROM `" . $tabla . "` WHERE `" . $elemento . "` =" . $registro;
 
             // Preparar la sentencia
-            $sentencia = Database::getInstance()->getDb()->prepare($comando);
+            // $sentencia = Database::getInstance()->getDb()->prepare($comando);
 
-            return $sentencia->execute(array($id));
+            // return $sentencia->execute(array($id));
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                //Retorna el numero de filas afectadas con el último movimiento
+                return $comando->rowCount();;
+
+            } catch (PDOException $e) {
+                return false;
+            }
         }
     }
  ?>
