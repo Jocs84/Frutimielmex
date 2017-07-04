@@ -16,9 +16,15 @@
         $retorno = generar::obtenerEnum($tabla,$busqueda);
         if ($retorno) {
             // $datos["estado"] = "1";
-            // // $muajaja = json_encode($retorno);
-            // $datos["datos"] = $retorno;
+            // $muajaja = json_encode($retorno);
+            // $datos["datos"] = $retorno["Type"];
             print json_encode($retorno);
+            // print json_encode(
+            //     array(
+            //         'estado' => '1',
+            //         'mensaje' => ':v'
+            //     )
+            // );
         }else {
             //enviar respuesta con un JSON
             print json_encode(

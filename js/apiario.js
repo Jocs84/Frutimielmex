@@ -56,24 +56,28 @@ alimentacion = function(){
     $("#btnAgregarAlimento").click(function(){
         $("#insertar-gestion").empty();
         $("#insertar-gestion").append(HTMLAgregarAlimento);
-        $("#agregarAlimento").append(HTMLFormAgregarAlimento);
+        $("#agregarAlimento").append(HTMLFormAlimento.replace("%FORMULARIO%","frmAgrAlimento"));
         $("#seleccionantinatu").append(HTMLSelectTipoAlimentacion);
         $("#artinatu").append(HTMLAgregarArtificial);
 
         // AJAX para cargar las unidades de medida de un select
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "../php/llenadoDatosFormAlimentos.php",
-    //         data: {"tabla":"Alimentos","busqueda" : "UnidadMedicion"},
-    //         success: function(data){
-    //             // val insertar = HTMLAgregarOptionSelec.replace("**",data[eldato]);
-    //             // insertar = insertar.replace("%data%",data[eldato])
-    //             // $('#UnidadMedicion').append(insertar);
-       //
-       //
-    //         },
-    //         dataType: 'json'
-    //    });
+        $.ajax({
+            type: "POST",
+            url: "../php/llenadoDatosFormAlimentos.php",
+            data: {"tabla":"alimentos","busqueda" : "UnidadMedicion"},
+            success: function(data){
+                var tipos = data[0]["Type"];
+                var arg = tipos.split("'");
+                for (var i = 0; i < arg.length; i++) {
+                    if(i%2 != 0){
+                        var valor = HTMLAgregarOptionSelect.replace("**",arg[i]);
+                        valor = valor.replace("%data%", arg[i]);
+                        $("#unidadMedicion").append(valor);
+                    }
+                }
+            },
+            dataType: 'json'
+       });
 
     });
 
@@ -178,7 +182,72 @@ alimentacion = function(){
         e.preventDefault();
         var padre = $(this).parent().parent();
         var nom = $(padre).children(':first-child').text();
-        alert(nom);
+
+        $("#insertar-gestion").empty();
+        $("#insertar-gestion").append(HTMLEditarAlimento);
+        $("#agregarAlimento").append(HTMLFormAlimento.replace("%FORMULARIO%","frmEdAlimento"));
+        $("#seleccionantinatu").append(HTMLSelectTipoAlimentacion);
+        $("#artinatu").append(HTMLAgregarArtificial);
+
+        // AJAX para cargar las unidades de medida de un select
+        $.ajax({
+            type: "POST",
+            url: "../php/llenadoDatosFormAlimentos.php",
+            data: {"tabla":"alimentos","busqueda" : "UnidadMedicion"},
+            success: function(data){
+                var tipos = data[0]["Type"];
+                var arg = tipos.split("'");
+                for (var i = 0; i < arg.length; i++) {
+                    if(i%2 != 0){
+                        var valor = HTMLAgregarOptionSelect.replace("**",arg[i]);
+                        valor = valor.replace("%data%", arg[i]);
+                        $("#unidadMedicion").append(valor);
+                    }
+                }
+            },
+            dataType: 'json'
+       });
+
+
+        for (var i = 0; i < jsonBusq.length; i++) {
+            if(jsonBusq[i]["IdAlimento"] === nom ){
+                $("#frmEdAlimento").children(':first-child').children(':nth-child(2)').val(jsonBusq[i]["NombreAlimento"]);
+                $("#frmEdAlimento").children(':nth-child(2)').children(':nth-child(2)').val(jsonBusq[i]["Consistencia"]);
+                $("#unidadMedicion").val(jsonBusq[i]["UnidadMedicion"]);
+                alert(jsonBusq[i]["UnidadMedicion"]);
+                var fecha = jsonBusq[i]["DiaCadAli"] + "/" + jsonBusq[i]["MesCadAli"] + "/" + jsonBusq[i]["AnioCadAli"];
+                $("#frmEdAlimento").children(':nth-child(4)').children(':nth-child(2)').val(fecha);
+            }
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarPorId.php",
+            data: {"busqueda":nom, "campo":"IdAlimento", "tabla": "artificial"},
+            success: function(data){
+                if(data.estado != '2'){
+                    $("#seleccionantinatu").children(':nth-child(2)').val("Artificial");
+                    $("#artinatu").children(':first-child').children(':nth-child(2)').val(data[0]["TipoAlimento"]);
+                }
+            },
+            dataType: 'json'
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "../php/buscarPorId.php",
+           data: {"busqueda":nom, "campo":"IdAlimento", "tabla": "natural"},
+           success: function(data){
+               if(data.estado != '2'){
+                   $("#seleccionantinatu").children(':nth-child(2)').val("Natural");
+                   $("#artinatu").children(':first-child').children(':nth-child(2)').val(data[0]["LugarObtencion"]);
+               }
+           },
+           dataType: 'json'
+      });
+
+
     });
 
 
@@ -231,12 +300,12 @@ alimentacion = function(){
        });
     });
 
+
+    //Eliminar alimentación
     $(document).on('click', '.elElem', function(e) {
         e.preventDefault();
         var padre = $(this).parent().parent();
         var nom = $(padre).children(':first-child').text();
-        alert(nom);
-        // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","alimento"));
         $.ajax({
             type: "POST",
             url: "../php/eliminarPorId.php",
@@ -247,8 +316,8 @@ alimentacion = function(){
                     // $("#insertarBusqueda").children(':first-child').remove();
                     // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
                 }else{
-                    alert("Se eliminó");
-                    // $("#insertarBusqueda").children(':first-child').remove();
+                    alert("Se eliminó elemento");
+                    $(padre).remove();
                     // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","ELIMINADO"));
                 }
             },
@@ -256,37 +325,6 @@ alimentacion = function(){
        });
     });
 
-    // $(document).on('click', '.cancelarAccion', function(e) {
-    //     $("#insertarBusqueda").children(':first-child').remove();
-    // });
-
-    // $(document).on('click', '.eliElem', function(e) {
-    //     var padre = $(this).parent().parent().parent();
-    //     var nom = $(padre).children(':first-child').text();
-    //     alert(nom);
-    //
-    //     /*
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "../php/eliminarPorId.php",
-    //         data: '{"eliminar":' + nom + ', "tabla":"alimentos", "elemento":"IdAlimento"}',
-    //         dataType: 'jsonp',
-    //         success: function(data){
-    //             alert(data.estado);
-    //             if(data.estado == '2'){
-    //                 alert("MUAJA");
-    //                 $("#insertarBusqueda").children(':first-child').remove();
-    //                 $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
-    //             }else{
-    //                 alert("GATO");
-    //                 $("#insertarBusqueda").children(':first-child').remove();
-    //                 $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","ELIMINADO"));
-    //
-    //             }
-    //         }
-    //    });*/
-    //
-    // });
 
 
 

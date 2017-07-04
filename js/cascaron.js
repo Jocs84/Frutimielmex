@@ -47,10 +47,10 @@ var HTMLAgregarAlimento = '<div id="agregarAlimento"><div><p class="destacado ma
 //     *UnidadMedicion
 //     *FechaCaducidad
 //     *tipoAlimento
-var HTMLFormAgregarAlimento = '<form id="frmAgrAlimento" action="" method="POST"><div class="form-group"><label for="NombreAlimento">Nombre</label><input type="text" class="form-control" name="nombreAli" value=""></div><div class="form-group"><label for="Consistencia">Consistencia</label><select class="form-control" name="Consistencia"><option value="Solida">Solida</option><option value="Liquida">Liquída</option></select></div><div class="form-group"><label for="UnidadMedicion">Unidad de medición</label><select id="unidadMedicion" class="form-control" name="UnidadMedicion"></select></div><div class="form-group"><label for="anioCad">Fecha de caducidad</label><input type="date" class="form-control" name="anioCad" value=""></div><div id="seleccionantinatu" class="form-group"></div><div id="artinatu" class="form-group"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guarda"></div></form>';
+var HTMLFormAlimento = '<form id="%FORMULARIO%" action="" method="POST"><div class="form-group"><label for="NombreAlimento">Nombre</label><input type="text" class="form-control" name="nombreAli" value=""></div><div class="form-group"><label for="Consistencia">Consistencia</label><select class="form-control" name="Consistencia"><option value="Solida">Solida</option><option value="Liquida">Liquída</option></select></div><div class="form-group"><label for="UnidadMedicion">Unidad de medición</label><select id="unidadMedicion" class="form-control" name="UnidadMedicion"></select></div><div class="form-group"><label for="anioCad">Fecha de caducidad</label><input type="date" class="form-control" name="anioCad" value=""></div><div id="seleccionantinatu" class="form-group"></div><div id="artinatu" class="form-group"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guarda"></div></form>';
 
 // var HTMLAgregarSelect = '<select name="%data%" class="form-control">xxx</select>';
-// var HTMLAgregarOptionSelect = '<option value="**">%data%</option>';
+var HTMLAgregarOptionSelect = '<option value="**">%data%</option>';
 
 // SELECT para seleccionar el tipo de alimento que se agregará.
 // *Se agrega este elemento en el contenedor #seleccionantinatu
@@ -72,11 +72,14 @@ var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destaca
 // *insertar en .table .table-striped
 var HTMLTablaBusqueda = '<thead><td>ID</td><td>Nombre</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
 
-
 // *insertar en #insertarBusqueda
 var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="edElem" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
 
 var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
+
+
+
+var HTMLEditarAlimento = '<div id="agregarAlimento"><div><p class="destacado mas-font">Editar alimento</p></div></div>';
 
 
 

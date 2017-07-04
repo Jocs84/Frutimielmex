@@ -19,6 +19,7 @@
          */
         public static function obtenerEnum($tabla,$busqueda){
             $consulta = "SHOW COLUMNS FROM " . $tabla . " LIKE '" . $busqueda . "'";;
+            // $consulta = "DESCRIBE" . $tabla;
 
             try {
                 $comando = Database::getInstance()->getDb()->prepare($consulta);
@@ -43,6 +44,25 @@
                         FROM alimentos
                         WHERE NombreAlimento
                         LIKE  '%" . $busqueda . "%'";
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+
+        public static function buscarPorId($tabla,$campo,$busqueda)
+        {
+            $consulta = "SELECT *
+                        FROM `" . $tabla . "`
+                        WHERE `" . $campo ."`
+                        =  " . $busqueda;
             try {
                 $comando = Database::getInstance()->getDb()->prepare($consulta);
                 // Ejecutar sentencia preparada
@@ -128,14 +148,39 @@
         /**
          * Insertar una nueva meta
          *
-         * @param $titulo      titulo del nuevo registro
-         * @param $descripcion descripción del nuevo registro
-         * @param $fechaLim    fecha limite del nuevo registro
-         * @param $categoria   categoria del nuevo registro
-         * @param $prioridad   prioridad del nuevo registro
+         * @param $titulo
          * @return PDOStatement
          */
-        public static function insert(
+        public static function insertarAlimento(
+            $username,
+            $password
+        )
+        {
+            // Sentencia INSERT
+            $comando = "INSERT INTO users ( " .
+                "username," .
+                " password)" .
+                " VALUES( ?,?)";
+
+            // Preparar la sentencia
+            $sentencia = Database::getInstance()->getDb()->prepare($comando);
+
+            return $sentencia->execute(
+                array(
+                    $username,
+                    $password
+                )
+            );
+
+        }
+
+        /**
+         * Insertar una nueva meta
+         *
+         * @param $titulo
+         * @return PDOStatement
+         */
+        public static function insertarAlimentoArtificial(
             $username,
             $password
         )
