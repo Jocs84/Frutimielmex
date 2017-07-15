@@ -152,54 +152,88 @@
          * @return PDOStatement
          */
         public static function insertarAlimento(
-            $username,
-            $password
+            $nombre,$consistencia,$unidadmed,$dia,$mes,$anio
         )
         {
             // Sentencia INSERT
-            $comando = "INSERT INTO users ( " .
-                "username," .
-                " password)" .
-                " VALUES( ?,?)";
+            $comando = "INSERT INTO `alimentos`(
+                    `IdAlimento`,
+                    `NombreAlimento`,
+                    `Consistencia`,
+                    `UnidadMedicion`,
+                    `DiaCadAli`,
+                    `MesCadAli`,
+                    `AnioCadAli`)
+                    VALUES
+                    (NULL ,  '". $nombre."',  '". $consistencia."',
+                    '". $unidadmed."',  ". $dia.",  ". $mes.",  ". $anio.")";
 
-            // Preparar la sentencia
-            $sentencia = Database::getInstance()->getDb()->prepare($comando);
 
-            return $sentencia->execute(
-                array(
-                    $username,
-                    $password
-                )
-            );
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
 
         }
 
-        /**
-         * Insertar una nueva meta
-         *
-         * @param $titulo
-         * @return PDOStatement
-         */
         public static function insertarAlimentoArtificial(
-            $username,
-            $password
-        )
-        {
+            $extra
+        ){
+            $consulta = "SELECT MAX(`IdAlimento`) as `IdAlimento` from `alimentos`";
+            $busca = Database::getInstance()->getDb()->prepare($consulta);
+            $busca->execute();
+            $j = $busca->fetch(PDO::FETCH_ASSOC);
+            // $j = json_encode($busca);
+
+            $id = $j['IdAlimento'];
             // Sentencia INSERT
-            $comando = "INSERT INTO users ( " .
-                "username," .
-                " password)" .
-                " VALUES( ?,?)";
+            $comando = "INSERT INTO `Artificial`(`IdAlimento`, `TipoAlimento`)
+                        VALUES (". $id .",'". $extra ."')";
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
 
-            // Preparar la sentencia
-            $sentencia = Database::getInstance()->getDb()->prepare($comando);
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
 
-            return $sentencia->execute(
-                array(
-                    $username,
-                    $password
-                )
-            );
+        }
+
+
+        public static function insertarAlimentoNatural(
+            $extra
+        ){
+            $consulta = "SELECT MAX(`IdAlimento`) as `IdAlimento` from `alimentos`";
+            $busca = Database::getInstance()->getDb()->prepare($consulta);
+            $busca->execute();
+            $j = $busca->fetch(PDO::FETCH_ASSOC);
+
+            $id = $j['IdAlimento'];
+            // Sentencia INSERT
+            $comando = "INSERT INTO `Natural`(`IdAlimento`, `LugarObtencion`)
+                        VALUES (". $id .",'". $extra ."')";
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
 
         }
 
@@ -224,7 +258,7 @@
                 // Ejecutar sentencia preparada
                 $comando->execute();
                 //Retorna el numero de filas afectadas con el último movimiento
-                return $comando->rowCount();;
+                return $comando->rowCount();
 
             } catch (PDOException $e) {
                 return false;

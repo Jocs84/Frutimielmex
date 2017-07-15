@@ -57,10 +57,10 @@ var HTMLAgregarOptionSelect = '<option value="**">%data%</option>';
 var HTMLSelectTipoAlimentacion = '<label for="tipo">Tipo</label><select id="tipoAlimt" class="form-control" name="tipo"><option value="Artificial">Artificial</option><option value="Natural">Natural</option></select>';
 // LABEL e INPUT que se insertará en el contenedor #artinatu si es que se seleccionó
 // un alimento del tipo natural.
-var HTMLAgregarNatural = '<div class="form-group"><label for="lugarObtAli">Lugar de obtención</label><input type="text" class="form-control" name="lugarObtAli" value=""></div>';
+var HTMLAgregarNatural = '<div class="form-group"><label for="extra">Lugar de obtención</label><select id="LugarObtencion" class="form-control" name="extra"></select></div>';
 // LABEL e INPUT que se insertará en el contenedor #artinatu si es que se seleccionó
 // un alimento del tipo artificial.
-var HTMLAgregarArtificial = '<div class="form-group"><label for="tipoAlimento">Tipo de alimento</label><input type="text" class="form-control" name="tipoAlimento"></div>';
+var HTMLAgregarArtificial = '<div class="form-group"><label for="extra">Tipo de alimento</label><select id="LugarObtencion" class="form-control" name="extra"></select></div>';
 
 
 // *********************************************** MODIFICAR ALIMENTO

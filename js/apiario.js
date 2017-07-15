@@ -59,6 +59,12 @@ alimentacion = function(){
         $("#agregarAlimento").append(HTMLFormAlimento.replace("%FORMULARIO%","frmAgrAlimento"));
         $("#seleccionantinatu").append(HTMLSelectTipoAlimentacion);
         $("#artinatu").append(HTMLAgregarArtificial);
+        var z = HTMLAgregarOptionSelect.replace("**","Energizante");
+        z = z.replace("%data%", "Energizante");
+        $("#LugarObtencion").append(z);
+        z = HTMLAgregarOptionSelect.replace("**","De reserva");
+        z = z.replace("%data%", "De reserva");
+        $("#LugarObtencion").append(z);
 
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
@@ -90,9 +96,21 @@ alimentacion = function(){
         if($("#tipoAlimt").val() === "Artificial"){
             $("#artinatu").empty();
             $("#artinatu").append(HTMLAgregarArtificial);
+            var z = HTMLAgregarOptionSelect.replace("**","Energizante");
+            z = z.replace("%data%", "Energizante");
+            $("#LugarObtencion").append(z);
+            z = HTMLAgregarOptionSelect.replace("**","De reserva");
+            z = z.replace("%data%", "De reserva");
+            $("#LugarObtencion").append(z);
         }else{
             $("#artinatu").empty();
             $("#artinatu").append(HTMLAgregarNatural);
+            var z = HTMLAgregarOptionSelect.replace("**","Colmena ajena");
+            z = z.replace("%data%", "Colmena ajena");
+            $("#LugarObtencion").append(z);
+            z = HTMLAgregarOptionSelect.replace("**","Colmena propia");
+            z = z.replace("%data%", "Colmena propia");
+            $("#LugarObtencion").append(z);
         }
     });
 
@@ -105,12 +123,11 @@ alimentacion = function(){
             type: "POST",
             url: "../php/agregarAlimento.php",
             data: $("#frmAgrAlimento").serialize(),
-            // data: {"buscarAlimento":"torta"},
             success: function(data){
                 if(data.estado == '2'){
-
+                    alert("Error al agregar alimento");
                 }else{
-
+                    alert("Se agregó alimento");
 
                 }
             },
@@ -178,16 +195,25 @@ alimentacion = function(){
     });
 
 
+
+    // Llenado de datos del formurario para editarla información
+    // de los alimentos
     $(document).on('click', '.edElem', function(e) {
         e.preventDefault();
         var padre = $(this).parent().parent();
         var nom = $(padre).children(':first-child').text();
 
-        $("#insertar-gestion").empty();
+    $("#insertar-gestion").empty();
         $("#insertar-gestion").append(HTMLEditarAlimento);
         $("#agregarAlimento").append(HTMLFormAlimento.replace("%FORMULARIO%","frmEdAlimento"));
         $("#seleccionantinatu").append(HTMLSelectTipoAlimentacion);
         $("#artinatu").append(HTMLAgregarArtificial);
+        var z = HTMLAgregarOptionSelect.replace("**","Energizante");
+        z = z.replace("%data%", "Energizante");
+        $("#LugarObtencion").append(z);
+        z = HTMLAgregarOptionSelect.replace("**","De reserva");
+        z = z.replace("%data%", "De reserva");
+        $("#LugarObtencion").append(z);
 
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
@@ -215,7 +241,7 @@ alimentacion = function(){
                 $("#frmEdAlimento").children(':nth-child(2)').children(':nth-child(2)').val(jsonBusq[i]["Consistencia"]);
                 $("#unidadMedicion").val(jsonBusq[i]["UnidadMedicion"]);
                 alert(jsonBusq[i]["UnidadMedicion"]);
-                var fecha = jsonBusq[i]["DiaCadAli"] + "/" + jsonBusq[i]["MesCadAli"] + "/" + jsonBusq[i]["AnioCadAli"];
+                var fecha = jsonBusq[i]["DiaCadAli"] + "-" + jsonBusq[i]["MesCadAli"] + "-" + jsonBusq[i]["AnioCadAli"];
                 $("#frmEdAlimento").children(':nth-child(4)').children(':nth-child(2)').val(fecha);
             }
         }
@@ -241,14 +267,23 @@ alimentacion = function(){
            success: function(data){
                if(data.estado != '2'){
                    $("#seleccionantinatu").children(':nth-child(2)').val("Natural");
+                   $("#artinatu").empty();
+                   $("#artinatu").append(HTMLAgregarNatural);
+                   var z = HTMLAgregarOptionSelect.replace("**","Colmena ajena");
+                   z = z.replace("%data%", "Colmena ajena");
+                   $("#LugarObtencion").append(z);
+                   z = HTMLAgregarOptionSelect.replace("**","Colmena propia");
+                   z = z.replace("%data%", "Colmena propia");
+                   $("#LugarObtencion").append(z);
                    $("#artinatu").children(':first-child').children(':nth-child(2)').val(data[0]["LugarObtencion"]);
                }
            },
            dataType: 'json'
       });
-
-
     });
+
+
+
 
 
     // **************

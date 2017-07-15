@@ -8,11 +8,52 @@
 </head>
 <body>
 
-    <form action="" method="get">
-        <input type="text" name="tabla" value="alimentos">
-        <input type="date" name="busqueda" value="UnidadMedicion">
-        <input type="submit" name="" value="EVIL :v">
+    <form id="frmAgrAlimento" action="../php/agregarAlimento.php" method="POST">
+        <div class="form-group">
+            <label for="NombreAlimento">Nombre</label>
+            <input class="form-control" name="nombreAli" value="" type="text">
+        </div>
+        <div class="form-group">
+            <label for="Consistencia">Consistencia</label>
+            <select class="form-control" name="Consistencia">
+                <option value="Solida">Solida</option>
+                <option value="Liquida">Liquída</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="UnidadMedicion">Unidad de medición</label>
+            <select id="unidadMedicion" class="form-control" name="UnidadMedicion">
+                <option value="kg">kg</option>
+                <option value="gr">gr</option>
+                <option value="ml">ml</option>
+                <option value="lt">lt</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="anioCad">Fecha de caducidad</label>
+            <input class="form-control" name="anioCad" value="" type="date">
+        </div>
+        <div id="seleccionantinatu" class="form-group">
+            <label for="tipo">Tipo</label>
+            <select id="tipoAlimt" class="form-control" name="tipo">
+                <option value="Artificial">Artificial</option>
+                <option value="Natural">Natural</option>
+            </select>
+        </div>
+        <div id="artinatu" class="form-group">
+            <div class="form-group">
+                <label for="extra">Lugar de obtención</label>
+                <select id="LugarObtencion" class="form-control" name="extra">
+                    <option value="Colmena ajena">Colmena ajena</option>
+                    <option value="Colmena propia">Colmena propia</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-default boton" name="" value="Guarda" type="submit">
+        </div>
     </form>
+
 
 </body>
 </html>
