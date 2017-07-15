@@ -122,24 +122,31 @@
          * @param $username      nuevo titulo
          * @param $password      nueva descripcion
          */
-        public static function update(
-            $id,
-            $username,
-            $password
+        public static function updateAlimento(
+            $id,$nombre,$consistencia,$unidadmed,$dia,$mes,$anio
         )
         {
             // Creando consulta UPDATE
-            $consulta = "UPDATE users" .
-                " SET username=?, password=? " .
-                "WHERE id=?";
+            $consulta = "UPDATE `alimentos`
+                            SET `NombreAlimento`= '". $nombre ."',
+                            `Consistencia`='". $consistencia ."',
+                            `UnidadMedicion`='".$unidadmed."',
+                            `DiaCadAli`=". $dia .",
+                            `MesCadAli`= ". $mes .",
+                            `AnioCadAli`= ". $anio ."
+                            WHERE `IdAlimento`=  " . $id;
 
-            // Preparar la sentencia
-            $cmd = Database::getInstance()->getDb()->prepare($consulta);
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
 
-            // Relacionar y ejecutar la sentencia
-            $cmd->execute(array($username, $password, $id));
-
-            return $cmd;
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
         }
 
 

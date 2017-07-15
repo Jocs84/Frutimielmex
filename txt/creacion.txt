@@ -1,0 +1,13 @@
+Creación alimentos
+
+
+CREATE TABLE IF NOT EXISTS `alimentos` (
+  `IdAlimento` int(11) NOT NULL AUTO_INCREMENT,
+  `NombreAlimento` text COLLATE utf8_spanish_ci NOT NULL,
+  `Consistencia` enum('Liquida','Solida') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  `UnidadMedicion` enum('kg','gr','ml','lt') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  `DiaCadAli` int(11) NOT NULL,
+  `MesCadAli` int(11) NOT NULL,
+  `AnioCadAli` int(11) NOT NULL,
+  PRIMARY KEY (`IdAlimento`)
+);

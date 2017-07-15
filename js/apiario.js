@@ -50,6 +50,19 @@ alimentacion = function(){
 
     // **************
     // *********************
+    // ******************************* AGREGAR INGREDIENTE
+    // Evento del boton Agregar Ingrediente, el cual despliega
+    // El formulario para agregar el alimento
+    $("#btnAgregarIngrediente").click(function(){
+        $("#insertar-gestion").empty();
+        $("#insertar-gestion").append(HTMLAgregarIngrediente);
+
+    });
+
+
+
+    // **************
+    // *********************
     // ******************************* AGREGAR ALIMENTO
     // Evento del boton Agregar Alimento, el cual despliega
     // El formulario para agregar el alimento
@@ -198,12 +211,13 @@ alimentacion = function(){
 
     // Llenado de datos del formurario para editarla información
     // de los alimentos
+    var nom;
     $(document).on('click', '.edElem', function(e) {
         e.preventDefault();
         var padre = $(this).parent().parent();
-        var nom = $(padre).children(':first-child').text();
+        nom = $(padre).children(':first-child').text();
 
-    $("#insertar-gestion").empty();
+        $("#insertar-gestion").empty();
         $("#insertar-gestion").append(HTMLEditarAlimento);
         $("#agregarAlimento").append(HTMLFormAlimento.replace("%FORMULARIO%","frmEdAlimento"));
         $("#seleccionantinatu").append(HTMLSelectTipoAlimentacion);
@@ -234,19 +248,19 @@ alimentacion = function(){
             dataType: 'json'
        });
 
-
+    //    Poniendo los datos del registro en los campos correspóndientes
         for (var i = 0; i < jsonBusq.length; i++) {
             if(jsonBusq[i]["IdAlimento"] === nom ){
                 $("#frmEdAlimento").children(':first-child').children(':nth-child(2)').val(jsonBusq[i]["NombreAlimento"]);
                 $("#frmEdAlimento").children(':nth-child(2)').children(':nth-child(2)').val(jsonBusq[i]["Consistencia"]);
                 $("#unidadMedicion").val(jsonBusq[i]["UnidadMedicion"]);
-                alert(jsonBusq[i]["UnidadMedicion"]);
                 var fecha = jsonBusq[i]["DiaCadAli"] + "-" + jsonBusq[i]["MesCadAli"] + "-" + jsonBusq[i]["AnioCadAli"];
                 $("#frmEdAlimento").children(':nth-child(4)').children(':nth-child(2)').val(fecha);
             }
         }
 
-
+        // Buscar la información en la tabla Artificial para desplegar información
+        // extra del alimento
         $.ajax({
             type: "POST",
             url: "../php/buscarPorId.php",
@@ -260,6 +274,8 @@ alimentacion = function(){
             dataType: 'json'
        });
 
+       // Buscar la información en la tabla Natural para desplegar información
+       // extra del alimento
        $.ajax({
            type: "POST",
            url: "../php/buscarPorId.php",
@@ -281,6 +297,27 @@ alimentacion = function(){
            dataType: 'json'
       });
     });
+
+    // Envio de la información a base de datos para su actualización
+    // dentro de la misma.
+    $(document).on('submit', '#frmEdAlimento', function(e) {
+        e.preventDefault(e);
+        // ajax para enviar los datos
+        $.ajax({
+            type: "POST",
+            url: "../php/editarAlimento.php",
+            data: $("#frmEdAlimento").serialize() + "&id=" + nom,
+            success: function(data){
+                if(data.estado == '2'){
+                    alert("Error al editar alimento");
+                }else{
+                    alert("Se editó el alimento");
+                }
+            },
+            dataType: 'json'
+       });
+
+   });
 
 
 

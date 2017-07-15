@@ -34,6 +34,14 @@ var HTMLgestIngredinetes = '<div class="contenedor-chico"><div><p class="destaca
 
 
 
+// **** VARIABLES PARA INGREDIENTES   *****
+
+var HTMLAgregarIngrediente = '<div id="agregarIngrediente"><div><p class="destacado mas-font">Agregar ingrediente</p></div><form id = "agregarIngrediente" ction="" method="post"><div class="form-group"><label for="NombreIngrediente">Nombre</label><input type="text" class="form-control" name="NombreIngrediente" value=""></div><div class="form-group"><label for="UnidadMedida">Unidad de medida</label><select name="UnidadMedida" id = "UnidadMedida" class="form-control"></select></div><div class="form-group"><label for="PrecioIngrediente">Precio</label><input type="number" name="PrecioIngrediente" min="0.5" class="form-control" value=""></div><div class="form-group"><label for="CadIngrediente">Fecha de caducidad</label><input type="date" class="form-control" name="CadIngrediente" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form></div>';
+
+
+
+
+
 // **** VARIABLES PARA ALIMENTOS   *****
 
 // AGREGAR ALIMENTO
@@ -80,58 +88,6 @@ var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><stro
 
 
 var HTMLEditarAlimento = '<div id="agregarAlimento"><div><p class="destacado mas-font">Editar alimento</p></div></div>';
-
-
-
-//
-// var HTMLModificarAlimento2 = '
-// <div id="modificarrAlimento">
-//     <div>
-//         <p class="destacado mas-font">Modificar alimento</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label for="nombreAli">Nombre</label>
-//             <input type="text" class="form-control" name="nombreAli" value="Torta proteínica">
-//         </div>
-//         <div class="form-group">
-//             <label for="tipoAli">Tipo</label>
-//             <select name="tipoAli" class="form-control">
-//                <option value="1">Energizante</option>
-//                <option value="2">Reserva</option>
-//             </select>
-//         </div>
-//         <div class="form-group">
-//             <label for="consAli">Consistencia</label>
-//             <select name="consAli" class="form-control">
-//                <option value="1">Jarabe</option>
-//                <option value="2">Sólido</option>
-//             </select>
-//         </div>
-//         <div class="form-group">
-//             <label for="unidadAli">Unidad de medición</label>
-//             <select name="unidadAli" class="form-control">
-//                <option value="1">kg</option>
-//                <option value="2">gr</option>
-//             </select>
-//         </div>
-//
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de caducidad</label>
-//             <input type="date" class="form-control" name="anioCad" value="18/06/2017">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Guardar">
-//         </div>
-//
-//     </form>
-// </div>
-// ';
-
-
-
-
-
 
 
 
@@ -334,40 +290,19 @@ var HTMLEliminarConf = '<tr class="alert alert-danger" role="alert"><td>  </td><
 // ';
 //
 //
-// var HTMLAgregarIngrediente = '
-// <div id="agregarIngrediente">
-//     <div>
-//         <p class="destacado mas-font">Agregar ingrediente</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label for="nombreAli">Nombre</label>
-//             <input type="text" class="form-control" name="nombreAli" value="">
-//         </div>
-//         <div class="form-group">
-//             <label for="tipoAli">Unidad de medida</label>
-//             <select name="tipoAli" class="form-control">
-//                <option value="1">kg</option>
-//                <option value="2">gr</option>
-//                <option value="2">lt</option>
-//             </select>
-//         </div>
-//         <div class="form-group">
-//             <label for="nombreAli">Precio</label>
-//             <input type="text" class="form-control" name="nombreAli" value="">
-//         </div>
-//
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de caducidad</label>
-//             <input type="date" class="form-control" name="anioCad" value="">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Guardar">
-//         </div>
-//
-//     </form>
-// </div>
-// ';
+
+
+
+
+
+
+
+
+
+
+// *****************************
+// ******************
+// *************
 //
 // var HTMLModificarIngrediente = '
 // <div id="modificarrIngrediente">
