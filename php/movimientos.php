@@ -271,5 +271,64 @@
                 return false;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+         * Insertar una nueva meta
+         *
+         * @param $titulo
+         * @return PDOStatement
+         */
+        public static function insertarIngrediente(
+            $nombre,$unidadmed,$precio,$dia,$mes,$anio
+        )
+        {
+            // Sentencia INSERT
+            $comando = "INSERT INTO `ingredientes`
+                        (`IdAlimento`,
+                        `NombreAlimento`,
+                        `PrecioIngrediente`,
+                        `UnidadMedida`,
+                        `DiaCadAli`,
+                        `MesCadAli`,
+                        `AnioCadAli`)
+                        VALUES (NULL,
+                            '". $nombre . "',
+                            '". $precio . "',
+                            '". $unidadmed . "',
+                            '". $dia  . "',
+                            '". $mes . "',
+                            '". $anio . "')";
+
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+
+        }
     }
  ?>

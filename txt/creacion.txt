@@ -1,4 +1,12 @@
+
+
+
+
+
+
+
 Creación alimentos
+
 
 
 CREATE TABLE IF NOT EXISTS `alimentos` (
@@ -9,5 +17,31 @@ CREATE TABLE IF NOT EXISTS `alimentos` (
   `DiaCadAli` int(11) NOT NULL,
   `MesCadAli` int(11) NOT NULL,
   `AnioCadAli` int(11) NOT NULL,
+  PRIMARY KEY (`IdAlimento`)
+);
+
+
+
+CREATE TABLE IF NOT EXISTS `artificial` (
+  `IdAlimento` int(11) NOT NULL,
+  `TipoAlimento` enum('Energizante','De reserva') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`IdAlimento`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `ingredientes` (
+  `IdAlimento` int(11) NOT NULL AUTO_INCREMENT,
+  `NombreAlimento` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  `PrecioIngrediente` double NOT NULL,
+  `UnidadMedida` enum('kg','gr','lt','ml') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  `DiaCadAli` int(11) NOT NULL,
+  `MesCadAli` int(11) NOT NULL,
+  `AnioCadAli` int(11) NOT NULL,
+  PRIMARY KEY (`IdAlimento`)
+);
+
+CREATE TABLE IF NOT EXISTS `natural` (
+  `IdAlimento` int(11) NOT NULL,
+  `LugarObtencion` enum('Colmena ajena','Colmena propia') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`IdAlimento`)
 );

@@ -57,7 +57,58 @@ alimentacion = function(){
         $("#insertar-gestion").empty();
         $("#insertar-gestion").append(HTMLAgregarIngrediente);
 
+        // AJAX para cargar las unidades de medida de un select
+        $.ajax({
+            type: "POST",
+            url: "../php/llenadoDatosFormAlimentos.php",
+            data: {"tabla":"ingredientes","busqueda" : "UnidadMedida"},
+            success: function(data){
+                var tipos = data[0]["Type"];
+                var arg = tipos.split("'");
+                for (var i = 0; i < arg.length; i++) {
+                    if(i%2 != 0){
+                        var valor = HTMLAgregarOptionSelect.replace("**",arg[i]);
+                        valor = valor.replace("%data%", arg[i]);
+                        $("#UnidadMedida").append(valor);
+                    }
+                }
+            },
+            dataType: 'json'
+       });
     });
+
+    //Enviar datos del Ingrediente a agregar
+    $(document).on('submit', '#frmAgrIng', function(e) {
+        //Previene el trabajo por default del submit
+         e.preventDefault();
+        //  Método AJAX para enviar los datos de búsqueda en el form
+        //  e insertar el
+        $.ajax({
+            type: "POST",
+            url: "../php/agregarIngrediente.php",
+            data: $("#frmAgrIng").serialize(),
+            success: function(data){
+                if(data.estado == '2'){
+                    alert("Error al agregar ingrediente");
+                }else{
+                    alert("Se agregó ingrediente");
+                }
+            },
+            dataType: 'json'
+       });
+
+    });
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
