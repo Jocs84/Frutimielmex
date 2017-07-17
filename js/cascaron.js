@@ -84,7 +84,7 @@ var HTMLEditarAlimento = '<div id="agregarAlimento"><div><p class="destacado mas
 
 var HTMLEliminarAlimento = '<div id="eliminarAlimento"><div><p class="destacado mas-font">Eliminar alimento</p></div><form id="formBuscarEl" action="../php/buscarPorNombre.php" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
-var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="elElem" href=""><img src="../img/close.png" alt=""></a></td></tr>';
+var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="%CLASS%" href=""><img src="../img/close.png" alt=""></a></td></tr>';
 
 var HTMLEliminarConf = '<tr class="alert alert-danger" role="alert"><td>  </td><td>¿Eliminar este %MENSAJE%</td><td><button type="button" data-dismiss="modal" class="btn btn-primary btn-danger eliElem">Eliminar</button></td><td><button type="button" data-dismiss="modal" class="btn btn-danger cancelarAccion">Cancelar</button></td></tr>';
 
@@ -132,7 +132,7 @@ var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><stro
 
 
 
-
+var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="destacado mas-font">Eliminar ingrediente</p></div><form id="frmbuscInge" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarAli">Buscar</label><input type="text" class="form-control" name="buscarIng" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
 
 
@@ -347,111 +347,4 @@ var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><stro
 
 
 
-
-
-// *****************************
-// ******************
-// *************
 //
-// var HTMLModificarIngrediente = '
-// <div id="modificarrIngrediente">
-//     <div>
-//         <p class="destacado mas-font">Modificar ingrediente</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label class="sr-only" for="buscarAli">Buscar</label>
-//             <input type="text" class="form-control" name="buscarAli" placeholder="Nombre">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Buscar">
-//         </div>
-//     </form>
-//     <table class="table table-striped">
-//         <thead>
-//             <td>Nombre</td>
-//             <td>Modificar</td>
-//         </thead>
-//         <tbody id="insertarBusqueda">
-//             <tr>
-//                 <td>Leche en polvo</td>
-//                 <td><img src="../img/edit.png" alt=""></td>
-//             </tr>
-//             <tr>
-//                 <td>Leche de soya</td>
-//                 <td><img src="../img/edit.png" alt=""></td>
-//             </tr>
-//         </tbody>
-//     </table>
-// </div>
-// ';
-//
-//
-// var HTMLModificarIngrediente2 = '
-// <div id="modificarrIngrediente">
-//     <div>
-//         <p class="destacado mas-font">Modificar Ingrediente</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label for="nombreAli">Nombre</label>
-//             <input type="text" class="form-control" name="nombreAli" value="">
-//         </div>
-//         <div class="form-group">
-//             <label for="tipoAli">Unidad de medida</label>
-//             <select name="tipoAli" class="form-control">
-//                <option value="1">kg</option>
-//                <option value="2">gr</option>
-//                <option value="2">lt</option>
-//             </select>
-//         </div>
-//         <div class="form-group">
-//             <label for="nombreAli">Precio</label>
-//             <input type="text" class="form-control" name="nombreAli" value="">
-//         </div>
-//
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de caducidad</label>
-//             <input type="date" class="form-control" name="anioCad" value="">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Guardar">
-//         </div>
-//
-//     </form>
-// </div>
-// ';
-//
-//
-// var HTMLEliminarIngrediente = '
-// <div id="eliminarIngrediente">
-//     <div>
-//         <p class="destacado mas-font">Eliminar ingrediente</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label class="sr-only" for="buscarAli">Buscar</label>
-//             <input type="text" class="form-control" name="buscarAli" placeholder="Nombre">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Buscar">
-//         </div>
-//     </form>
-//     <table class="table table-striped">
-//         <thead>
-//             <td>Nombre</td>
-//             <td>Eliminar</td>
-//         </thead>
-//         <tbody id="insertarBusqueda">
-//             <tr>
-//                 <td>Leche en polvo</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//             <tr>
-//                 <td>Leche de soya</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//         </tbody>
-//     </table>
-// </div>
-// ';

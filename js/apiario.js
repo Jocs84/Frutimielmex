@@ -203,6 +203,113 @@ alimentacion = function(){
     });
 
 
+    $(document).on('submit', '#frmEdIng', function(e) {
+        e.preventDefault(e);
+        // ajax para enviar los datos
+        $.ajax({
+            type: "POST",
+            url: "../php/editarIngrediente.php",
+            data: $("#frmEdIng").serialize() + "&id=" + nom,
+            success: function(data){
+                if(data.estado == '2'){
+                    alert("Error al editar alimento");
+                }else{
+                    alert("Se editó el alimento");
+                }
+            },
+            dataType: 'json'
+       });
+
+    });
+
+
+    // **************
+    // *********************
+    // *******************************ELIMINAR INGREDIENTE
+    $("#btnEliminarIngrediente").click(function(){
+        $("#insertar-gestion").empty();
+        $("#insertar-gestion").append(HTMLEliminarIngrediente);
+    });
+
+    // Buscar alimentos por nombre e insertarlos
+    // al DOM.
+    $(document).on('submit', '#frmbuscInge', function(e) {
+        //Previene el trabajo por default del submit
+         e.preventDefault();
+        //  Método AJAX para enviar los datos de búsqueda en el form
+        //  e insertar el
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarIngPorNombre.php",
+            data: $("#frmbuscInge").serialize(),
+            // data: {"buscarAlimento":"torta"},
+            success: function(data){
+                if(data.estado == '2'){
+                    //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    // Agregar en alert de que no se encontró informacion
+                    $("#insBusq").append(HTMLAlertaNoElementos.replace("%MENSAJE%","ingredientes"));
+                }else{
+                   //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    //agrega la estructura de la tabla contenedora de la busqueda
+                    $("#insBusq").append(HTMLTablaBusqueda.replace("%OPTION%","Eliminar"));
+                    // Insertar los registros que se encontraron
+                    for (var i = 0; i < data.length; i++) {
+                        //Poner el nombre del alimento
+                        var rem = HTMLElementEncontradoEl.replace("%NOMBRE%",data[i]["NombreIngrediente"]);
+                        //Poner el id del alimento
+                        rem = rem.replace("%IDALI%",data[i]["IdIngrediente"]);
+                        // Poner la fecha de caducidad del alimento
+                        rem = rem.replace("%FECHA%",data[i]["DiaCadIng"] + "/" + data[i]["MesCadIng"] + "/" + data[i]["AnioCadIng"]);
+                        rem = rem.replace("%CLASS%","elElemIng");
+                        // insertar el alimento en el DOM
+                        $("#insertarBusqueda").append(rem);
+                    }
+
+                }
+            },
+            dataType: 'json'
+       });
+    });
+
+
+    //Eliminar alimentación
+    $(document).on('click', '.elElemIng', function(e) {
+        e.preventDefault();
+        var padre = $(this).parent().parent();
+        var nom = $(padre).children(':first-child').text();
+        $.ajax({
+            type: "POST",
+            url: "../php/eliminarPorId.php",
+            data: {"eliminar": nom, "tabla":"ingredientes", "elemento":"IdIngrediente"},
+            success: function(data){
+                if(data.estado == '2'){
+                    alert("No se eliminó");
+                    // $("#insertarBusqueda").children(':first-child').remove();
+                    // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
+                }else{
+                    alert("Se eliminó elemento");
+                    $(padre).remove();
+                    // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","ELIMINADO"));
+                }
+            },
+            dataType: 'json'
+       });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -514,6 +621,7 @@ alimentacion = function(){
                         rem = rem.replace("%IDALI%",data[i]["IdAlimento"]);
                         // Poner la fecha de caducidad del alimento
                         rem = rem.replace("%FECHA%",data[i]["DiaCadAli"] + "/" + data[i]["MesCadAli"] + "/" + data[i]["AnioCadAli"]);
+                        rem = rem.replace("%CLASS%","elElem");
                         // insertar el alimento en el DOM
                         $("#insertarBusqueda").append(rem);
                     }

@@ -357,6 +357,44 @@
 
 
 
+        /**
+         * Actualiza un registro de la bases de datos basado
+         * en los nuevos valores relacionados con un identificador
+         *
+         * @param $id            identificador
+         * @param $username      nuevo titulo
+         * @param $password      nueva descripcion
+         */
+        public static function updateIngrediente(
+            $id,$nombre,$unidadmed,$precio,$dia,$mes,$anio
+        ){
+            // Creando consulta UPDATE
+            $consulta = "UPDATE `ingredientes` SET
+                        `NombreIngrediente`= '". $nombre ."',
+                        `PrecioIngrediente`= '". $precio ."',
+                        `UnidadMedida`= '". $unidadmed ."',
+                        `DiaCadIng`= ". $dia .",
+                        `MesCadIng`= ". $mes .",
+                        `AnioCadIng`= ". $anio ."
+                        WHERE `IdIngrediente` = " . $id;
+
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+        }
+
+
+
+
+
 
     }
  ?>
