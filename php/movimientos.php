@@ -302,13 +302,13 @@
         {
             // Sentencia INSERT
             $comando = "INSERT INTO `ingredientes`
-                        (`IdAlimento`,
-                        `NombreAlimento`,
+                        (`IdIngrediente`,
+                        `NombreIngrediente`,
                         `PrecioIngrediente`,
                         `UnidadMedida`,
-                        `DiaCadAli`,
-                        `MesCadAli`,
-                        `AnioCadAli`)
+                        `DiaCadIng`,
+                        `MesCadIng`,
+                        `AnioCadIng`)
                         VALUES (NULL,
                             '". $nombre . "',
                             '". $precio . "',
@@ -330,5 +330,33 @@
             }
 
         }
+
+
+
+        /**
+         * Retorna todos registros de los alimentos
+         * @param
+         * @return array Datos del registro
+         */
+        public static function buscarIngredienteNombre($busqueda)
+        {
+            $consulta = "SELECT *
+                        FROM ingredientes
+                        WHERE NombreIngrediente
+                        LIKE  '%" . $busqueda . "%'";
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+
+
     }
  ?>

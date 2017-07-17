@@ -34,9 +34,10 @@ var HTMLgestIngredinetes = '<div class="contenedor-chico"><div><p class="destaca
 
 
 
-// **** VARIABLES PARA INGREDIENTES   *****
 
-var HTMLAgregarIngrediente = '<div id="agregarIngrediente"><div><p class="destacado mas-font">Agregar ingrediente</p></div><form id = "frmAgrIng" action="" method="post"><div class="form-group"><label for="NombreIngrediente">Nombre</label><input type="text" class="form-control" name="NombreIngrediente" value=""></div><div class="form-group"><label for="UnidadMedida">Unidad de medida</label><select name="UnidadMedida" id = "UnidadMedida" class="form-control"></select></div><div class="form-group"><label for="PrecioIngrediente">Precio</label><input type="number" name="PrecioIngrediente" min="0.5" class="form-control" value=""></div><div class="form-group"><label for="CadIngrediente">Fecha de caducidad</label><input type="date" class="form-control" name="CadIngrediente" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form></div>';
+
+
+
 
 
 
@@ -74,21 +75,9 @@ var HTMLAgregarArtificial = '<div class="form-group"><label for="extra">Tipo de 
 // *********************************************** MODIFICAR ALIMENTO
 // Variable que contiene toda la estructura para buscar el elemento a modificar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="../php/buscarPorNombre.php" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
-
-
-// *insertar en .table .table-striped
-var HTMLTablaBusqueda = '<thead><td>ID</td><td>Nombre</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
-
-// *insertar en #insertarBusqueda
-var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="edElem" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
-
-var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
-
-
+var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="buscarAlimento" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
 var HTMLEditarAlimento = '<div id="agregarAlimento"><div><p class="destacado mas-font">Editar alimento</p></div></div>';
-
 
 
 // *********************************************** ELIMINAR ALIMENTO
@@ -98,6 +87,66 @@ var HTMLEliminarAlimento = '<div id="eliminarAlimento"><div><p class="destacado 
 var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="elElem" href=""><img src="../img/close.png" alt=""></a></td></tr>';
 
 var HTMLEliminarConf = '<tr class="alert alert-danger" role="alert"><td>  </td><td>¿Eliminar este %MENSAJE%</td><td><button type="button" data-dismiss="modal" class="btn btn-primary btn-danger eliElem">Eliminar</button></td><td><button type="button" data-dismiss="modal" class="btn btn-danger cancelarAccion">Cancelar</button></td></tr>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **** VARIABLES PARA INGREDIENTES   *****
+
+var HTMLAgregarIngrediente = '<div id="agregarIngrediente"><div><p class="destacado mas-font">Agregar ingrediente</p></div></div>';
+
+var HTMLFormIngrediente = '<form id = "%FORMULARIO%" action="" method="post"><div class="form-group"><label for="NombreIngrediente">Nombre</label><input type="text" class="form-control" name="NombreIngrediente" value=""></div><div class="form-group"><label for="UnidadMedida">Unidad de medida</label><select name="UnidadMedida" id = "UnidadMedida" class="form-control"></select></div><div class="form-group"><label for="PrecioIngrediente">Precio</label><input type="number" name="PrecioIngrediente" min="0.5" class="form-control" value=""></div><div class="form-group"><label for="CadIngrediente">Fecha de caducidad</label><input type="date" class="form-control" name="CadIngrediente" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
+
+var HTMLModificarIngrediente = '<div id="modificarIngrediente"><div><p class="destacado mas-font">Modificar ingrediente</p></div><form id="frmbuscIng" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarIng">Buscar</label><input class="form-control" name="buscarIng" placeholder="Nombre" type="text"></div><div class="form-group"><input class="btn btn-default boton" name="" value="Buscar" type="submit"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+
+var HTMLEditarIngrediente = '<div id="agregarIngrediente"><div><p class="destacado mas-font">Editar ingrediente</p></div></div>';
+
+
+// *****************
+// LA TABLA DE BUSQUEDA :D
+// *insertar en .table .table-striped
+var HTMLTablaBusqueda = '<thead><td>ID</td><td>Nombre</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
+
+// *insertar en #insertarBusqueda
+var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="%CLASS%" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
+
+
+var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //

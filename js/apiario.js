@@ -36,6 +36,7 @@ $( document ).ready(function() {
 alimentacion = function(){
 
     var jsonBusq;
+    var nom;
 
     // Inserta los controles para gestión de alimentos
     $("#opc-contenedor").append(HTMLcontAlimentacion);
@@ -56,6 +57,7 @@ alimentacion = function(){
     $("#btnAgregarIngrediente").click(function(){
         $("#insertar-gestion").empty();
         $("#insertar-gestion").append(HTMLAgregarIngrediente);
+        $("#agregarIngrediente").append(HTMLFormIngrediente.replace("%FORMULARIO%","frmAgrIng"));
 
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
@@ -100,6 +102,105 @@ alimentacion = function(){
     });
 
 
+    // **************
+    // *********************
+    // ******************************* MODIFICAR INGREDIENTE
+    // Evento del boton Modificar Alimento, el cual buscador
+    // para después proceder a editar los datos.
+    $("#btnModificarIngrediente").click(function(){
+        //  Vacia el contenedor en caso de busquedas anteriores
+        $("#insertar-gestion").empty();
+        //Inserta el formulario de busqueda de alimentos por nombre
+        $("#insertar-gestion").append(HTMLModificarIngrediente);
+    });
+
+    // Buscar alimentos por nombre e insertarlos
+    // al DOM.
+    $(document).on('submit', '#frmbuscIng', function(e) {
+        //Previene el trabajo por default del submit
+         e.preventDefault();
+        //  Método AJAX para enviar los datos de búsqueda en el form
+        //  e insertar el
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarIngPorNombre.php",
+            data: $("#frmbuscIng").serialize(),
+            // data: {"buscarAlimento":"torta"},
+            success: function(data){
+                if(data.estado == '2'){
+                    //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    // Agregar en alert de que no se encontró informacion
+                    $("#insBusq").append(HTMLAlertaNoElementos.replace("%MENSAJE%","alimentos"));
+                }else{
+                    jsonBusq = data;
+                   //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    //agrega la estructura de la tabla contenedora de la busqueda
+                    $("#insBusq").append(HTMLTablaBusqueda.replace("%OPTION%","Modificar"));
+                    // Insertar los registros que se encontraron
+                    for (var i = 0; i < data.length; i++) {
+                        //Poner el nombre del alimento
+                        var rem = HTMLElementEncontradoEd.replace("%NOMBRE%",data[i]["NombreIngrediente"]);
+                        //Poner el id del alimento
+                        rem = rem.replace("%IDALI%",data[i]["IdIngrediente"]);
+                        // Poner la fecha de caducidad del alimento
+                        rem = rem.replace("%FECHA%",data[i]["DiaCadIng"] + "/" + data[i]["MesCadIng"] + "/" + data[i]["AnioCadIng"]);
+                        rem = rem.replace("%CLASS%","edElemIng");
+                        // insertar el alimento en el DOM
+                        $("#insertarBusqueda").append(rem);
+                    }
+
+                }
+            },
+            dataType: 'json'
+       });
+    });
+
+
+
+    // Llenado de datos del formurario para editarla información
+    // de los alimentos
+
+    $(document).on('click', '.edElemIng', function(e) {
+        e.preventDefault();
+        var padre = $(this).parent().parent();
+        nom = $(padre).children(':first-child').text();
+
+        $("#insertar-gestion").empty();
+        $("#insertar-gestion").append(HTMLEditarIngrediente);
+        $("#agregarIngrediente").append(HTMLFormIngrediente.replace("%FORMULARIO%","frmEdIng"));
+
+        // AJAX para cargar las unidades de medida de un select
+        $.ajax({
+            type: "POST",
+            url: "../php/llenadoDatosFormAlimentos.php",
+            data: {"tabla":"alimentos","busqueda" : "UnidadMedicion"},
+            success: function(data){
+                var tipos = data[0]["Type"];
+                var arg = tipos.split("'");
+                for (var i = 0; i < arg.length; i++) {
+                    if(i%2 != 0){
+                        var valor = HTMLAgregarOptionSelect.replace("**",arg[i]);
+                        valor = valor.replace("%data%", arg[i]);
+                        $("#UnidadMedida").append(valor);
+                    }
+                }
+            },
+            dataType: 'json'
+       });
+
+    //    Poniendo los datos del registro en los campos correspóndientes
+        for (var i = 0; i < jsonBusq.length; i++) {
+            if(jsonBusq[i]["IdIngrediente"] === nom ){
+                $("#frmEdIng").children(':first-child').children(':nth-child(2)').val(jsonBusq[i]["NombreIngrediente"]);
+                $("#UnidadMedida").val(jsonBusq[i]["UnidadMedida"]);
+                $("#frmEdIng").children(':nth-child(3)').children(':nth-child(2)').val(jsonBusq[i]["PrecioIngrediente"]);
+                var fecha = jsonBusq[i]["DiaCadIng"] + "-" + jsonBusq[i]["MesCadIng"] + "-" + jsonBusq[i]["AnioCadIng"];
+                $("#frmEdIng").children(':nth-child(4)').children(':nth-child(2)').val(fecha);
+            }
+        }
+    });
 
 
 
@@ -108,7 +209,6 @@ alimentacion = function(){
 
 
 
-    
 
 
 
@@ -248,6 +348,7 @@ alimentacion = function(){
                         rem = rem.replace("%IDALI%",data[i]["IdAlimento"]);
                         // Poner la fecha de caducidad del alimento
                         rem = rem.replace("%FECHA%",data[i]["DiaCadAli"] + "/" + data[i]["MesCadAli"] + "/" + data[i]["AnioCadAli"]);
+                        rem = rem.replace("%CLASS%","edElemAli");
                         // insertar el alimento en el DOM
                         $("#insertarBusqueda").append(rem);
                     }
@@ -263,7 +364,7 @@ alimentacion = function(){
     // Llenado de datos del formurario para editarla información
     // de los alimentos
     var nom;
-    $(document).on('click', '.edElem', function(e) {
+    $(document).on('click', '.edElemAli', function(e) {
         e.preventDefault();
         var padre = $(this).parent().parent();
         nom = $(padre).children(':first-child').text();
