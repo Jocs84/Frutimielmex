@@ -1,14 +1,5 @@
 
 
-
-
-
-
-
-Creación alimentos
-
-
-
 CREATE TABLE IF NOT EXISTS `alimentos` (
   `IdAlimento` int(11) NOT NULL AUTO_INCREMENT,
   `NombreAlimento` text COLLATE utf8_spanish_ci NOT NULL,
@@ -29,15 +20,31 @@ CREATE TABLE IF NOT EXISTS `artificial` (
 );
 
 
+
+CREATE TABLE IF NOT EXISTS `encabpreparacion` (
+  `IdPreparacion` int(4) NOT NULL AUTO_INCREMENT,
+  `IdAlimento` int(11) NOT NULL,
+  `IdEmpleado` int(11) NOT NULL,
+  `PrecioPreparacion` double NOT NULL,
+  `DiaPrep` int(11) NOT NULL,
+  `MesPrep` int(11) NOT NULL,
+  `AnioPrep` int(11) NOT NULL,
+  `DiaCadPrep` int(11) NOT NULL,
+  `MesCadPrep` int(11) NOT NULL,
+  `AnioCadPrep` int(11) NOT NULL,
+  PRIMARY KEY (`IdPreparacion`),
+  KEY `IdAlimento` (`IdAlimento`,`IdEmpleado`)
+);
+
 CREATE TABLE IF NOT EXISTS `ingredientes` (
-  `IdAlimento` int(11) NOT NULL AUTO_INCREMENT,
-  `NombreAlimento` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  `IdIngrediente` int(11) NOT NULL AUTO_INCREMENT,
+  `NombreIngrediente` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
   `PrecioIngrediente` double NOT NULL,
   `UnidadMedida` enum('kg','gr','lt','ml') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  `DiaCadAli` int(11) NOT NULL,
-  `MesCadAli` int(11) NOT NULL,
-  `AnioCadAli` int(11) NOT NULL,
-  PRIMARY KEY (`IdAlimento`)
+  `DiaCadIng` int(11) NOT NULL,
+  `MesCadIng` int(11) NOT NULL,
+  `AnioCadIng` int(11) NOT NULL,
+  PRIMARY KEY (`IdIngrediente`)
 );
 
 CREATE TABLE IF NOT EXISTS `natural` (
@@ -45,3 +52,21 @@ CREATE TABLE IF NOT EXISTS `natural` (
   `LugarObtencion` enum('Colmena ajena','Colmena propia') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`IdAlimento`)
 );
+
+
+CREATE TABLE IF NOT EXISTS `preparacion` (
+  `IdPreparacion` int(11) NOT NULL AUTO_INCREMENT,
+  `IdIngrediente` int(11) NOT NULL,
+  `CantIngrediente` int(11) NOT NULL,
+  PRIMARY KEY (`IdPreparacion`),
+  KEY `IdIngrediente` (`IdIngrediente`)
+);
+
+
+
+ALTER TABLE `encabpreparacion`
+  ADD CONSTRAINT `encabpreparacion_ibfk_1` FOREIGN KEY (`IdAlimento`) REFERENCES `alimentos` (`IdAlimento`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `preparacion`
+  ADD CONSTRAINT `preparacion_ibfk_2` FOREIGN KEY (`IdIngrediente`) REFERENCES `ingredientes` (`IdIngrediente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `preparacion_ibfk_1` FOREIGN KEY (`IdPreparacion`) REFERENCES `encabpreparacion` (`IdPreparacion`) ON DELETE CASCADE ON UPDATE CASCADE;

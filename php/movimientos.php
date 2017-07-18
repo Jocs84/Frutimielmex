@@ -74,6 +74,21 @@
             }
         }
 
+        public static function buscarGeneral($tabla)
+        {
+            $consulta = "SELECT *
+                        FROM `" . $tabla . "`";
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
 
 
         /**

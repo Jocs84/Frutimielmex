@@ -127,10 +127,7 @@ var HTMLTablaBusqueda = '<thead><td>ID</td><td>Nombre</td><td>Fecha cad</td><td>
 // *insertar en #insertarBusqueda
 var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="%CLASS%" href=""><img src="../img/edit.png" alt=""></a></td></tr>';
 
-
 var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
-
-
 
 var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="destacado mas-font">Eliminar ingrediente</p></div><form id="frmbuscInge" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarAli">Buscar</label><input type="text" class="form-control" name="buscarIng" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
@@ -139,6 +136,7 @@ var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="dest
 
 
 
+// **** VARIABLES PARA PREPARACIONES   *****
 
 
 
@@ -149,63 +147,29 @@ var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="dest
 
 
 
-//
-//
-//
-// var HTMLAgregarPreparacion = '
-// <div id="agregarPreparacion">
-//     <div>
-//         <p class="destacado mas-font">Agregar preparacion</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label for="nombreAli">Nombre alimento</label>
-//             <select name="consAli" class="form-control">
-//                <option value="1">Torta 1</option>
-//                <option value="2">Torta proteínica</option>
-//             </select>
-//         </div>
-//         <div class="form-group">
-//             <label for="tipoAli">Empleado</label>
-//             <select name="tipoAli" class="form-control">
-//                <option value="1">Rogelio Flores</option>
-//                <option value="2">Saul Santos</option>
-//             </select>
-//         </div>
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de preparación</label>
-//             <input type="date" class="form-control" name="anioCad" value="">
-//         </div>
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de caducidad</label>
-//             <input type="date" class="form-control" name="anioCad" value="">
-//         </div>
-//         <div class="form-group">
-//             <button type="button" class="btn btn-default boton" name="button">Agregar ingredientes</button>
-//         </div>
-//
-//         <div id ="add-opciones">
-//             <div class="form-group">
-//                 <label for="anioCad">Ingrediente</label>
-//                 <select name="tipoAli" class="form-control">
-//                    <option value="1">Azucar</option>
-//                    <option value="2">Leche de soya</option>
-//                 </select>
-//             </div>
-//             <div class="form-group">
-//                 <label for="anioCad">Cantidad</label>
-//                 <input type="text" class="form-control" name="" value="">
-//             </div>
-//         </div>
-//
-//
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Guarda">
-//         </div>
-//
-//     </form>
-// </div>
-// ';
+var HTMLAgregarPreparacion = '<div id="agregarPreparacion"><div><p class="destacado mas-font">Agregar preparación</p></div></div>';
+
+var HTMLFormPreparacion = '<form id="%FORMULARIO%" action="" method="post"><div class="form-group"><label for="IdAlimento">Nombre alimento</label><select id="IdAlimento" name="IdAlimento" class="form-control"></select></div><div class="form-group"><label for="IdEmpleado">Empleado</label><select id="IdEmpleado" name="IdEmpleado" class="form-control"></select></div><div class="form-group"><label for="FechaPrep">Fecha de preparación</label><input type="date" class="form-control" name="FechaPrep" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><label for="FechaCadPrep">Fecha de caducidad</label><input type="date" class="form-control" name="FechaCadPrep" value=""placeholder="DD-MM-AAAA"></div><div id ="add-opciones"></div><div class="form-group"><button id = "agrIngForm" type="button" class="btn btn-default boton" name="button">Agregar ingredientes</button></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guarda"></div></form>';
+
+
+
+// Insertar en #add-opciones
+var HTMLFormPreparacionAgrIng = '<div><div class="form-group"><label for="IdIngrediente">Ingrediente</label><select name="IdIngrediente[]" class="IdIngrediente form-control"></select></div><div class="form-group"><label for="CantIngrediente">Cantidad</label><input type="num" class="form-control" name="CantIngrediente[]" value=""></div></div>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //
 // var HTMLEliminarPreparacion = '
@@ -281,70 +245,4 @@ var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="dest
 // </div>
 // ';
 //
-//
-// var HTMLModificarPreparacion2 = '
-// <div id="modificarrAlimento">
-//     <div>
-//         <p class="destacado mas-font">Modificar Preparacion</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label for="nombreAli">Nombre alimento</label>
-//             <input type="text"class="form-control" name="" value="Jarabe más miel">
-//         </div>
-//         <div class="form-group">
-//             <label for="tipoAli">Empleado</label>
-//             <input type="text"class="form-control" name="" value="Rogelio Flores">
-//         </div>
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de preparación</label>
-//             <input type="date" class="form-control" name="anioCad" value="">
-//         </div>
-//         <div class="form-group">
-//             <label for="anioCad">Fecha de caducidad</label>
-//             <input type="date" class="form-control" name="anioCad" value="">
-//         </div>
-//         <div class="form-group">
-//             <p class="destacado">Ingredientes</p>
-//         </div>
-//
-//         <div id ="add-opciones">
-//             <div class="form-group">
-//                 <label for="anioCad">Nombre</label>
-//                 <input type="text" class="form-control" name="anioCad" value="Miel">
-//
-//             </div>
-//             <div class="form-group">
-//                 <label for="anioCad">Cantidad</label>
-//                 <input type="text" class="form-control" name="" value="2">
-//             </div>
-//             <div class="form-group">
-//                 <label for="anioCad">Nombre</label>
-//                 <input type="text" class="form-control" name="anioCad" value="Agua">
-//
-//             </div>
-//             <div class="form-group">
-//                 <label for="anioCad">Cantidad</label>
-//                 <input type="text" class="form-control" name="" value="1">
-//             </div>
-//         </div>
-//
-//
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Guarda">
-//         </div>
-//
-//     </form>
-// </div>
-// ';
-//
-//
-
-
-
-
-
-
-
-
 //

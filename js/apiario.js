@@ -661,8 +661,95 @@ alimentacion = function(){
 
 
 
+    // *********************
+    // *********************
+    // *********************
+    // *****       PREPARACIONES
+    // *********************
+    // **************
+    // *********************
+    // ******************************* AGREGAR PREPARACIONES
+    // Evento del boton Agregar Alimento, el cual despliega
+    // El formulario para agregar el alimento
+    $("#btnAgregarPreparacion").click(function(){
+        $("#insertar-gestion").empty();
+        $("#insertar-gestion").append(HTMLAgregarPreparacion);
+        $("#agregarPreparacion").append(HTMLFormPreparacion.replace("%FORMULARIO%","frmAgrPreparacion"));
+        $("#add-opciones").append(HTMLFormPreparacionAgrIng);
+
+        // AJAX para cargar los ids y datos de los alimentos
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarGeneral.php",
+            data: {"tabla":"alimentos"},
+            success: function(data){
+                var i = 0;
+                while (data[i]) {
+                    var ins = HTMLAgregarOptionSelect.replace("**",data[i]["IdAlimento"]);
+                    ins = ins.replace("%data%", data[i]["NombreAlimento"]);
+                    $("#IdAlimento").append(ins);
+                    i++;
+                }
+            },
+            dataType: 'json'
+       });
+
+       // AJAX para cargar los ids y datos de los empleados
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "../php/buscarGeneral.php",
+    //        data: {"tabla":"empleados"},
+    //        success: function(data){
+    //            var i = 0;
+    //            while (data[i]) {
+    //                var ins = HTMLAgregarOptionSelect.replace("**",data[i]["IdAlimento"]);
+    //                ins = ins.replace("%data%", data[i]["NombreAlimento"]);
+    //                $("#IdAlimento").append(ins);
+    //                i++;
+    //            }
+    //        },
+    //        dataType: 'json'
+    //   });
+
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarGeneral.php",
+            data: {"tabla":"ingredientes"},
+            success: function(data){
+                var i = 0;
+                while (data[i]) {
+                    var ins = HTMLAgregarOptionSelect.replace("**",data[i]["IdIngrediente"]);
+                    ins = ins.replace("%data%", data[i]["NombreIngrediente"]);
+                    $(".IdIngrediente").append(ins);
+                    i++;
+                }
+            },
+            dataType: 'json'
+       });
+
+    });
 
 
+    // Agregar el más espacios para llenar con más ingredientes :D
+    $(document).on('click', '#agrIngForm', function(e) {
+        $("#add-opciones").append(HTMLFormPreparacionAgrIng);
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarGeneral.php",
+            data: {"tabla":"ingredientes"},
+            success: function(data){
+                var i = 0;
+                while (data[i]) {
+                    var ins = HTMLAgregarOptionSelect.replace("**",data[i]["IdIngrediente"]);
+                    ins = ins.replace("%data%", data[i]["NombreIngrediente"]);
+                    $("#add-opciones").children(':last-child').children(':nth-child(1)').children(':nth-child(2)').append(ins);
+                    i++;
+                }
+            },
+            dataType: 'json'
+       });
+
+    });
 
 
 
