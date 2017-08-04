@@ -4,34 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/imprimir.css" media="print">
     <title>Document</title>
 </head>
 <body>
 
-    <!-- <select name="IdAlimento" class="form-control">
-       <option value="IdAlimento">NombreAlimento</option>
-    </select> -->
-
-    <!-- <select name="IdEmpleado" class="form-control">
-       <option value="IdEmpleado">NombreEmpleado</option>
-    </select> -->
-
-    <!-- <select id="IdIngrediente" name="IdIngrediente[]" class="form-control">
-       <option value="IdIngrediente">NombreIngrediente</option>
-    </select> -->
-
-
-
-    <form  action="../php/buscarGeneral.php" method="post">
-
+    <form id="frmbuscIng" action="../php/buscarPorNombre.php" method="post">
         <div class="form-group">
-            <input type="text" name="tabla" value="ingredientes">
+            <label class="sr-only" for="buscarIng">Buscar</label>
+            <input class="form-control" name="nombre" placeholder="Nombre" type="text" >
+            <input class="form-control" name="columna" placeholder="Nombre" type="text" value="NombreIngrediente">
+            <input class="form-control" name="tabla" placeholder="Nombre" type="text" value="ingredientes">
         </div>
         <div class="form-group">
-            <input type="submit" class = "btn btn-default boton" name="" value="Guarda">
+            <input class="btn btn-default boton" name="" value="Buscar" type="submit">
         </div>
     </form>
-
 
 
 

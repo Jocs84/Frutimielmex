@@ -9,13 +9,12 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $busqueda = $_POST['buscarAlimento'];
+        $busqueda = $_POST['nombre'];
+        $columna = $_POST['columna'];
+        $tabla = $_POST['tabla'];
 
-        $retorno = generar::buscarAlimentoNombre($busqueda);
+        $retorno = generar::buscarPorNombre($busqueda,$tabla,$columna);
         if ($retorno) {
-            // $datos["estado"] = "1";
-            // // $muajaja = json_encode($retorno);
-            // $datos["datos"] = $retorno;
             print json_encode($retorno);
         }else {
             //enviar respuesta con un JSON

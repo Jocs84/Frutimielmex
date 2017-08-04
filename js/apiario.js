@@ -1,7 +1,41 @@
 
+// *********************************************************************************
+// ***
+// *** APIARIO.JS se encarga de manipular el DOM y efectos del archivo
+// *** APIARIOS.HTML.
+// *** Este archivo manipula lo siguiente:
+// ***     -Mostrar las diferentes opciones que se presentan en el menú de apiarios.
+// ***     -Mostrar información general (Detalles) sobre los apiarios como conjunto.
+// ***     -Mostrar las diferentes gestiones dentro del submenú de Alimentación
+// ***          ♦ Mostrar las diferentes gestiones de Ingredientes
+// ***          ♦ Mostrar las diferentes gestiones de Alimentos
+// ***          ♦ Mostrar las diferentes gestiones de Preparaciones
+// ***     -Mostrar las diferentes gestiones dentro del submenú de Medicación
+// ***     -Mostrar las diferentes gestiones dentro del submenú de Movilidad
+// ***     -Mostrar las diferentes gestiones dentro del submenú de Productividad
+// ***
+// *********************************************************************************
+
+
+
+
+
+// **************************************
+// ***
+// *** Cuando el documento esté cargado
+// ***
+// **************************************
+
+// Muestra las diferentes opciones que se presentan en el menú de apiarios,
+// cargando los Detalles de los apiarios al inicio.
 $( document ).ready(function() {
-    // alimentacion();
-    //
+    // Carga por default la sección de
+    // DETALLES
+    // *insertar aquí una vez esté diseñado
+
+
+    // Muestra las acciones a realizar cuando se de click a la opción
+    // ALIMENTACIÓN
     $(document).on('click','#opc-alimentacion',function(e){
         e.preventDefault();
         $("#opc-contenedor").empty();
@@ -9,8 +43,9 @@ $( document ).ready(function() {
     });
 
 
-
-    //Prueba de como se iniciaría la inserción
+    // Muestra las acciones a realizar cuando se de click a la opción
+    // MEDICACIÓN
+    //Prueba de como se iniciaría la inserción *quitar esto una vez listo*
     $(document).on('click','#opc-medicacion',function(e){
         e.preventDefault();
         $("#opc-contenedor").empty();
@@ -62,7 +97,7 @@ alimentacion = function(){
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
             type: "POST",
-            url: "../php/llenadoDatosFormAlimentos.php",
+            url: "../php/llenadoDatosEnum.php",
             data: {"tabla":"ingredientes","busqueda" : "UnidadMedida"},
             success: function(data){
                 var tipos = data[0]["Type"];
@@ -114,7 +149,7 @@ alimentacion = function(){
         $("#insertar-gestion").append(HTMLModificarIngrediente);
     });
 
-    // Buscar alimentos por nombre e insertarlos
+    // Buscar ingrediente por nombre e insertarlos
     // al DOM.
     $(document).on('submit', '#frmbuscIng', function(e) {
         //Previene el trabajo por default del submit
@@ -123,9 +158,8 @@ alimentacion = function(){
         //  e insertar el
         $.ajax({
             type: "POST",
-            url: "../php/buscarIngPorNombre.php",
-            data: $("#frmbuscIng").serialize(),
-            // data: {"buscarAlimento":"torta"},
+            url: "../php/buscarPorNombre.php",
+            data: $("#frmbuscIng").serialize() + "&columna=" + "NombreIngrediente"  + "&tabla=" + "ingredientes",
             success: function(data){
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
@@ -174,7 +208,7 @@ alimentacion = function(){
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
             type: "POST",
-            url: "../php/llenadoDatosFormAlimentos.php",
+            url: "../php/llenadoDatosEnum.php",
             data: {"tabla":"alimentos","busqueda" : "UnidadMedicion"},
             success: function(data){
                 var tipos = data[0]["Type"];
@@ -240,8 +274,8 @@ alimentacion = function(){
         //  e insertar el
         $.ajax({
             type: "POST",
-            url: "../php/buscarIngPorNombre.php",
-            data: $("#frmbuscInge").serialize(),
+            url: "../php/buscarPorNombre.php",
+            data: $("#frmbuscInge").serialize() + "&columna=" + "NombreIngrediente"  + "&tabla=" + "ingredientes",
             // data: {"buscarAlimento":"torta"},
             success: function(data){
                 if(data.estado == '2'){
@@ -340,7 +374,7 @@ alimentacion = function(){
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
             type: "POST",
-            url: "../php/llenadoDatosFormAlimentos.php",
+            url: "../php/llenadoDatosEnum.php",
             data: {"tabla":"alimentos","busqueda" : "UnidadMedicion"},
             success: function(data){
                 var tipos = data[0]["Type"];
@@ -433,7 +467,7 @@ alimentacion = function(){
         $.ajax({
             type: "POST",
             url: "../php/buscarPorNombre.php",
-            data: $("#formBuscar").serialize(),
+            data: $("#formBuscar").serialize() + "&columna=" + "NombreAlimento"  + "&tabla=" + "alimentos",
             // data: {"buscarAlimento":"torta"},
             success: function(data){
                 if(data.estado == '2'){
@@ -491,7 +525,7 @@ alimentacion = function(){
         // AJAX para cargar las unidades de medida de un select
         $.ajax({
             type: "POST",
-            url: "../php/llenadoDatosFormAlimentos.php",
+            url: "../php/llenadoDatosEnum.php",
             data: {"tabla":"alimentos","busqueda" : "UnidadMedicion"},
             success: function(data){
                 var tipos = data[0]["Type"];
@@ -600,7 +634,7 @@ alimentacion = function(){
         $.ajax({
             type: "POST",
             url: "../php/buscarPorNombre.php",
-            data: $("#formBuscarEl").serialize(),
+            data: $("#formBuscarEl").serialize()+ "&columna=" + "NombreAlimento"  + "&tabla=" + "alimentos",
             // data: {"buscarAlimento":"torta"},
             success: function(data){
                 if(data.estado == '2'){
@@ -711,6 +745,13 @@ alimentacion = function(){
     //        dataType: 'json'
     //   });
 
+        // **********************************************************
+        // dato experimental, volover a lo de arriba cuando se esté trabajando con la basecompleta
+        // ++++++++++++++++++++++++++++++++
+        var c = HTMLAgregarOptionSelect.replace("**","88");
+        c = c.replace("%data%", "Empleado de prueba");
+        $("#IdEmpleado").append(c);
+
         $.ajax({
             type: "POST",
             url: "../php/buscarGeneral.php",
@@ -751,7 +792,90 @@ alimentacion = function(){
 
     });
 
+    // Wnviar los datos del formulario para la
+    // agregar el registro a la tabla
+    //Enviar datos del Ingrediente a agregar
+    $(document).on('submit', '#frmAgrPreparacion', function(e) {
+        //Previene el trabajo por default del submit
+         e.preventDefault();
+        //  Método AJAX para enviar los datos de búsqueda en el form
+        //  e insertar el
+        $.ajax({
+            type: "POST",
+            url: "../php/agregarPreparacion.php",
+            data: $("#frmAgrPreparacion").serialize(),
+            success: function(data){
+                if(data.estado == '2'){
+                    alert("Error al agregar ingrediente");
+                }else{
+                    alert("Se agregó ingrediente");
+                    $("#insertar-gestion").empty();
+                }
+            },
+            dataType: 'json'
+       });
 
+    });
+
+
+    // *********************AGREGAR PREPARACION
+
+    $("#btnModificarPreparacion").click(function(){
+        //  Vacia el contenedor en caso de busquedas anteriores
+        $("#insertar-gestion").empty();
+        //Inserta el formulario de busqueda de alimentos por nombre
+        $("#insertar-gestion").append(HTMLModificarPreparacion);
+    });
+
+    // Buscar alimentos por nombre e insertarlos
+    // al DOM.
+    $(document).on('submit', '#frmbuscPrep', function(e) {
+        //Previene el trabajo por default del submit
+         e.preventDefault();
+        //  Método AJAX para enviar los datos de búsqueda en el form
+        //  e insertar el
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarPorNombre.php",
+            data: $("#frmbuscPrep").serialize() + "&columna=" + "IdPreparacion"  + "&tabla=" + "encabpreparacion",
+            // data: {"buscarAlimento":"torta"},
+            success: function(data){
+                if(data.estado == '2'){
+                    //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    // Agregar en alert de que no se encontró informacion
+                    $("#insBusq").append(HTMLAlertaNoElementos.replace("%MENSAJE%","preparacion"));
+                }else{
+                    jsonBusq = data;
+                   //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    //agrega la estructura de la tabla contenedora de la busqueda
+                    $("#insBusq").append(HTMLTablaBusqueda.replace("%OPTION%","Modificar"));
+                    // Insertar los registros que se encontraron
+                    for (var i = 0; i < data.length; i++) {
+                        //Poner el nombre del alimento
+                        var rem = HTMLElementEncontradoEd.replace("%NOMBRE%",data[i]["IdPreparacion"]);
+                        //Poner el id del alimento
+                        rem = rem.replace("%IDALI%",data[i]["IdAlimento"]);
+                        // Poner la fecha de caducidad del alimento
+                        rem = rem.replace("%FECHA%",data[i]["DiaCadAli"] + "/" + data[i]["MesCadAli"] + "/" + data[i]["AnioCadAli"]);
+                        rem = rem.replace("%CLASS%","edElemAli");
+                        // insertar el alimento en el DOM
+                        $("#insertarBusqueda").append(rem);
+                    }
+
+                }
+            },
+            dataType: 'json'
+       });
+    });
+    //
+    //
+    //
+    // // Llenado de datos del formurario para editarla información
+    // // de los alimentos
+    // var nom;
+    // $(document).on('click', '.edElemAli', function(e) {});
 
 
 

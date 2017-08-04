@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+form{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+}
+
+div{
+    margin: 5em;
+}

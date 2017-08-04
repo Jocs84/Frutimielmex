@@ -411,5 +411,140 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+         * Insertar una nueva meta
+         *
+         * @param $titulo
+         * @return PDOStatement
+         */
+        public static function insertarEncabPreparacion(
+            $idAlimento,$idEmpleado,$diaPrep,$mesPrep,$anioPrep,
+            $diaCadPrep,$mesCadPrep,$anioCadPrep
+        )
+        {
+            // Sentencia INSERT
+            $comando = "INSERT INTO `encabpreparacion`
+                        (`IdPreparacion`,
+                        `IdAlimento`,
+                        `IdEmpleado`,
+                        `PrecioPreparacion`,
+                        `DiaPrep`,
+                        `MesPrep`,
+                        `AnioPrep`,
+                        `DiaCadPrep`,
+                        `MesCadPrep`,
+                        `AnioCadPrep`)
+                        VALUES (NULL,
+                            ". $idAlimento .",
+                            ". $idEmpleado .",
+                            0,
+                            ". $diaPrep .",
+                            ". $mesPrep .",
+                            ". $anioPrep .",
+                            ". $diaCadPrep .",
+                            ". $mesCadPrep .",
+                            ". $anioCadPrep .")";
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+
+        }
+
+
+        public static function insertarPreparacion(
+            $idIngrediente,$cantIngrediente
+        ){
+            $consulta = "SELECT MAX(`IdPreparacion`) as `IdPreparacion` from `encabpreparacion`";
+            $busca = Database::getInstance()->getDb()->prepare($consulta);
+            $busca->execute();
+            $j = $busca->fetch(PDO::FETCH_ASSOC);
+            // $j = json_encode($busca);
+
+            $id = $j['IdPreparacion'];
+            // Sentencia INSERT
+
+            $comando = "INSERT INTO `preparacion`
+                        (`IdPreparacion`, `IdIngrediente`, `CantIngrediente`) VALUES ";
+
+            for ($i=0; $i < count($idIngrediente); $i++) {
+                if($i != 0){
+                    $comando = $comando . ",";
+                }
+                $comando = $comando . "(". $id .",". $idIngrediente[$i] .",". $cantIngrediente[$i] .")";
+            }
+            // return $comando;
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+
+        }
+
+
+
+
+
+
+        public static function buscarPorNombre($busqueda,$tabla,$columna)
+        {
+            $consulta = "SELECT *
+                        FROM `". $tabla ."`
+                        WHERE `". $columna . "`
+                        LIKE  '%" . $busqueda . "%'";
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+
+
+
+
     }
  ?>
