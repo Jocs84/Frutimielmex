@@ -61,16 +61,23 @@ $( document ).ready(function() {
 
 
 
-
-//************************* FUNCION ALIMENTACION
+// **************************************
+// ***
+// *** FUNCIÓN ALIMENTACIÓN
+// ***
+// **************************************
 
 // Manipula todos los eventos del apartado de alimentación
-// dentro de apiario.html
-
-
+// dentro de APIARIOS.HTML
 alimentacion = function(){
-
+    // Guarda los JSON resultantes de una busqueda, así no se perderá recursos
+    // al volver a buscar en BD para volver a obtener los datos.
+    // Util para cuando se buscan registro que serán editados.
     var jsonBusq;
+
+    // Guarda identificadores cuando se obtienen a través de la manupulación
+    // del DOM, facilitando su posterior uso.
+    // Útil para seleccionar el ID del registro a editar o eliminar.
     var nom;
 
     // Inserta los controles para gestión de alimentos
@@ -84,26 +91,44 @@ alimentacion = function(){
     $("#agr-gestiones").append(HTMLgestPreparaciones);
 
 
-    // **************
-    // *********************
-    // ******************************* AGREGAR INGREDIENTE
+    // **************************************
+    // ***
+    // *** AGREGAR INGREDIENTE
+    // ***
+    // **************************************
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Inserción del formulario para
+    // ♦ ♦  agregar Ingrediente
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
     // Evento del boton Agregar Ingrediente, el cual despliega
     // El formulario para agregar el alimento
     $("#btnAgregarIngrediente").click(function(){
+        // Vacia el contenedor de elementos anteriores e inserta el formulario
+        // necesario
         $("#insertar-gestion").empty();
         $("#insertar-gestion").append(HTMLAgregarIngrediente);
+        // Remplaza el valor comodín de la variable por el identificador necesario
+        // para su posterior manipulación. id = "frmAgrIng"
         $("#agregarIngrediente").append(HTMLFormIngrediente.replace("%FORMULARIO%","frmAgrIng"));
 
-        // AJAX para cargar las unidades de medida de un select
+        // AJAX para cargar las unidades de medida de un SELECT dentro del
+        // FORM id = "frmAgrIng"
         $.ajax({
             type: "POST",
             url: "../php/llenadoDatosEnum.php",
+            // datos necesarios para la busqueda de los valores,
+            // en formato JSON
             data: {"tabla":"ingredientes","busqueda" : "UnidadMedida"},
             success: function(data){
+                // Seleccionando el campo que se necesita
                 var tipos = data[0]["Type"];
+                // Manipulación de cadena
                 var arg = tipos.split("'");
                 for (var i = 0; i < arg.length; i++) {
                     if(i%2 != 0){
+                        // Insertando valores a través de la variable HTMLAgregarOptionSelect,
+                        // reemplazando el comodín ** con el valor en cuestión
                         var valor = HTMLAgregarOptionSelect.replace("**",arg[i]);
                         valor = valor.replace("%data%", arg[i]);
                         $("#UnidadMedida").append(valor);
@@ -114,12 +139,19 @@ alimentacion = function(){
        });
     });
 
-    //Enviar datos del Ingrediente a agregar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Envio de los datos del formulario
+    // ♦ ♦  una vez que esté este
+    // ♦ ♦  agregar Ingrediente
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del Guardar,, el cual envia la información contenida en el FORM para
+    // almacenar un registro a agregarIngrediente.php, el archivo encargado de
+    // trabajar con la BD.
     $(document).on('submit', '#frmAgrIng', function(e) {
         //Previene el trabajo por default del submit
          e.preventDefault();
-        //  Método AJAX para enviar los datos de búsqueda en el form
-        //  e insertar el
+        //  Método AJAX para enviar los datos al archivo PHP
+        //  retornando un JSON con un mensaje de éxito o fracaso
         $.ajax({
             type: "POST",
             url: "../php/agregarIngrediente.php",
@@ -137,11 +169,20 @@ alimentacion = function(){
     });
 
 
-    // **************
-    // *********************
-    // ******************************* MODIFICAR INGREDIENTE
-    // Evento del boton Modificar Alimento, el cual buscador
-    // para después proceder a editar los datos.
+
+
+    // **************************************
+    // ***
+    // *** MODIFICAR INGREDIENTE
+    // ***
+    // **************************************
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Inserción del formulario para
+    // ♦ ♦  la búsqueda del Ingrediente a modificar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del boton Modificar Alimento, el cual insertaen el
+    // DOM la estructura del FORM para la búsqueda de dicho ingrediente
     $("#btnModificarIngrediente").click(function(){
         //  Vacia el contenedor en caso de busquedas anteriores
         $("#insertar-gestion").empty();
@@ -149,24 +190,37 @@ alimentacion = function(){
         $("#insertar-gestion").append(HTMLModificarIngrediente);
     });
 
-    // Buscar ingrediente por nombre e insertarlos
-    // al DOM.
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Envio de la información del formulario
+    // ♦ ♦  la búsqueda del Ingrediente a modificar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del boton Buscar alimento, el cual manda los datos
+    // al archivo buscarPorNombre.php, y después insertar los registros
+    // obtenidos al DOM.
     $(document).on('submit', '#frmbuscIng', function(e) {
         //Previene el trabajo por default del submit
          e.preventDefault();
-        //  Método AJAX para enviar los datos de búsqueda en el form
-        //  e insertar el
+        //  Método AJAX para enviar los datos de búsqueda del FORM
+        //  e insertar el en una tabla los registros obtenidos.
         $.ajax({
             type: "POST",
             url: "../php/buscarPorNombre.php",
+            // El campo del FORM serializado en formato JSON (la búsqueda a realizar),
+            // así como los datos necesarios para realizar la búsqueda.
             data: $("#frmbuscIng").serialize() + "&columna=" + "NombreIngrediente"  + "&tabla=" + "ingredientes",
             success: function(data){
+                // Si se recibe un error
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
                     $("#insBusq").empty();
                     // Agregar en alert de que no se encontró informacion
                     $("#insBusq").append(HTMLAlertaNoElementos.replace("%MENSAJE%","alimentos"));
+                // Si se recibe un objeto JSON con el resultado de la búsqueda
                 }else{
+                    //Copiar el JSON de respuesta a una variable auxiliar para
+                    // evitar volver a consultar la base de datos al momento de
+                    // rellenar el FORM con los datos del registro necesario
                     jsonBusq = data;
                    //  Vacia el contenedor en caso de busquedas anteriores
                     $("#insBusq").empty();
@@ -193,10 +247,15 @@ alimentacion = function(){
 
 
 
-    // Llenado de datos del formurario para editarla información
-    // de los alimentos
-
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Llenado de datos del formurario para editar la
+    // ♦ ♦  información de los alimentos
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Una vez se elige el registro a editar a través de dar click
+    // al icono, se insertará el formulario correspondiente, y se
+    // rellenará con la información del registro.
     $(document).on('click', '.edElemIng', function(e) {
+        //Previene el trabajo por default del submit
         e.preventDefault();
         var padre = $(this).parent().parent();
         nom = $(padre).children(':first-child').text();
