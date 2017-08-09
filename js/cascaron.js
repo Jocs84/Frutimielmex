@@ -231,9 +231,51 @@ var HTMLFormPreparacion = '<form id="%FORMULARIO%" action="" method="post"><div 
 // Insertar en #add-opciones
 var HTMLFormPreparacionAgrIng = '<div><div class="form-group"><label for="IdIngrediente">Ingrediente</label><select name="IdIngrediente[]" class="IdIngrediente form-control"></select></div><div class="form-group"><label for="CantIngrediente">Cantidad</label><input type="num" class="form-control" name="CantIngrediente[]" value=""></div></div>';
 
+
+
+
+
+// **************************************
+// ***
+// *** ELEMENTOS PARA GESTIONAR ALIMENTACIÓN
+// ***     Modificar preparacion
+// ***
+// **************************************
+
 // Variable que contiene toda la estructura para buscar la preparación a editar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLModificarPreparacion = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="frmbuscPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table class="table table-striped"></table></div>';
+var HTMLModificarPreparacion = '<div id="modificarPreparacion"><div><p class="destacado mas-font">Modificar preparación</p></div><form id="frmbuscPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+
+
+// Estructura de TABLE, en la que se desplegará los elementos de la busqueda de
+// registros
+// *insertar en .table .table-striped
+// Cambiar %OPTION% por la opción que se desee realizar (eliminar o modificar)
+var HTMLTablaBusquedaPrep = '<thead><td>ID</td><td>Alimento</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
+
+
+// Variable que contiene la estructura del título de la sección
+// *Se inserta en el el contenedor #insertar-gestion
+var HTMLModificarPreparacionF = '<div id="modificarrPreparacion"><div><p class="destacado mas-font">Modificar preparación</p></div></div>';
+
+
+var HTMLFormModPreparacion = '<form id="frmEdPreparacion" action="" method="post"><div class="form-group"><label for="IdAlimento">Nombre alimento</label><select id="IdAlimento" name="IdAlimento" class="form-control"></select></div><div class="form-group"><label for="IdEmpleado">Empleado</label><select id="IdEmpleado" name="IdEmpleado" class="form-control"></select></div><div class="form-group"><label for="FechaPrep">Fecha de preparación</label><input type="date" class="form-control" name="FechaPrep" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><label for="FechaCadPrep">Fecha de caducidad</label><input type="date" class="form-control" name="FechaCadPrep" value=""placeholder="DD-MM-AAAA"></div><div class="form-group" id ="ing-existentes"><label>Ingredientes</label><table id="ingEx" class="table table-striped"></table></div><div id ="add-opciones"></div>';
+
+var HTMLFormModPreparacionBotones = '<div class="form-group"><button id = "agrIngForm" type="button" class="btn btn-default boton" name="button">Agregar ingredientes</button></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
+
+
+// Estructura de TABLE, en la que se desplegará los elementos de la busqueda de
+// registros
+// *insertar en #ingEx
+var HTMLTablaIng = '<thead><td>ID</td><td>Nombre</td><td>Cant</td><td>Eliminar</td></thead><tbody id="insertarAliTab"></tbody>';
+
+// Renglón o TR con la estructura para insertar un elemento que es posible Eliminar
+// a la tabla correspondiete
+// Insertar en #insertarAliTab
+// Cambiar:
+    // %NOMBRE% por el nombre del alimento
+    // %CANT% por lacantidad del ingrediente
+var HTMLElementTablaIng = '<tr><td>%ID%</td><td>%NOMBRE%</td><td>%CANT%</td><td><a class="%CLASS%" href=""><img src="../img/close.png" alt=""></a></td></tr>';
 
 
 
@@ -241,6 +283,34 @@ var HTMLModificarPreparacion = '<div id="modificarrAlimento"><div><p class="dest
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************
+// ***
+// *** ELEMENTOS PARA GESTIONAR ALIMENTACIÓN
+// ***     Eliminar preparacion
+// ***
+// **************************************
+
+// Variable que contiene toda la estructura para buscar la preparación a editar
+// *Se inserta en el el contenedor #insertar-gestion
+var HTMLEliminarPreparacion = '<div id="eliminarPreparacion"><div><p class="destacado mas-font">Eliminar preparación</p></div><form id="frmbuscElPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
 
 
 

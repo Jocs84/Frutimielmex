@@ -9,15 +9,13 @@
 </head>
 <body>
 
-    <form id="frmbuscIng" action="../php/buscarPorNombre.php" method="post">
+    <form id="frmEdPreparacion" action="../php/buscarAlimePrep.php" method="post">
+
         <div class="form-group">
-            <label class="sr-only" for="buscarIng">Buscar</label>
-            <input class="form-control" name="nombre" placeholder="Nombre" type="text" >
-            <input class="form-control" name="columna" placeholder="Nombre" type="text" value="NombreIngrediente">
-            <input class="form-control" name="tabla" placeholder="Nombre" type="text" value="ingredientes">
+            <input type="date" class="form-control" name="busqueda" value="11">
         </div>
         <div class="form-group">
-            <input class="btn btn-default boton" name="" value="Buscar" type="submit">
+            <input type="submit" class = "btn btn-default boton" name="" value="Guardar">
         </div>
     </form>
 

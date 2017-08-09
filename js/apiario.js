@@ -77,8 +77,15 @@ alimentacion = function(){
 
     // Guarda identificadores cuando se obtienen a través de la manupulación
     // del DOM, facilitando su posterior uso.
-    // Útil para seleccionar el ID del registro a editar o eliminar.
+    // Útil para seleccionar el ID (y en el caso de Preparacion, Nombre)
+    // del registro a editar o eliminar.
     var nom;
+
+    // Guarda identificadores cuando se obtienen a través de la manupulación
+    // del DOM, facilitando su posterior uso.
+    // Útil para seleccionar el ID en el caso de Preparacion
+    // del registro a editar o eliminar.
+    var id;
 
     // Variable que ayuda a obtener los padres dentro del DOM
     // del elemento al que se le dió click, para obtener su ID y poder
@@ -264,7 +271,7 @@ alimentacion = function(){
         //Previene el trabajo por default del elemento A HTML
         e.preventDefault();
         // Obtener ID del padre del elemento clicleado
-        var padre = $(this).parent().parent();
+        padre = $(this).parent().parent();
         // Obtener el texto (en este caso ID) del padre de la variable padre
         nom = $(padre).children(':first-child').text();
         // Vaciar la caja contenedora e insertar el formulario de ingredientes
@@ -870,7 +877,7 @@ alimentacion = function(){
                         rem = rem.replace("%IDALI%",data[i]["IdAlimento"]);
                         // Poner la fecha de caducidad del alimento
                         rem = rem.replace("%FECHA%",data[i]["DiaCadAli"] + "/" + data[i]["MesCadAli"] + "/" + data[i]["AnioCadAli"]);
-                        rem = rem.replace("%CLASS%","elElem");
+                        rem = rem.replace("%CLASS%","elElemAli");
                         // insertar el alimento en el DOM
                         $("#insertarBusqueda").append(rem);
                     }
@@ -888,7 +895,7 @@ alimentacion = function(){
     // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
     // Una vez se elige el registro a eliminar a través de dar click
     // al icono, y se eliminará.
-    $(document).on('click', '.elElem', function(e) {
+    $(document).on('click', '.elElemAli', function(e) {
         e.preventDefault();
         // Variable auxiliar para obtener los elementos padres del elemento clicleado
         // en el DOM
@@ -1144,18 +1151,20 @@ alimentacion = function(){
 
 
 
-    // Buscar alimentos por nombre e insertarlos
-    // al DOM.
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Envio de la información del formulario
+    // ♦ ♦  la búsqueda de la Preparación a modificar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del boton Buscar Preparación, el cual manda los datos
+    // al archivo buscarPorNombre.php, y después insertar los registros
+    // obtenidos al DOM.
     $(document).on('submit', '#frmbuscPrep', function(e) {
         //Previene el trabajo por default del submit
-         e.preventDefault();
-        //  Método AJAX para enviar los datos de búsqueda en el form
-        //  e insertar el
+        e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "../php/buscarPorNombre.php",
-            data: $("#frmbuscPrep").serialize() + "&columna=" + "IdPreparacion"  + "&tabla=" + "encabpreparacion",
-            // data: {"buscarAlimento":"torta"},
+            url: "../php/buscarPreparacion.php",
+            data: $("#frmbuscPrep").serialize(),
             success: function(data){
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
@@ -1167,16 +1176,244 @@ alimentacion = function(){
                    //  Vacia el contenedor en caso de busquedas anteriores
                     $("#insBusq").empty();
                     //agrega la estructura de la tabla contenedora de la busqueda
-                    $("#insBusq").append(HTMLTablaBusqueda.replace("%OPTION%","Modificar"));
+                    $("#insBusq").append(HTMLTablaBusquedaPrep.replace("%OPTION%","Modificar"));
                     // Insertar los registros que se encontraron
                     for (var i = 0; i < data.length; i++) {
                         //Poner el nombre del alimento
-                        var rem = HTMLElementEncontradoEd.replace("%NOMBRE%",data[i]["IdPreparacion"]);
-                        //Poner el id del alimento
-                        rem = rem.replace("%IDALI%",data[i]["IdAlimento"]);
-                        // Poner la fecha de caducidad del alimento
-                        rem = rem.replace("%FECHA%",data[i]["DiaCadAli"] + "/" + data[i]["MesCadAli"] + "/" + data[i]["AnioCadAli"]);
-                        rem = rem.replace("%CLASS%","edElemAli");
+                        var rem = HTMLElementEncontradoEd.replace("%NOMBRE%",data[i]["NombreAlimento"]);
+                        // Poner el id del alimento
+                        rem = rem.replace("%IDALI%",data[i]["IdPreparacion"]);
+                        // Poner la fecha de caducidad de la preparación
+                        rem = rem.replace("%FECHA%",data[i]["DiaPrep"] + "/" + data[i]["MesPrep"] + "/" + data[i]["AnioPrep"]);
+                        rem = rem.replace("%CLASS%","edElemPrep");
+                        // insertar el alimento en el DOM
+                        $("#insertarBusqueda").append(rem);
+                    }
+
+                }
+            },
+            dataType: 'json'
+       });
+    });
+
+
+
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Envio de la información del formulario
+    // ♦ ♦  la búsqueda de la Preparación a eliminar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del boton Buscar Preparación, el cual manda los datos
+    // al archivo buscarPorNombre.php, y después insertar los registros
+    // obtenidos al DOM.
+    $(document).on('click', '.edElemPrep', function(e) {
+        e.preventDefault();
+        // Obtener ID del padre del elemento clicleado
+        padre = $(this).parent().parent();
+        // Obtener el texto (en este caso ID) del padre de la variable padre
+        id = $(padre).children(':first-child').text();
+        nom = $(this).parent().parent().children(':nth-child(2)').text();
+
+        // Vaciando la sección de posibles usos anteriores e insertando el titulo de
+        // la sección, en este caso Agregar Preparacion
+        $("#insertar-gestion").empty();
+        $("#insertar-gestion").append(HTMLModificarPreparacionF);
+        $("#insertar-gestion").append(HTMLFormModPreparacion);
+        $("#insertar-gestion").append(HTMLFormModPreparacionBotones);
+        $("#ingEx").append(HTMLTablaIng);
+
+
+        // AJAX para cargar los ID y datos de los alimentos disponibles.
+        // Después se agregarán los campos y los datos para su uso al rellenar
+        // el FORM
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarGeneral.php",
+            // Formato JSON
+            //     • Tabla: La tabla en la cual se hará una consulta general, osea
+            //       se consultará todos los registros de esta.
+            data: {"tabla":"alimentos"},
+            success: function(data){
+                var i = 0;
+                // Insertando los OPTIONS en el SELECT que agregar los Alimentos
+                // disponibles
+                while (data[i]) {
+                    // Reemplazar:
+                    //     • ** - Id del alimento
+                    //     • %data% - Nombre del alimento
+                    var ins = HTMLAgregarOptionSelect.replace("**",data[i]["IdAlimento"]);
+                    ins = ins.replace("%data%", data[i]["NombreAlimento"]);
+                    $("#IdAlimento").append(ins);
+                    i++;
+                }
+            },
+            dataType: 'json'
+       });
+
+       // AJAX para cargar los ID y datos de los empleados disponibles.
+       // Después se agregarán los campos y los datos para su uso al rellenar
+       // el FORM
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "../php/buscarGeneral.php",
+    //        // Formato JSON
+    //        //     • Tabla: La tabla en la cual se hará una consulta general, osea
+    //        //       se consultará todos los registros de esta.
+    //        data: {"tabla":"empleados"},
+    //        success: function(data){
+    //            var i = 0;
+    //            // Insertando los OPTIONS en el SELECT que agregar los Empleado
+    //            // disponibles
+    //            while (data[i]) {
+    //                // Reemplazar:
+    //                //     • ** - Id del Empleado
+    //                //     • %data% - Nombre del Empleado
+    //                var ins = HTMLAgregarOptionSelect.replace("**",data[i]["IdAlimento"]);
+    //                ins = ins.replace("%data%", data[i]["NombreAlimento"]);
+    //                $("#IdAlimento").append(ins);
+    //                i++;
+    //            }
+    //        },
+    //        dataType: 'json'
+    //   });
+
+
+        // •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+        // •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+        // dato experimental, volover a lo de arriba cuando se esté trabajando con la basecompleta
+        // ++++++++++++++++++++++++++++++++
+        var c = HTMLAgregarOptionSelect.replace("**","88");
+        c = c.replace("%data%", "Empleado de prueba");
+        $("#IdEmpleado").append(c);
+        // •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+        // •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+
+
+        // Colocando los datos del registro seleccionado en el FORM para
+        // proceder a editarlos
+        for (var i = 0; i < jsonBusq.length; i++) {
+            // compara el ID obtenido del elemento clicleado y lo compara con
+            // la info de la variable jsonBusq
+            if(jsonBusq[i]["IdPreparacion"] === id && jsonBusq[i]["NombreAlimento"] === nom){
+                $("#IdAlimento").val(jsonBusq[i]["IdIngrediente"]);
+                $("#IdEmpleado").val(jsonBusq[i]["IdEmpleado"]);
+                var fecha = jsonBusq[i]["DiaPrep"] + "-" + jsonBusq[i]["MesPrep"] + "-" + jsonBusq[i]["AnioPrep"];
+                $("#frmEdPreparacion").children(':nth-child(3)').children(':nth-child(2)').val(fecha);
+                fecha = jsonBusq[i]["DiaCadPrep"] + "-" + jsonBusq[i]["MesCadPrep"] + "-" + jsonBusq[i]["AnioCadPrep"];
+                $("#frmEdPreparacion").children(':nth-child(4)').children(':nth-child(2)').val(fecha);
+
+            }
+        }
+
+        // AJAX para cargar los ID y datos de los alimentos disponibles.
+        // Después se agregarán los campos y los datos para su uso al rellenar
+        // el FORM
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarAlimePrep.php",
+            // Formato JSON
+            //     • Tabla: La tabla en la cual se hará una consulta general, osea
+            //       se consultará todos los registros de esta.
+            data: {"busqueda":id},
+            success: function(data){
+                var i = 0;
+                // Insertando los OPTIONS en el SELECT que agregar los Alimentos
+                // disponibles
+                while (data[i]) {
+                    var ins = HTMLElementTablaIng.replace("%ID%",data[i]["IdIngrediente"]);
+                    ins = ins.replace("%NOMBRE%", data[i]["NombreIngrediente"]);
+                    ins = ins.replace("%CANT%", data[i]["CantIngrediente"]);
+                    ins = ins.replace("%CLASS%", "elAlimPrep");
+                    $("#insertarAliTab").append(ins);
+                    i++;
+                }
+            },
+            dataType: 'json'
+       });
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // **************************************
+    // ***
+    // *** ELIMINAR PREPARACION
+    // ***
+    // **************************************
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Inserción del formulario para
+    // ♦ ♦  la búsqueda de la Preparación a eliminar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del boton Modificar Preparación, el cual insertaen el
+    // DOM la estructura del FORM para la búsqueda de dicha preparación
+    $("#btnEliminarPreparacion").click(function(){
+        //  Vacia el contenedor en caso de busquedas anteriores
+        $("#insertar-gestion").empty();
+        //Inserta el formulario de busqueda de alimentos por nombre
+        $("#insertar-gestion").append(HTMLEliminarPreparacion);
+    });
+
+
+
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Envio de la información del formulario
+    // ♦ ♦  la búsqueda de la Preparación a eliminar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Evento del boton Buscar Preparación, el cual manda los datos
+    // al archivo buscarPorNombre.php, y después insertar los registros
+    // obtenidos al DOM.
+    $(document).on('submit', '#frmbuscElPrep', function(e) {
+        //Previene el trabajo por default del submit
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarPreparacion.php",
+            data: $("#frmbuscElPrep").serialize(),
+            success: function(data){
+                if(data.estado == '2'){
+                    //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    // Agregar en alert de que no se encontró informacion
+                    $("#insBusq").append(HTMLAlertaNoElementos.replace("%MENSAJE%","preparacion"));
+                }else{
+                    jsonBusq = data;
+                   //  Vacia el contenedor en caso de busquedas anteriores
+                    $("#insBusq").empty();
+                    //agrega la estructura de la tabla contenedora de la busqueda
+                    $("#insBusq").append(HTMLTablaBusquedaPrep.replace("%OPTION%","Eliminar"));
+                    // Insertar los registros que se encontraron
+                    for (var i = 0; i < data.length; i++) {
+                        //Poner el nombre del alimento
+                        var rem = HTMLElementEncontradoEl.replace("%NOMBRE%",data[i]["NombreAlimento"]);
+                        // Poner el id del alimento
+                        rem = rem.replace("%IDALI%",data[i]["IdPreparacion"]);
+                        // Poner la fecha de caducidad de la preparación
+                        rem = rem.replace("%FECHA%",data[i]["DiaPrep"] + "/" + data[i]["MesPrep"] + "/" + data[i]["AnioPrep"]);
+                        rem = rem.replace("%CLASS%","elElemPrep");
                         // insertar el alimento en el DOM
                         $("#insertarBusqueda").append(rem);
                     }
@@ -1190,3 +1427,8 @@ alimentacion = function(){
 
 
 }
+// **************************************
+// ***
+// *** FIN DE FUNCIÓN ALIMENTACIÓN
+// ***
+// **************************************

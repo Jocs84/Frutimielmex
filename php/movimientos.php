@@ -544,6 +544,71 @@
 
 
 
+        /**
+         * Retorna todos registros de los alimentos
+         * @param
+         * @return array Datos del registro
+         */
+        public static function buscarPreparacion($busqueda)
+        {
+            $consulta = "SELECT `IdPreparacion`,
+                                `IdAlimento`,
+                                `NombreAlimento`,
+                                `IdEmpleado`,
+                                `PrecioPreparacion`,
+                                `DiaPrep`,
+                                `MesPrep`,
+                                `AnioPrep`,
+                                `DiaCadPrep`,
+                                `MesCadPrep`,
+                                `AnioCadPrep`
+                        FROM `encabpreparacion` INNER JOIN  `alimentos`
+                        USING(`IdAlimento`)
+                        WHERE `NombreAlimento` LIKE  '%" . $busqueda . "%'";
+
+
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+
+        /**
+         * Retorna todos registros de los alimentos
+         * @param
+         * @return array Datos del registro
+         */
+        public static function buscarAlimePrep($busqueda)
+        {
+            $consulta = "SELECT `IdPreparacion`,
+                                `IdIngrediente`,
+                                `NombreIngrediente`,
+                                `CantIngrediente`
+                        FROM `preparacion` INNER JOIN  `ingredientes`
+                        USING(`IdIngrediente`)
+                        WHERE `IdPreparacion` =" . $busqueda;
+
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+
+
 
 
     }
