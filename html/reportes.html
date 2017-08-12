@@ -12,17 +12,20 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <!-- CSS PERSONALIZADO -->
     <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/apiarios.css">
+    <link rel="stylesheet" href="../css/reportes.css">
+    <link rel="stylesheet" href="../css/imprimir.css" media="print" title="no title" charset="utf-8">
 
     <!-- JAVASCRIPT -->
     <!-- JS JQUERY -->
     <script src="../js/jquery-3.2.1.js"></script>
     <!-- JS BOOTSTRAP -->
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <script src="../js/helper-apiarios.js"></script>
-    <script src="../js/apiario.js"></script>
+    <script src="../js/helper-reportes.js"></script>
+    <script src="../js/reportes.js"></script>
 
-    <title>Apiarios - Frutimielmex</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+
+    <title>Reportes - Frutimielmex</title>
 </head>
 <body>
 
@@ -46,20 +49,29 @@
     <div class="container">
         <div class="col-md-3">
             <div class="cont-titulo">
-                <img src="../img/apiario.png" alt="" class="ico-titulo">
-                <a href="apiarios.html" class="titulo">Apiarios</a>
+                <img src="../img/reporte.png" alt="" class="ico-titulo">
+                <a href="reportes.html" class="titulo">Reportes</a>
             </div>
             <div class="opciones">
-                <a id="opc-detalles" class ="activo" href="">Detalles</a>
-                <a id="opc-alimentacion" href="">Alimentación</a>
-                <a id="opc-medicacion" href="">Medicación</a>
-                <a id="opc-movilidad" href="">Movilidad</a>
-                <a id="opc-productividad" href="">Productividad</a>
+                <select id="seccion-rep" class="form-control">
+                    <option value="Apiarios">Apiarios</option>
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Movilidad">Movilidad</option>
+                    <option value="Productividad">Productividad</option>
+                    <option value="Administrativos">Administrativos</option>
+                    <option value="Personalizados">Personalizados</option>
+                </select>
+            </div>
+            <div id = "cont-opciones" class="opciones">
+                <a href="" id='opc'>Opcion 1</a>
+                <a href="" id='opc'>Opcion 2</a>
+                <a href="" id='opc'>Opcion 3</a>
+                <a href="" id='opc'>Opcion 4</a>
             </div>
         </div>
 
         <div id ="opc-contenedor" class="col-md-8 col-md-offset-1">
-
+            <div id="help"></div>
 
         </div>
     </div>

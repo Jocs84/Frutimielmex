@@ -9,18 +9,19 @@
 </head>
 <body>
 
-    <form id="frmEdPreparacion" action="../php/buscarAlimePrep.php" method="post">
-
+    <form id="" action="../php/buscarGeneral.php" method="POST">
         <div class="form-group">
-            <input type="date" class="form-control" name="busqueda" value="11">
+            <label class="sr-only" for="buscarAlimento">Buscar</label>
+            <input class="form-control" name="tabla" placeholder="Nombre del alimento" type="text" value="alimentos">
         </div>
         <div class="form-group">
-            <input type="submit" class = "btn btn-default boton" name="" value="Guardar">
+            <input id="btnEnviar" class="btn btn-default boton" name="" value="Buscar" type="submit">
         </div>
     </form>
 
-
-
+<button type="button" class="btn btn-default boton">
+    <img src="../img/printer.png">
+</button>
 
 
 

@@ -1,15 +1,17 @@
+/**************    MODIFICAR FUENTES Y FONDOS    *********************************/
 *{
-    margin: 0;
-    padding: 0;
-}
-
-form{
-    display: flex;
-    flex-flow: column;
-    align-items: center;
+    color: black;
+    font-family: Arial;
+    font-size: 16px;
 
 }
 
-div{
-    margin: 5em;
+/**************    ELIMINANDO ELEMENTOS DE IMPRESIÓN     *********************************/
+
+nav,
+#admonOculto,
+.cont-titulo,
+.opciones,
+#btnImprimir{
+    display: none;
 }

@@ -93,6 +93,10 @@ alimentacion = function(){
     // variable jsonBusq
     var padre;
 
+    // Variable que ayuda a obtener los ingredientes que serán
+    // eliminados de una preparación
+    var sumIngr = "";
+
     // Inserta los controles para gestión de alimentos
     $("#opc-contenedor").append(HTMLcontAlimentacion);
     $("#opc-contenedor").append(HTMLcontGestiones);
@@ -1246,6 +1250,11 @@ alimentacion = function(){
                     $("#IdAlimento").append(ins);
                     i++;
                 }
+                for (var i = 0; i < jsonBusq.length; i++) {
+                    if(jsonBusq[i]["IdPreparacion"] === id && jsonBusq[i]["NombreAlimento"] === nom){
+                        $("#IdAlimento").val(jsonBusq[i]["IdAlimento"]);
+                    }
+                }
             },
             dataType: 'json'
        });
@@ -1273,6 +1282,11 @@ alimentacion = function(){
     //                $("#IdAlimento").append(ins);
     //                i++;
     //            }
+    //            for (var i = 0; i < jsonBusq.length; i++) {
+    //                if(jsonBusq[i]["IdPreparacion"] === id && jsonBusq[i]["NombreAlimento"] === nom){
+    //                    $("#IdEmpleado").val(jsonBusq[i]["IdEmpleado"]);
+    //                }
+    //            }
     //        },
     //        dataType: 'json'
     //   });
@@ -1295,12 +1309,16 @@ alimentacion = function(){
             // compara el ID obtenido del elemento clicleado y lo compara con
             // la info de la variable jsonBusq
             if(jsonBusq[i]["IdPreparacion"] === id && jsonBusq[i]["NombreAlimento"] === nom){
-                $("#IdAlimento").val(jsonBusq[i]["IdIngrediente"]);
-                $("#IdEmpleado").val(jsonBusq[i]["IdEmpleado"]);
-                var fecha = jsonBusq[i]["DiaPrep"] + "-" + jsonBusq[i]["MesPrep"] + "-" + jsonBusq[i]["AnioPrep"];
-                $("#frmEdPreparacion").children(':nth-child(3)').children(':nth-child(2)').val(fecha);
-                fecha = jsonBusq[i]["DiaCadPrep"] + "-" + jsonBusq[i]["MesCadPrep"] + "-" + jsonBusq[i]["AnioCadPrep"];
-                $("#frmEdPreparacion").children(':nth-child(4)').children(':nth-child(2)').val(fecha);
+                var fecha1, fecha2;
+                if (navigator.userAgent.search("Firefox") >= 0) {
+                    fecha1 = pad (jsonBusq[i]["DiaPrep"], 2) + "-" + pad (jsonBusq[i]["MesPrep"], 2) + "-" + jsonBusq[i]["AnioPrep"];
+                    fecha2 = pad (jsonBusq[i]["DiaCadPrep"] , 2)+ "-" + pad (jsonBusq[i]["MesCadPrep"], 2) + "-" + jsonBusq[i]["AnioCadPrep"];
+                } else {
+                    fecha1 = jsonBusq[i]["AnioPrep"] + "-" + pad (jsonBusq[i]["MesPrep"], 2) + "-" + pad (jsonBusq[i]["DiaPrep"], 2);
+                    fecha2 = jsonBusq[i]["AnioCadPrep"] + "-" + pad (jsonBusq[i]["MesCadPrep"], 2) + "-" + pad (jsonBusq[i]["DiaCadPrep"] , 2);
+                }
+                $("#frmEdPreparacion").children(':nth-child(3)').children(':nth-child(2)').val(fecha1);
+                $("#frmEdPreparacion").children(':nth-child(4)').children(':nth-child(2)').val(fecha2);
 
             }
         }
@@ -1331,11 +1349,14 @@ alimentacion = function(){
             dataType: 'json'
        });
 
+    });
 
 
 
-
-
+    $(document).on('click', '.elAlimPrep', function(e) {
+        e.preventDefault();
+        sumIngr = sumIngr + " " + $(this).parent().parent().children(':first-child').text();
+        alert(sumIngr);
     });
 
 
@@ -1432,3 +1453,11 @@ alimentacion = function(){
 // *** FIN DE FUNCIÓN ALIMENTACIÓN
 // ***
 // **************************************
+
+
+function pad (n, length) {
+    var  n = n.toString();
+    while(n.length < length)
+         n = "0" + n;
+    return n;
+}

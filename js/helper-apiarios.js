@@ -1,7 +1,7 @@
 
 // *********************************************************************************
 // ***
-// *** CASCARON.JS contiene las cadenas de los elementos HTML que, una vez agregadas
+// *** HELPER-APIARIOS.JS contiene las cadenas de los elementos HTML que, una vez agregadas
 // *** al DOM, mostrará los elementos que se necesitan agregar dinamicamente.
 // *** Este archivo contiene los elementos siguientes:
 // ***     -Gestion para la alimentación
