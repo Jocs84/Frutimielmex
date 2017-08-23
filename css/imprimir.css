@@ -1,10 +1,10 @@
 /**************    MODIFICAR FUENTES Y FONDOS    *********************************/
-*{
+/**{
     color: black;
     font-family: Arial;
     font-size: 16px;
 
-}
+}*/
 
 /**************    ELIMINANDO ELEMENTOS DE IMPRESIÓN     *********************************/
 
@@ -14,4 +14,10 @@ nav,
 .opciones,
 #btnImprimir{
     display: none;
+}
+
+
+tr td{
+    /*font-family: Arial;*/
+    font-size: 16px;
 }

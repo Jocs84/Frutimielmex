@@ -44,10 +44,24 @@ $( document ).ready(function() {
         }
     });
 
+    // var doc = new jsPDF();
+    // var specialElementHandlers = {
+    //     '#help': function (element, renderer) {
+    //         return true;
+    //     }
+    // };
+
     $(document).on('click','#btnImprimir',function(e){
         e.preventDefault();
-		window.print();
-		return false;
+        demoFromHTML();
+		// window.print();
+		// return false;
+        //
+        // doc.fromHTML($('#repImp').html(), 15, 15, {
+        //     'width': 170,
+        //         'elementHandlers': specialElementHandlers
+        // });
+        // doc.save('sample-file.pdf');
 	});
 
 
@@ -113,9 +127,62 @@ function pad (n, length) {
     return n;
 }
 
-function imprimir(){
-    $('#btnImprimir').on("click",function(){
-		window.print();
-		return false;
-	});
+// function imprimir(){
+//     $('#btnImprimir').on("click",function(){
+// 		window.print();
+// 		return false;
+// 	});
+// }
+
+
+
+function demoFromHTML() {
+    var pdf = new jsPDF('p', 'in', 'letter');
+    // source can be HTML-formatted string, or a reference
+    // to an actual DOM element from which the text will be scraped.
+    source = $('#repImp')[0];
+
+    specialElementHandlers = {
+        '#help': function(element, renderer) {
+            return true
+        }
+    };
+
+    pdf.fromHTML(
+        source,
+        0.5,
+        0.5,
+        {
+            'width':7.5,
+            'elementHandlers': specialElementHandlers
+        }
+    );
+
+    pdf.save('filename.pdf');
+
+    // pageHeight = pdf.internal.pageSize.height;
+    //
+    // margins = {
+    //     top: 80,
+    //     bottom: 60,
+    //     left: 40,
+    //     width: 522
+    // };
+    // // all coords and widths are in jsPDF instance's declared units
+    // // 'inches' in this case
+    //
+    // pdf.fromHTML(
+    //         source, // HTML string or DOM elem ref.
+    //         margins.left, // x coord
+    //         margins.top, {// y coord
+    //             'width': margins.width, // max width of content on PDF
+    //             'pagesplit': true,
+    //             'elementHandlers': specialElementHandlers
+    //         },
+    //     function(dispose) {
+    //         // dispose: object with X, Y of the last line add to the PDF
+    //         //          this allow the insertion of new lines after html
+    //         pdf.save('Test.pdf');
+    //     }
+    //     , margins);
 }

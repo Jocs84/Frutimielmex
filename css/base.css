@@ -1,3 +1,14 @@
+body{
+    background: url("../img/honeycomb2.jpg");
+}
+
+
+
+.table-hover > tbody > tr:hover {
+    background-color: #FFFACE;
+    color: #56430E;
+}
+
 
 /*Color del van*/
 .navbar{
@@ -79,6 +90,18 @@
 .boton{
     background: #8BC34A;
     color: #FFF;
+}
+
+.boton:hover{
+    background: #FFF38C;
+    border: 1px solid #FFF38C;
+    color: #000;
+}
+
+.boton:focus{
+    background: #FFF17C;
+    border: 1px solid #FFF17C;
+    color: #000;
 }
 
 

@@ -63,7 +63,7 @@ var HTMLAgregarOptionSelect = '<option value="**">%data%</option>';
 
 // Estructura de TABLE, en la que se desplegará los elementos de la busqueda de
 // registros
-// *insertar en .table .table-striped
+// *insertar en .table .table-hover
 // Cambiar %OPTION% por la opción que se desee realizar (eliminar o modificar)
 var HTMLTablaBusqueda = '<thead><td>ID</td><td>Nombre</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
 
@@ -134,7 +134,7 @@ var HTMLAgregarArtificial = '<div class="form-group"><label for="extra">Tipo de 
 
 // Variable que contiene toda la estructura para buscar el elemento a modificar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+var HTMLModificarAlimento = '<div id="modificarrAlimento"><div><p class="destacado mas-font">Modificar alimento</p></div><form id="formBuscar" action="" method="POST"><div class="form-group"><label class="sr-only" for="buscarAlimento">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento"></div><div class="form-group"><input id="btnEnviar" type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-hover"></table></div>';
 
 // Variable que el encabezado del formulario cuando este servirá para editar
 // la información del alimento
@@ -151,7 +151,7 @@ var HTMLEditarAlimento = '<div id="agregarAlimento"><div><p class="destacado mas
 
 // Variable que contiene toda la estructura para buscar el elemento a eliminar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLEliminarAlimento = '<div id="eliminarAlimento"><div><p class="destacado mas-font">Eliminar alimento</p></div><form id="formBuscarEl" action="" method="POST"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+var HTMLEliminarAlimento = '<div id="eliminarAlimento"><div><p class="destacado mas-font">Eliminar alimento</p></div><form id="formBuscarEl" action="" method="POST"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-hover"></table></div>';
 
 
 
@@ -185,7 +185,7 @@ var HTMLFormIngrediente = '<form id = "%FORMULARIO%" action="" method="post"><di
 
 // Variable que contiene toda la estructura para buscar el ingrediente a modificar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLModificarIngrediente = '<div id="modificarIngrediente"><div><p class="destacado mas-font">Modificar ingrediente</p></div><form id="frmbuscIng" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarIng">Buscar</label><input class="form-control" name="nombre" placeholder="Nombre del ingrediente" type="text"></div><div class="form-group"><input class="btn btn-default boton" name="" value="Buscar" type="submit"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+var HTMLModificarIngrediente = '<div id="modificarIngrediente"><div><p class="destacado mas-font">Modificar ingrediente</p></div><form id="frmbuscIng" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarIng">Buscar</label><input class="form-control" name="nombre" placeholder="Nombre del ingrediente" type="text"></div><div class="form-group"><input class="btn btn-default boton" name="" value="Buscar" type="submit"></div></form><table id="insBusq" class="table table-hover"></table></div>';
 
 // Variable que contiene la estructura del titulo para la sección modificar Ingrediente
 // *Se inserta en el el contenedor #insertar-gestion
@@ -202,7 +202,7 @@ var HTMLEditarIngrediente = '<div id="agregarIngrediente"><div><p class="destaca
 
 // Variable que contiene toda la estructura para buscar el ingrediente a eliminar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="destacado mas-font">Eliminar ingrediente</p></div><form id="frmbuscInge" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarAli">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+var HTMLEliminarIngrediente = '<div id="eliminarIngrediente"><div><p class="destacado mas-font">Eliminar ingrediente</p></div><form id="frmbuscInge" action="" method="post"><div class="form-group"><label class="sr-only" for="buscarAli">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-hover"></table></div>';
 
 
 
@@ -244,12 +244,12 @@ var HTMLFormPreparacionAgrIng = '<div><div class="form-group"><label for="IdIngr
 
 // Variable que contiene toda la estructura para buscar la preparación a editar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLModificarPreparacion = '<div id="modificarPreparacion"><div><p class="destacado mas-font">Modificar preparación</p></div><form id="frmbuscPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+var HTMLModificarPreparacion = '<div id="modificarPreparacion"><div><p class="destacado mas-font">Modificar preparación</p></div><form id="frmbuscPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-hover"></table></div>';
 
 
 // Estructura de TABLE, en la que se desplegará los elementos de la busqueda de
 // registros
-// *insertar en .table .table-striped
+// *insertar en .table .table-hover
 // Cambiar %OPTION% por la opción que se desee realizar (eliminar o modificar)
 var HTMLTablaBusquedaPrep = '<thead><td>ID</td><td>Alimento</td><td>Fecha cad</td><td>%OPTION%</td></thead><tbody id="insertarBusqueda"></tbody>';
 
@@ -259,7 +259,7 @@ var HTMLTablaBusquedaPrep = '<thead><td>ID</td><td>Alimento</td><td>Fecha cad</t
 var HTMLModificarPreparacionF = '<div id="modificarrPreparacion"><div><p class="destacado mas-font">Modificar preparación</p></div></div>';
 
 
-var HTMLFormModPreparacion = '<form id="frmEdPreparacion" action="" method="post"><div class="form-group"><label for="IdAlimento">Nombre alimento</label><select id="IdAlimento" name="IdAlimento" class="form-control"></select></div><div class="form-group"><label for="IdEmpleado">Empleado</label><select id="IdEmpleado" name="IdEmpleado" class="form-control"></select></div><div class="form-group"><label for="FechaPrep">Fecha de preparación</label><input type="date" class="form-control" name="FechaPrep" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><label for="FechaCadPrep">Fecha de caducidad</label><input type="date" class="form-control" name="FechaCadPrep" value=""placeholder="DD-MM-AAAA"></div><div class="form-group" id ="ing-existentes"><label>Ingredientes</label><table id="ingEx" class="table table-striped"></table></div><div id ="add-opciones"></div>';
+var HTMLFormModPreparacion = '<form id="frmEdPreparacion" action="" method="post"><div class="form-group"><label for="IdAlimento">Nombre alimento</label><select id="IdAlimento" name="IdAlimento" class="form-control"></select></div><div class="form-group"><label for="IdEmpleado">Empleado</label><select id="IdEmpleado" name="IdEmpleado" class="form-control"></select></div><div class="form-group"><label for="FechaPrep">Fecha de preparación</label><input type="date" class="form-control" name="FechaPrep" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><label for="FechaCadPrep">Fecha de caducidad</label><input type="date" class="form-control" name="FechaCadPrep" value=""placeholder="DD-MM-AAAA"></div><div class="form-group" id ="ing-existentes"><label>Ingredientes</label><table id="ingEx" class="table table-hover"></table></div><div id ="add-opciones"></div>';
 
 var HTMLFormModPreparacionBotones = '<div class="form-group"><button id = "agrIngForm" type="button" class="btn btn-default boton" name="button">Agregar ingredientes</button></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
 
@@ -310,7 +310,7 @@ var HTMLElementTablaIng = '<tr><td>%ID%</td><td>%NOMBRE%</td><td>%CANT%</td><td>
 
 // Variable que contiene toda la estructura para buscar la preparación a editar
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLEliminarPreparacion = '<div id="eliminarPreparacion"><div><p class="destacado mas-font">Eliminar preparación</p></div><form id="frmbuscElPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-striped"></table></div>';
+var HTMLEliminarPreparacion = '<div id="eliminarPreparacion"><div><p class="destacado mas-font">Eliminar preparación</p></div><form id="frmbuscElPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-hover"></table></div>';
 
 
 

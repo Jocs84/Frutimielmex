@@ -52,8 +52,10 @@ var HTMLRepAlimentosTitulo = '<h4>Alimentos existentes</h4>';
 
 // Variable que contiene todas las opciones de reportes
 // predefinidos que existen en la sección de alimentación.
-var HTMLRepAlimentosCuerpo = '<table class="table table-striped"><thead><tr><td>Nombre alimento</td><td>Consistencia</td><td>Unidad de medición</td><td>Caducidad</td></tr></thead><tbody id="insertarDatos"></tbody></table>';
+var HTMLRepAlimentosCuerpo = '<table id="repImp" class="table table-hover"><thead><tr><td>Nombre alimento</td><td>Consistencia</td><td>Unidad de medición</td><td>Caducidad</td></tr></thead><tbody id="insertarDatos"></tbody></table>';
 
 // Variable que contiene todas las opciones de reportes
 // predefinidos que existen en la sección de alimentación.
 var HTMLRepAlimentosRenglon = '<tr><td>%nombre%</td><td>%consistencia%</td><td>%unimed%</td><td>%cad%</td></tr>';
+
+// var HTMLAyudaImprimir = '';

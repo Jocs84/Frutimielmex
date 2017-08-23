@@ -1413,7 +1413,7 @@ alimentacion = function(){
         $.ajax({
             type: "POST",
             url: "../php/buscarPreparacion.php",
-            data: $("#frmbuscElPrep").serialize(),
+            data: $("#frmbuscPrep").serialize(),
             success: function(data){
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
@@ -1425,7 +1425,7 @@ alimentacion = function(){
                    //  Vacia el contenedor en caso de busquedas anteriores
                     $("#insBusq").empty();
                     //agrega la estructura de la tabla contenedora de la busqueda
-                    $("#insBusq").append(HTMLTablaBusquedaPrep.replace("%OPTION%","Eliminar"));
+                    $("#insBusq").append(HTMLTablaBusquedaPrep.replace("%OPTION%","Modificar"));
                     // Insertar los registros que se encontraron
                     for (var i = 0; i < data.length; i++) {
                         //Poner el nombre del alimento
@@ -1434,7 +1434,7 @@ alimentacion = function(){
                         rem = rem.replace("%IDALI%",data[i]["IdPreparacion"]);
                         // Poner la fecha de caducidad de la preparación
                         rem = rem.replace("%FECHA%",data[i]["DiaPrep"] + "/" + data[i]["MesPrep"] + "/" + data[i]["AnioPrep"]);
-                        rem = rem.replace("%CLASS%","elElemPrep");
+                        rem = rem.replace("%CLASS%","edElemPrep");
                         // insertar el alimento en el DOM
                         $("#insertarBusqueda").append(rem);
                     }
