@@ -17,16 +17,22 @@
 // *********************************************************************************
 
 
+// **************************************
+// ***
+// *** Variables globales
+// ***
+// **************************************
 
-
+var rows;
+var columns;
+var titulo;
+var nombreArchivo;
 
 // **************************************
 // ***
 // *** Cuando el documento esté cargado
 // ***
 // **************************************
-
-
 $( document ).ready(function() {
     // Detecta cambio en el SELECT de las secciones en las que se separa
     // los reportes, y agrega dinamicamente al DOM las opciones con las que
@@ -54,14 +60,6 @@ $( document ).ready(function() {
     $(document).on('click','#btnImprimir',function(e){
         e.preventDefault();
         demoFromHTML();
-		// window.print();
-		// return false;
-        //
-        // doc.fromHTML($('#repImp').html(), 15, 15, {
-        //     'width': 170,
-        //         'elementHandlers': specialElementHandlers
-        // });
-        // doc.save('sample-file.pdf');
 	});
 
 
@@ -76,7 +74,7 @@ $( document ).ready(function() {
 
 // Manipula todos los eventos del apartado de alimentación
 // dentro de REPORTES.HTML
-alimentos = function(){
+alimentos = function()  {
 
     $(document).on('click','#opc-alimen',function(e){
         e.preventDefault();
@@ -92,6 +90,7 @@ alimentos = function(){
             // así como los datos necesarios para realizar la búsqueda.
             data: {"tabla":"alimentos"},
             success: function(data){
+                rows = data;
                 // Si se recibe un error
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
@@ -107,10 +106,18 @@ alimentos = function(){
                         renglon = renglon.replace("%unimed%",data[i]["UnidadMedicion"]);
                         // Poner la fecha de caducidad del ingrediente
                         renglon = renglon.replace("%cad%",  pad (data[i]["DiaCadAli"], 2)  + "/" +  pad (data[i]["MesCadAli"], 2)  + "/" + data[i]["AnioCadAli"]);
+                        rows[i]["DiaCadAli"] = pad (data[i]["DiaCadAli"], 2)  + "/" +  pad (data[i]["MesCadAli"], 2)  + "/" + data[i]["AnioCadAli"];
                         // insertar el ingrediente en el DOM
                         $("#insertarDatos").append(renglon);
                     }
-
+                    titulo = "Alimentos existentes"
+                    columns = [
+                        {title: "Nombre alimento", dataKey: "NombreAlimento"},
+                        {title: "Consistencia", dataKey: "Consistencia"},
+                        {title: "Unidad de medicion", dataKey: "UnidadMedicion"},
+                        {title: "Caducidad", dataKey: "DiaCadAli"},
+                    ];
+                    nombreArchivo = "Reporte - Alimentos existentes " +  fechaActual() + ".pdf";
                 }
             },
             dataType: 'json'
@@ -127,62 +134,30 @@ function pad (n, length) {
     return n;
 }
 
-// function imprimir(){
-//     $('#btnImprimir').on("click",function(){
-// 		window.print();
-// 		return false;
-// 	});
-// }
+function fechaActual(){
+    var d = new Date();
+    var mes = d.getMonth()+1;
+    var dia = d.getDate();
+
+    var output = (dia < 10 ? '0' : '') + dia + '/' +
+        (mes < 10 ? '0' : '') + mes + '/' +
+        d.getFullYear() ;
+    return output;
+}
 
 
 
 function demoFromHTML() {
-    var pdf = new jsPDF('p', 'in', 'letter');
-    // source can be HTML-formatted string, or a reference
-    // to an actual DOM element from which the text will be scraped.
-    source = $('#repImp')[0];
-
-    specialElementHandlers = {
-        '#help': function(element, renderer) {
-            return true
-        }
-    };
-
-    pdf.fromHTML(
-        source,
-        0.5,
-        0.5,
-        {
-            'width':7.5,
-            'elementHandlers': specialElementHandlers
+    var doc = new jsPDF('p', 'pt');
+    // var imgData = HTMLImgData;
+    doc.addImage(HTMLImgData, 'PNG', 0, 0, 595, 170);
+    doc.autoTable(
+        columns, rows, {
+            margin: {top: 200},
+            addPageContent: function(data) {
+            	doc.text(titulo, 180, 120);
+            }
         }
     );
-
-    pdf.save('filename.pdf');
-
-    // pageHeight = pdf.internal.pageSize.height;
-    //
-    // margins = {
-    //     top: 80,
-    //     bottom: 60,
-    //     left: 40,
-    //     width: 522
-    // };
-    // // all coords and widths are in jsPDF instance's declared units
-    // // 'inches' in this case
-    //
-    // pdf.fromHTML(
-    //         source, // HTML string or DOM elem ref.
-    //         margins.left, // x coord
-    //         margins.top, {// y coord
-    //             'width': margins.width, // max width of content on PDF
-    //             'pagesplit': true,
-    //             'elementHandlers': specialElementHandlers
-    //         },
-    //     function(dispose) {
-    //         // dispose: object with X, Y of the last line add to the PDF
-    //         //          this allow the insertion of new lines after html
-    //         pdf.save('Test.pdf');
-    //     }
-    //     , margins);
+    doc.save(nombreArchivo);
 }
