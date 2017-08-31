@@ -13,6 +13,12 @@ CREATE TABLE IF NOT EXISTS `alimentos` (
 
 
 
+
+
+
+
+
+
 CREATE TABLE IF NOT EXISTS `artificial` (
   `IdAlimento` int(11) NOT NULL,
   `TipoAlimento` enum('Energizante','De reserva') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
