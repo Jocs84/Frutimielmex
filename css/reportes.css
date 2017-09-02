@@ -1,7 +1,17 @@
 #cont-opciones{
     padding-top: 2em;
 }
-/*
-#imgReporte{
-    display: none;
-}*/
+
+#padding5{
+    padding: 5em;
+}
+
+SELECT
+A.NombreAlimento,
+B.IdEmpleado,
+B.DiaCadPrep,
+B.MesCadPrep,
+B.AnioCadPrep,
+D.NombreIngrediente,
+C.CantIngrediente
+FROM ((alimentos A INNER JOIN encabpreparacion B ON A.IdAlimento = B.IdAlimento) INNER JOIN preparacion C ON B.IdPreparacion = C.IdPreparacion) INNER JOIN ingredientes D ON C.IdIngrediente = D.IdIngrediente;

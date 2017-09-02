@@ -1,14 +1,356 @@
+CREATE DATABASE FrutiMielMex;
+GO
+USE FrutiMielMex;
+
+CREATE TABLE CodigoPostal(
+	CodigoPostal varchar(5) NOT NULL,
+	Colonia varchar(50) NOT NULL,
+	Asentamiento varchar(5) NOT NULL,
+	Ciudad varchar(30),
+	Municipio varchar(30),
+	Estado varchar(30),
+	PRIMARY KEY(CodigoPostal,Colonia,Asentamiento));
 
 
-CREATE TABLE IF NOT EXISTS `alimentos` (
-  `IdAlimento` int(11) NOT NULL AUTO_INCREMENT,
-  `NombreAlimento` text COLLATE utf8_spanish_ci NOT NULL,
-  `Consistencia` enum('Liquida','Solida') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  `UnidadMedicion` enum('kg','gr','ml','lt') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  `DiaCadAli` int(11) NOT NULL,
-  `MesCadAli` int(11) NOT NULL,
-  `AnioCadAli` int(11) NOT NULL,
-  PRIMARY KEY (`IdAlimento`)
+CREATE TABLE Calles(
+	IdCalle int NOT NULL PRIMARY KEY,
+	Nombre varchar(30),
+	CodigoPostal varchar(5),
+	FOREIGN KEY(CodigoPostal) REFERENCES CodigoPostal(CodigoPostal));
+
+CREATE TABLE Rutas(
+	IdRuta int NOT NULL PRIMARY KEY,
+	NombreRuta varchar(30));
+
+CREATE TABLE Cuadrillas(
+	IdCuadrilla int NOT NULL PRIMARY KEY,
+	NomCuadrilla varchar(30),
+	IdRuta int,
+	FOREIGN KEY(IdRuta) REFERENCES Rutas(IdRuta));
+
+CREATE TABLE Empleados(
+	IdEmpleado int NOT NULL PRIMARY KEY,
+	NomEmpleado varchar(30),
+	ApEmpleado varchar(30),
+	AmEmpleado varchar(30),
+	Dia varchar(2),
+	Mes varchar(2),
+	Anio varchar(4),
+	Telefono varchar(10),
+	Email varchar(30),
+	Curp varchar(13),
+	Rfc varchar(13),
+	IdCuadrilla int,
+	IdCalle int,
+	Numero varchar(11),
+	FiguraProductiva varchar(30),
+	RazonSocial varchar(30),
+	FOREIGN KEY(IdCuadrilla) REFERENCES Cuadrillas(IdCuadrilla),
+	FOREIGN KEY(IdCalle) REFERENCES Calles(IdCalle));
+
+CREATE TABLE Ejidos(
+	IdEjido int NOT NULL PRIMARY KEY,
+	NombreEjido varchar(30),
+	CoordEjido varchar(25),
+	CodigoPostal varchar(5),
+	FOREIGN KEY(CodigoPostal) REFERENCES CodigoPostal(CodigoPostal));
+
+CREATE TABLE Propietarios(
+	IdPropietario int NOT NULL PRIMARY KEY,
+	NombreProp varchar(30),
+	ApProp varchar(30),
+	AmProp varchar(30),
+	TelProp varchar(10),
+	EmailProp varchar(30),
+	CodigoPosProp varchar(5));
+
+CREATE TABLE Predios(
+	IdPredio int NOT NULL PRIMARY KEY,
+	NomPredio varchar(30),
+	CoordPredio varchar(25),
+	IdPropietario int,
+	IdRuta int,
+	IdEjido int,
+	FOREIGN KEY(IdPropietario) REFERENCES Propietarios(IdPropietario),
+	FOREIGN KEY(IdRuta) REFERENCES Rutas(IdRuta),
+	FOREIGN KEY(IdEjido) REFERENCES Ejidos(IdEjido));
+
+CREATE TABLE Vecinos(
+	IdVecino int NOT NULL PRIMARY KEY,
+	NombreVecino varchar(30),
+	ApVecino varchar(30),
+	AmVecino varchar(30),
+	UbicacionVecino varchar(40),
+	IdPredio int,
+	FOREIGN KEY(IdPredio) REFERENCES Predios(IdPredio));
+
+CREATE TABLE Zonas(
+	IdZona int NOT NULL PRIMARY KEY,
+	NombreZona varchar(30));
+
+CREATE TABLE Apiarios(
+	IdApiario int NOT NULL PRIMARY KEY,
+	NombreApiario varchar(30),
+	DiaAltaApiario varchar(2),
+	MesAltaApiario varchar(2),
+	AnioAltaApiario varchar(4),
+	TipoAcceso varchar(40),
+	DificultadUbicacion varchar(20),
+	NumeroColmenas int,
+	CoordApiario varchar(25),
+	IdPredio int,
+	IdZona int,
+	FOREIGN KEY(IdPredio) REFERENCES Predios(IdPredio),
+	FOREIGN KEY(IdZona) REFERENCES Zonas(IdZona));
+
+CREATE TABLE Movilidad(
+	IdMovilidad int NOT NULL PRIMARY KEY,
+	CoordNuevas varchar(25),
+	CoordAnteriores varchar(25),
+	Estado varchar(30),
+	Municipio varchar(30),
+	Localidad varchar(30),
+	FechaLlegada varchar(10),
+	FechaFin varchar(10),
+	IdApiario int,
+	FOREIGN KEY(IdApiario) REFERENCES Apiarios(IdApiario));
+
+CREATE TABLE AbejaReina(
+	IdAbejaReina varchar(11) NOT NULL PRIMARY KEY,
+	IdApiario int,
+	Procedencia varchar(40),
+	AnioNacAb varchar(4),
+	FOREIGN KEY(IdApiario) REFERENCES Apiarios(IdApiario));
+
+CREATE TABLE Fierros(
+	IdFierro int NOT NULL PRIMARY KEY,
+	FiguraFierro varchar(100));
+
+CREATE TABLE Colmenas(
+	IdColmena int NOT NULL PRIMARY KEY,
+	IdApiario int,
+	IdFierro int,
+	IdArete int,
+	FOREIGN KEY(IdApiario) REFERENCES Apiarios(IdApiario),
+	FOREIGN KEY(IdFierro) REFERENCES Fierros(IdFierro));
+
+CREATE TABLE Productos(
+	IdProducto int NOT NULL PRIMARY KEY,
+	NombreProducto varchar(30));
+
+CREATE TABLE EncabCosecha(
+	IdCosecha int NOT NULL PRIMARY KEY,
+	DiaCosecha varchar(2),
+	MesCosecha varchar(2),
+	AnioCosecha varchar(4),
+	IdApiario int,
+	IdCuadrilla int,
+	FOREIGN KEY(IdApiario) REFERENCES Apiarios(IdApiario),
+	FOREIGN KEY(IdCuadrilla) REFERENCES Cuadrillas(IdCuadrilla));
+
+CREATE TABLE Cosecha(
+	IdCosecha int NOT NULL,
+	IdProducto int NOT NULL,
+	NoAlzas int,
+	CalidadCosecha varchar(15),
+	FOREIGN KEY(IdCosecha) REFERENCES EncabCosecha(IdCosecha),
+	FOREIGN KEY(IdProducto) REFERENCES Productos(IdProducto),
+	PRIMARY KEY(IdCosecha,IdProducto));
+
+CREATE TABLE Clientes(
+	IdCliente int NOT NULL PRIMARY KEY,
+	NombreCliente varchar(30),
+	ApCliente varchar(30),
+	AmCliente varchar(30),
+	TelefonoC varchar(10),
+	Email varchar(30),
+	IdCalle int,
+	NumeroCliente int,
+	RfcCliente varchar(13),
+	FOREIGN KEY(IdCalle) REFERENCES Calles(IdCalle));
+
+CREATE TABLE EncabVentaBarriles(
+	IdVentaBarriles int NOT NULL PRIMARY KEY,
+	DiaVentaBarriles varchar(2),
+	MesVentaBarriles varchar(2),
+	AnioVentaBarriles varchar(4),
+	PrecioT float,
+	IdCliente int,
+	FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente));
+
+CREATE TABLE EncabExtraccion(
+	IdExtraccion int NOT NULL PRIMARY KEY,
+	ZonaProcedencia varchar(40),
+	DiaExtraccion varchar(2),
+	MesExtraccion varchar(2),
+	AnioExtraccion varchar(4));
+
+CREATE TABLE Extraccion(
+	IdExtraccion int NOT NULL,
+	IdProducto int NOT NULL,
+	KgxProducto int,
+	FOREIGN KEY(IdExtraccion) REFERENCES EncabExtraccion(IdExtraccion),
+	FOREIGN KEY(IdProducto) REFERENCES Productos(IdProducto),
+	PRIMARY KEY(IdExtraccion,IdProducto));
+
+CREATE TABLE ColorMiel(
+	IdColorMiel int NOT NULL PRIMARY KEY,
+	Rango float,
+	Nombre varchar(30));
+
+CREATE TABLE Barriles(
+	IdBarril int NOT NULL,
+	AnioBarril varchar(4) NOT NULL,
+	Humedad varchar(4),
+	GradosBrick float,
+	KgTotales int,
+	IdExtraccion int,
+	IdColorMiel int,
+	FOREIGN KEY(IdExtraccion) REFERENCES EncabExtraccion(IdExtraccion),
+	FOREIGN KEY(IdColorMiel) REFERENCES ColorMiel(IdColorMiel),
+	PRIMARY KEY(IdBarril,AnioBarril));
+
+CREATE TABLE VentaBarriles(
+	IdVentaBarriles int NOT NULL,
+	IdBarril int NOT NULL,
+	AnioBarril varchar(4) NOT NULL,
+	PrecioU float,
+	CantBarriles int,
+	FOREIGN KEY(IdVentaBarriles) REFERENCES EncabVentaBarriles(IdVentaBarriles),
+	FOREIGN KEY(IdBarril,AnioBarril) REFERENCES Barriles(IdBarril,AnioBarril),
+	PRIMARY KEY(IdVentaBarriles,IdBarril,AnioBarril));
+
+CREATE TABLE Presentaciones(
+	IdPresentacion int NOT NULL PRIMARY KEY,
+	NombrePresentacion varchar(30),
+	PesoPresentacion float,
+	UnidadMedidaPresentacion varchar(20));
+
+CREATE TABLE EncabVentaMenudeo(
+	IdVentaMenudeo int NOT NULL PRIMARY KEY,
+	PrecioTotal float,
+	DiaVentaMenudeo varchar(2),
+	MesVentaMenudeo varchar(2),
+	AnioVentaMenudeo varchar(4),
+	IdPresentacion int,
+	FOREIGN KEY(IdPresentacion) REFERENCES Presentaciones(IdPresentacion));
+
+CREATE TABLE VentaMenudeo(
+	IdVentaMenudeo int NOT NULL,
+	IdBarril int NOT NULL,
+	AnioBarril varchar(4) NOT NULL,
+	PrecioUMenudeo float,
+	CantVentaMenudeo int,
+	FOREIGN KEY(IdVentaMenudeo) REFERENCES EncabVentaMenudeo(IdVentaMenudeo),
+	FOREIGN KEY(IdBarril,AnioBarril) REFERENCES Barriles(IdBarril,AnioBarril),
+	PRIMARY KEY(IdVentaMenudeo,IdBarril,AnioBarril));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE EncabAlimentacion (
+      IdAlimentacion int(4) NOT NULL AUTO_INCREMENT,
+      IdApiario int NOT NULL,
+      IdEmpleado int NOT NULL,
+      DiaAliment int(2) NOT NULL,
+      MesAliment int(2) NOT NULL,
+      AnioAliment int(4) NOT NULL,
+      ObserAlimentacion varchar(150),
+      PRIMARY KEY (IdAlimentacion),
+      FOREIGN KEY (IdApiario) REFERENCES Apiarios (IdApiario) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (IdEmpleado) REFERENCES Empleados (IdEmpleado) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Alimentos (
+  IdAlimento int(4) NOT NULL AUTO_INCREMENT,
+  NombreAlimento text COLLATE utf8_spanish_ci NOT NULL,
+  Consistencia enum('Liquida','Solida') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  UnidadMedicion enum('kg','gr','ml','lt') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  DiaCadAli int(2) NOT NULL,
+  MesCadAli int(2) NOT NULL,
+  AnioCadAli int(4) NOT NULL,
+  PRIMARY KEY (IdAlimento)
+);
+
+CREATE TABLE Alimentacion (
+  IdAlimentacion int(4) NOT NULL,
+  IdAlimento int(4) NOT NULL,
+  MetodoSuministro varchar(50)  NOT NULL,
+  CantAlimento int(11) NOT NULL,
+  PRIMARY KEY (IdAlimentacion,IdAlimento),
+  KEY IdAlimento (IdAlimento),
+  FOREIGN KEY (IdAlimento) REFERENCES Alimentos (IdAlimento) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (IdAlimentacion) REFERENCES EncabAlimentacion (IdAlimentacion) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE Natural (
+  IdAlimento int(4) NOT NULL,
+  LugarObtencion enum('Colmena ajena','Colmena propia') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (IdAlimento),
+  FOREIGN KEY (IdAlimento) REFERENCES Alimentos (IdAlimento) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE Artificial (
+  IdAlimento int(4) NOT NULL,
+  TipoAlimento enum('Energizante','De reserva') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (IdAlimento),
+  FOREIGN KEY (IdAlimento) REFERENCES Alimentos (IdAlimento) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE EncabPreparacion (
+  IdPreparacion int(4) NOT NULL AUTO_INCREMENT,
+  IdAlimento int(4) NOT NULL,
+  IdEmpleado int NOT NULL,
+  PrecioPreparacion double NOT NULL,
+  DiaPrep int(2) NOT NULL,
+  MesPrep int(2) NOT NULL,
+  AnioPrep int(4) NOT NULL,
+  DiaCadPrep int(2) NOT NULL,
+  MesCadPrep int(2) NOT NULL,
+  AnioCadPrep int(4) NOT NULL,
+  PRIMARY KEY (IdPreparacion),
+  FOREIGN KEY (IdAlimento) REFERENCES Alimentos (IdAlimento) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Ingredientes (
+  IdIngrediente int(4) NOT NULL AUTO_INCREMENT,
+  NombreIngrediente varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  PrecioIngrediente double NOT NULL,
+  UnidadMedida enum('kg','gr','lt','ml') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (IdIngrediente)
+);
+
+
+CREATE TABLE Preparacion (
+  IdPreparacion int(4) NOT NULL,
+  IdIngrediente int(4) NOT NULL,
+  CantIngrediente int(2) NOT NULL,
+  PRIMARY KEY (IdPreparacion,IdIngrediente),
+  FOREIGN KEY (IdPreparacion) REFERENCES EncabPreparacion (IdPreparacion) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (IdIngrediente) REFERENCES Ingredientes (IdIngrediente) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -18,61 +360,6 @@ CREATE TABLE IF NOT EXISTS `alimentos` (
 
 
 
-
-CREATE TABLE IF NOT EXISTS `artificial` (
-  `IdAlimento` int(11) NOT NULL,
-  `TipoAlimento` enum('Energizante','De reserva') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`IdAlimento`)
-);
-
-
-
-CREATE TABLE IF NOT EXISTS `encabpreparacion` (
-  `IdPreparacion` int(4) NOT NULL AUTO_INCREMENT,
-  `IdAlimento` int(11) NOT NULL,
-  `IdEmpleado` int(11) NOT NULL,
-  `PrecioPreparacion` double NOT NULL,
-  `DiaPrep` int(11) NOT NULL,
-  `MesPrep` int(11) NOT NULL,
-  `AnioPrep` int(11) NOT NULL,
-  `DiaCadPrep` int(11) NOT NULL,
-  `MesCadPrep` int(11) NOT NULL,
-  `AnioCadPrep` int(11) NOT NULL,
-  PRIMARY KEY (`IdPreparacion`),
-  KEY `IdAlimento` (`IdAlimento`,`IdEmpleado`)
-);
-
-CREATE TABLE IF NOT EXISTS `ingredientes` (
-  `IdIngrediente` int(11) NOT NULL AUTO_INCREMENT,
-  `NombreIngrediente` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  `PrecioIngrediente` double NOT NULL,
-  `UnidadMedida` enum('kg','gr','lt','ml') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  `DiaCadIng` int(11) NOT NULL,
-  `MesCadIng` int(11) NOT NULL,
-  `AnioCadIng` int(11) NOT NULL,
-  PRIMARY KEY (`IdIngrediente`)
-);
-
-CREATE TABLE IF NOT EXISTS `natural` (
-  `IdAlimento` int(11) NOT NULL,
-  `LugarObtencion` enum('Colmena ajena','Colmena propia') CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`IdAlimento`)
-);
-
-
-CREATE TABLE IF NOT EXISTS `preparacion` (
-  `IdPreparacion` int(11) NOT NULL AUTO_INCREMENT,
-  `IdIngrediente` int(11) NOT NULL,
-  `CantIngrediente` int(11) NOT NULL,
-  PRIMARY KEY (`IdPreparacion`),
-  KEY `IdIngrediente` (`IdIngrediente`)
-);
-
-
-
-ALTER TABLE `encabpreparacion`
-  ADD CONSTRAINT `encabpreparacion_ibfk_1` FOREIGN KEY (`IdAlimento`) REFERENCES `alimentos` (`IdAlimento`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `preparacion`
-  ADD CONSTRAINT `preparacion_ibfk_2` FOREIGN KEY (`IdIngrediente`) REFERENCES `ingredientes` (`IdIngrediente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `preparacion_ibfk_1` FOREIGN KEY (`IdPreparacion`) REFERENCES `encabpreparacion` (`IdPreparacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+DELETE FROM `preparacion`
+WHERE (`IdPreparacion`,`IdIngrediente`)
+IN ((16,24),(16,26),(16,27));

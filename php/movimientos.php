@@ -611,5 +611,106 @@
 
 
 
+
+        public static function modificarEncabPreparacion(
+            $idPreparacion,$idAlimento,$idEmpleado,$diaPrep,$mesPrep,$anioPrep,
+            $diaCadPrep,$mesCadPrep,$anioCadPrep
+        )
+        {
+            // Creando consulta UPDATE
+            $consulta = "UPDATE `encabpreparacion`
+                            SET `IdAlimento`= '". $idAlimento."',
+                            `IdEmpleado`= '". $idEmpleado ."',
+                            `DiaPrep`= '". $diaPrep ."',
+                            `MesPrep`= '". $mesPrep ."',
+                            `AnioPrep`= '". $anioPrep ."',
+                            `DiaCadPrep`= '". $diaCadPrep ."',
+                            `MesCadPrep`= '". $mesCadPrep ."',
+                            `AnioCadPrep`= '". $anioCadPrep ."'
+                            WHERE `IdPreparacion` =" . $idPreparacion;
+
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+        }
+
+
+
+        public static function insertarPreparacionMod(
+            $idPreparacion,$idIngrediente,$cantIngrediente
+        ){
+            $comando = "INSERT INTO `preparacion`
+                            (`IdPreparacion`, `IdIngrediente`, `CantIngrediente`) VALUES ";
+
+            for ($i=0; $i < count($idIngrediente); $i++) {
+                if($i != 0){
+                    $comando = $comando . ",";
+                }
+                $comando = $comando . "(". $idPreparacion .",". $idIngrediente[$i] .",". $cantIngrediente[$i] .")";
+            }
+            // return $comando;
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+
+        }
+
+
+        /**
+         * Eliminar el registro con el identificador especificado
+         *
+         * @param
+         * @return
+         */
+        public static function elimPreparacion($idPreparacion,$idIngrediente){
+            // Sentencia DELETE
+            $consulta = "DELETE FROM `preparacion`
+                            WHERE (`IdPreparacion`,`IdIngrediente`)
+                            IN (" ;
+
+
+            for ($i=0; $i < count($idIngrediente); $i++) {
+                if($i != 0){
+                    $consulta = $consulta . ",";
+                }
+                    $consulta = $consulta . "(". $idPreparacion[$i] .",". $idIngrediente[$i].")";
+            }
+
+            $consulta = $consulta . ")"
+
+            // return $sentencia->execute(array($id));
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                //Retorna el numero de filas afectadas con el último movimiento
+                return $comando->rowCount();
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+
+
+
+
     }
  ?>

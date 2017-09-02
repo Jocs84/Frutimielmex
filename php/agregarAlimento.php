@@ -21,9 +21,9 @@
             $token = strtok("-");
             $i++;
         }
-        $dia = $data[0];
+        $dia = $data[2];
         $mes = $data[1];
-        $anio = $data[2];
+        $anio = $data[0];
         $tipo = $_POST['tipo'];
         $extra = $_POST['extra'];
 

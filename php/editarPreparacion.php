@@ -8,7 +8,7 @@
     require 'movimientos.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+        $idPreparacion = $_POST['IdPreparacion'];
         $idAlimento = $_POST['IdAlimento'];
         $idEmpleado = $_POST['IdEmpleado'];
         $fechaPrep = $_POST['FechaPrep'];
@@ -44,13 +44,13 @@
         $cantIngrediente = $_POST['CantIngrediente'];
 
 
-        $retorno = generar::insertarEncabPreparacion(
-            $idAlimento,$idEmpleado,$diaPrep,$mesPrep,$anioPrep,
-            $diaCadPrep,$mesCadPrep,$anioCadPrep
+        $retorno = generar::modificarEncabPreparacion(
+            $idPreparacion,$idAlimento,$idEmpleado,$diaPrep,$mesPrep,
+            $anioPrep,$diaCadPrep,$mesCadPrep,$anioCadPrep
         );
         if ($retorno) {
-            $retorno2 = generar::insertarPreparacion(
-                $idIngrediente,$cantIngrediente
+            $retorno2 = generar::insertarPreparacionMod(
+                $idPreparacion,$idIngrediente,$cantIngrediente
             );
             if($retorno2){
                 $array = array(

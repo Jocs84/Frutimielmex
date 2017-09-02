@@ -50,19 +50,10 @@ $( document ).ready(function() {
         }
     });
 
-    // var doc = new jsPDF();
-    // var specialElementHandlers = {
-    //     '#help': function (element, renderer) {
-    //         return true;
-    //     }
-    // };
-
     $(document).on('click','#btnImprimir',function(e){
         e.preventDefault();
         demoFromHTML();
 	});
-
-
 });
 
 
@@ -76,12 +67,12 @@ $( document ).ready(function() {
 // dentro de REPORTES.HTML
 alimentos = function()  {
 
+    // Muestra el reporte definido de los
+    // alimentos existentes en la BD
     $(document).on('click','#opc-alimen',function(e){
         e.preventDefault();
         $("#opc-contenedor").empty();
-        $("#opc-contenedor").append(HTMLRepAlimentosTitulo);
-        $("#opc-contenedor").append(HTMLBotonImp);
-        $("#opc-contenedor").append(HTMLRepAlimentosCuerpo);
+        $("#opc-contenedor").append(HTMLTituloReporte.replace("%titulo%","Alimentos existentes"));
 
         $.ajax({
             type: "POST",
@@ -93,10 +84,12 @@ alimentos = function()  {
                 rows = data;
                 // Si se recibe un error
                 if(data.estado == '2'){
-                    //  Vacia el contenedor en caso de busquedas anteriores
-                    alert("vacio");
+                    //  Mostrar mensaje de advertencia
+                    $("#opc-contenedor").append(HTMLAlertaNoElementos);
                 // Si se recibe un objeto JSON con el resultado de la búsqueda
                 }else{
+                    $("#opc-contenedor").append(HTMLBotonImp);
+                    $("#opc-contenedor").append(HTMLRepAlimentosCuerpo);
                     for (var i = 0; i < data.length; i++) {
                         //Poner el nombre del alimento
                         var renglon = HTMLRepAlimentosRenglon.replace("%nombre%",data[i]["NombreAlimento"]);
@@ -124,6 +117,114 @@ alimentos = function()  {
        });
 
     });
+
+
+    // Muestra el reporte definido de los
+    // alimentos existentes en la BD
+    $(document).on('click','#opc-ingr',function(e){
+        e.preventDefault();
+        $("#opc-contenedor").empty();
+        $("#opc-contenedor").append(HTMLTituloReporte.replace("%titulo%","Ingredientes existentes"));
+
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarGeneral.php",
+            // El campo del FORM serializado en formato JSON (la búsqueda a realizar),
+            // así como los datos necesarios para realizar la búsqueda.
+            data: {"tabla":"ingredientes"},
+            success: function(data){
+                rows = data;
+                // Si se recibe un error
+                if(data.estado == '2'){
+                    //  Mostrar mensaje de advertencia
+                    $("#opc-contenedor").append(HTMLAlertaNoElementos);
+                // Si se recibe un objeto JSON con el resultado de la búsqueda
+                }else{
+                    $("#opc-contenedor").append(HTMLBotonImp);
+                    $("#opc-contenedor").append(HTMLRepIngCuerpo);
+                    for (var i = 0; i < data.length; i++) {
+                        //Poner el nombre del alimento
+                        var renglon = HTMLRepAlimentosRenglon.replace("%nombre%",data[i]["NombreIngrediente"]);
+                        //Poner el id del ingrediente
+                        renglon = renglon.replace("%consistencia%",data[i]["PrecioIngrediente"]);
+                        //Poner el id del ingrediente
+                        renglon = renglon.replace("%unimed%",data[i]["UnidadMedida"]);
+                        // Poner la fecha de caducidad del ingrediente
+                        renglon = renglon.replace("%cad%",  pad (data[i]["DiaCadIng"], 2)  + "/" +  pad (data[i]["MesCadIng"], 2)  + "/" + data[i]["AnioCadIng"]);
+                        rows[i]["DiaCadAli"] = pad (data[i]["DiaCadIng"], 2)  + "/" +  pad (data[i]["MesCadIng"], 2)  + "/" + data[i]["AnioCadIng"];
+                        // insertar el ingrediente en el DOM
+                        $("#insertarDatos").append(renglon);
+                    }
+                    titulo = "Ingredientes existentes"
+                    columns = [
+                        {title: "Nombre ingrediente", dataKey: "NombreIngrediente"},
+                        {title: "Precio", dataKey: "PrecioIngrediente"},
+                        {title: "Unidad de medicion", dataKey: "UnidadMedida"},
+                        {title: "Caducidad", dataKey: "DiaCadIng"},
+                    ];
+                    nombreArchivo = "Reporte - Alimentos existentes " +  fechaActual() + ".pdf";
+                }
+            },
+            dataType: 'json'
+       });
+
+    });
+
+
+    // Muestra el reporte definido de las
+    // preparaciones existentes en la BD
+    $(document).on('click','#opc-prep',function(e){
+        e.preventDefault();
+        $("#opc-contenedor").empty();
+        $("#opc-contenedor").append(HTMLTituloReporte.replace("%titulo%","Preparaciones existentes"));
+
+
+        $.ajax({
+            type: "POST",
+            url: "../php/buscarGeneral.php",
+            // El campo del FORM serializado en formato JSON (la búsqueda a realizar),
+            // así como los datos necesarios para realizar la búsqueda.
+            data: {"tabla":"ingredientes"},
+            success: function(data){
+                rows = data;
+                // Si se recibe un error
+                if(data.estado == '2'){
+                    //  Mostrar mensaje de advertencia
+                    $("#opc-contenedor").append(HTMLAlertaNoElementos);
+                // Si se recibe un objeto JSON con el resultado de la búsqueda
+                }else{
+                    $("#opc-contenedor").append(HTMLBotonImp);
+                    $("#opc-contenedor").append(HTMLRepIngCuerpo);
+                    for (var i = 0; i < data.length; i++) {
+                        //Poner el nombre del alimento
+                        var renglon = HTMLRepAlimentosRenglon.replace("%nombre%",data[i]["NombreIngrediente"]);
+                        //Poner el id del ingrediente
+                        renglon = renglon.replace("%consistencia%",data[i]["PrecioIngrediente"]);
+                        //Poner el id del ingrediente
+                        renglon = renglon.replace("%unimed%",data[i]["UnidadMedida"]);
+                        // Poner la fecha de caducidad del ingrediente
+                        renglon = renglon.replace("%cad%",  pad (data[i]["DiaCadIng"], 2)  + "/" +  pad (data[i]["MesCadIng"], 2)  + "/" + data[i]["AnioCadIng"]);
+                        rows[i]["DiaCadAli"] = pad (data[i]["DiaCadIng"], 2)  + "/" +  pad (data[i]["MesCadIng"], 2)  + "/" + data[i]["AnioCadIng"];
+                        // insertar el ingrediente en el DOM
+                        $("#insertarDatos").append(renglon);
+                    }
+                    titulo = "Ingredientes existentes"
+                    columns = [
+                        {title: "Nombre ingrediente", dataKey: "NombreIngrediente"},
+                        {title: "Precio", dataKey: "PrecioIngrediente"},
+                        {title: "Unidad de medicion", dataKey: "UnidadMedida"},
+                        {title: "Caducidad", dataKey: "DiaCadIng"},
+                    ];
+                    nombreArchivo = "Reporte - Alimentos existentes " +  fechaActual() + ".pdf";
+                }
+            },
+            dataType: 'json'
+       });
+
+    });
+
+
+
 }
 
 

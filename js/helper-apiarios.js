@@ -83,13 +83,10 @@ var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%<
     // %NOMBRE% por el nombre del elemento
     // %FECHA% por la fecha de caducidad del elemento
     // %CLASS% por la necesaria para manejar al elemento
-var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a class="%CLASS%" href=""><img src="../img/close.png" alt=""></a></td></tr>';
+var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a data-toggle="modal" data-target="#%MODAL%" class="%CLASS%" href=""><img src="../img/close.png" alt=""></a></td></tr>';
 
 
 var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
-var HTMLEliminarConf = '<tr class="alert alert-danger" role="alert"><td>  </td><td>¿Eliminar este %MENSAJE%</td><td><button type="button" data-dismiss="modal" class="btn btn-primary btn-danger eliElem">Eliminar</button></td><td><button type="button" data-dismiss="modal" class="btn btn-danger cancelarAccion">Cancelar</button></td></tr>';
-
-
 
 
 
@@ -172,7 +169,7 @@ var HTMLAgregarIngrediente = '<div id="agregarIngrediente"><div><p class="destac
 
 // Variable que contiene la estructura FORM para agregar ingrediente
 // *Se inserta en el el contenedor #insertar-gestion
-var HTMLFormIngrediente = '<form id = "%FORMULARIO%" action="" method="post"><div class="form-group"><label for="NombreIngrediente">Nombre</label><input type="text" class="form-control" name="NombreIngrediente" value=""></div><div class="form-group"><label for="UnidadMedida">Unidad de medida</label><select name="UnidadMedida" id = "UnidadMedida" class="form-control"></select></div><div class="form-group"><label for="PrecioIngrediente">Precio</label><input type="number" name="PrecioIngrediente" min="0.5" class="form-control" value=""></div><div class="form-group"><label for="CadIngrediente">Fecha de caducidad</label><input type="date" class="form-control" name="CadIngrediente" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
+var HTMLFormIngrediente = '<form id = "%FORMULARIO%" action="" method="post"><div class="form-group"><label for="NombreIngrediente">Nombre</label><input type="text" class="form-control" name="NombreIngrediente" value=""></div><div class="form-group"><label for="UnidadMedida">Unidad de medida</label><select name="UnidadMedida" id = "UnidadMedida" class="form-control"></select></div><div class="form-group"><label for="PrecioIngrediente">Precio</label><input type="number" name="PrecioIngrediente"  class="form-control"></div><div class="form-group"><label for="CadIngrediente">Fecha de caducidad</label><input type="date" class="form-control" name="CadIngrediente" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
 
 
 
@@ -261,7 +258,7 @@ var HTMLModificarPreparacionF = '<div id="modificarrPreparacion"><div><p class="
 
 var HTMLFormModPreparacion = '<form id="frmEdPreparacion" action="" method="post"><div class="form-group"><label for="IdAlimento">Nombre alimento</label><select id="IdAlimento" name="IdAlimento" class="form-control"></select></div><div class="form-group"><label for="IdEmpleado">Empleado</label><select id="IdEmpleado" name="IdEmpleado" class="form-control"></select></div><div class="form-group"><label for="FechaPrep">Fecha de preparación</label><input type="date" class="form-control" name="FechaPrep" value="" placeholder="DD-MM-AAAA"></div><div class="form-group"><label for="FechaCadPrep">Fecha de caducidad</label><input type="date" class="form-control" name="FechaCadPrep" value=""placeholder="DD-MM-AAAA"></div><div class="form-group" id ="ing-existentes"><label>Ingredientes</label><table id="ingEx" class="table table-hover"></table></div><div id ="add-opciones"></div>';
 
-var HTMLFormModPreparacionBotones = '<div class="form-group"><button id = "agrIngForm" type="button" class="btn btn-default boton" name="button">Agregar ingredientes</button></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
+var HTMLFormModPreparacionBotones = '<div class="form-group"><button id = "agrIngFormEd" type="button" class="btn btn-default boton" name="button">Agregar ingredientes</button></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Guardar"></div></form>';
 
 
 // Estructura de TABLE, en la que se desplegará los elementos de la busqueda de
@@ -276,6 +273,9 @@ var HTMLTablaIng = '<thead><td>ID</td><td>Nombre</td><td>Cant</td><td>Eliminar</
     // %NOMBRE% por el nombre del alimento
     // %CANT% por lacantidad del ingrediente
 var HTMLElementTablaIng = '<tr><td>%ID%</td><td>%NOMBRE%</td><td>%CANT%</td><td><a class="%CLASS%" href=""><img src="../img/close.png" alt=""></a></td></tr>';
+
+
+
 
 
 

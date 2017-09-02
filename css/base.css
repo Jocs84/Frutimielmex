@@ -104,6 +104,24 @@ body{
     color: #000;
 }
 
+.boton-ppal{
+    background: #FFF38C;
+    border: 1px solid #FFF38C;
+    color: #000;
+}
+
+.boton-ppal:hover{
+    background: #FFF;
+    border: 1px solid #FFF;
+    color: #000;
+}
+
+.boton-ppal:focus{
+    background: #FFF;
+    border: 1px solid #FFF;
+    color: #000;
+}
+
 
 .contenedor-chico{
     border: 1px solid #CCC;
