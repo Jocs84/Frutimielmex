@@ -692,7 +692,7 @@
                     $consulta = $consulta . "(". $idPreparacion[$i] .",". $idIngrediente[$i].")";
             }
 
-            $consulta = $consulta . ")"
+            $consulta = $consulta . ")";
 
             // return $sentencia->execute(array($id));
             try {

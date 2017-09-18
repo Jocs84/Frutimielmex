@@ -9,84 +9,18 @@
 </head>
 <body>
 
-    <!-- <form id="" action="../php/buscarGeneral.php" method="POST">
+    <!-- <form id="" action="../php/buscarGeneral.php" method="POST"> -->
     <form id="" action="../php/eliminarPorId.php" method="POST">
         <div class="form-group">
             <label class="sr-only" for="buscarAlimento">Buscar</label>
-            <input class="form-control" name="tabla" placeholder="Nombre del alimento" type="text" value="ingredientes">
-            <input class="form-control" name="eliminar" placeholder="eliminar" type="text" value="5">
-            <input class="form-control" name="tabla" placeholder="tabla" type="text" value="alimentos">
-            <input class="form-control" name="elemento" placeholder="elemento" type="text" value="IdAlimento">
+            <input class="form-control" name="tabla" placeholder="Nombre del alimento" type="text" value="encabpreparacion">
+            <input class="form-control" name="eliminar" placeholder="eliminar" type="text" value="18">
+            <!-- <input class="form-control" name="tabla" placeholder="tabla" type="text" value="alimentos"> -->
+            <input class="form-control" name="elemento" placeholder="elemento" type="text" value="IdPreparacion">
         </div>
         <div class="form-group">
             <input id="btnEnviar" class="btn btn-default boton" name="" value="Buscar" type="submit">
         </div>
-    </form> -->
-
-
-    <form id="frmEdPreparacion" action="../php/editarPreparacion.php" method="post">
-        <div class="form-group">
-            <label for="IdPreparacion">preparacion</label>
-            <input class="form-control" name="IdPreparacion" value="59" type="num">
-        </div>
-        <div class="form-group">
-            <label for="IdAlimento">Nombre alimento</label>
-            <select id="IdAlimento" name="IdAlimento" class="form-control">
-                <option value="58">Torta 3</option>
-                <option value="59">Jarabe 1</option>
-                <option value="60">Jarabe 2</option>
-                <option value="61">Torta X</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="IdEmpleado">Empleado</label>
-            <select id="IdEmpleado" name="IdEmpleado" class="form-control">
-                <option value="88">Empleado de prueba</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="FechaPrep">Fecha de preparación</label>
-            <input class="form-control" name="FechaPrep" value="" placeholder="DD-MM-AAAA" type="date">
-        </div>
-        <div class="form-group">
-            <label for="FechaCadPrep">Fecha de caducidad</label>
-            <input class="form-control" name="FechaCadPrep" value="" placeholder="DD-MM-AAAA" type="date">
-        </div>
-        <div class="form-group" id="ing-existentes">
-            <label>Ingredientes</label>
-            <div>
-                <div class="form-group">
-                    <label for="IdIngrediente">Ingrediente</label>
-                    <select name="IdIngrediente[]" class="IdIngrediente form-control">
-                        <option value="24">Queso</option>
-                        <option value="25">Azucar</option>
-                        <option value="26">Soya</option>
-                        <option value="27">Soya 2</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="CantIngrediente">Cantidad</label>
-                    <input class="form-control" name="CantIngrediente[]" value="" type="num">
-                </div>
-            </div>
-            <div>
-                <div class="form-group">
-                    <label for="IdIngrediente">Ingrediente</label>
-                    <select name="IdIngrediente[]" class="IdIngrediente form-control">
-                        <option value="24">Queso</option>
-                        <option value="25">Azucar</option>
-                        <option value="26">Soya</option>
-                        <option value="27">Soya 2</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="CantIngrediente">Cantidad</label>
-                    <input class="form-control" name="CantIngrediente[]" value="" type="num">
-                </div>
-            </div>
-        </div>
-
-        <input type="submit" name="" value="">
     </form>
 
 

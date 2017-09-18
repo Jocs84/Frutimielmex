@@ -14,7 +14,7 @@
         $elemento = $_POST['elemento'];
 
         $retorno = generar::eliminarReg($tabla,$elemento,$registro);
-        if ($retorno = 1) {
+        if ($retorno) {
             $array = array(
                 'estado' => '1',
                 'mensaje' => 'Elemento eliminado'

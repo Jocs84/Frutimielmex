@@ -29,23 +29,21 @@ var HTMLcontGestiones = '<div><div id="agr-gestiones" class="col-md-5"></div><di
 //     -btnAgregarAlimento
 //     -btnModificiarAlimento
 //     -btnEliminarAlimento
-var HTMLgestAlimentos='<div class="contenedor-chico"><div><p class="destacado">Gestionar Alimentos</p></div><div><button id="btnAgregarAlimento" class="btn btn-default boton">Agregar</button><button id="btnModificiarAlimento" class="btn btn-default boton">Modificar</button><button id="btnEliminarAlimento" class="btn btn-default boton">Eliminar</button></div></div>';
+var HTMLgestAlimentos='<div class="contenedor-chico"><div><p class="destacado">Alimentos</p></div><div><button id="btnAgregarAlimento" class="btn btn-default boton">Agregar</button><button id="btnModificiarAlimento" class="btn btn-default boton">Modificar</button><button id="btnEliminarAlimento" class="btn btn-default boton">Eliminar</button></div></div>';
 
 // Elemento con los botones de gestionar preparaciones.
 // id de botones:
 //     -btnAgregarPreparacion
 //     -btnModificarPreparacion
 //     -btnEliminarPreparacion
-var HTMLgestPreparaciones='<div class="contenedor-chico"><div><p class="destacado">Gestionar Preparaciones</p></div><div><button id="btnAgregarPreparacion" class="btn btn-default boton">Agregar</button><button id="btnModificarPreparacion" class="btn btn-default boton">Modificar</button><button id="btnEliminarPreparacion" class="btn btn-default boton">Eliminar</button></div></div>';
+var HTMLgestPreparaciones='<div class="contenedor-chico"><div><p class="destacado">Preparaciones</p></div><div><button id="btnAgregarPreparacion" class="btn btn-default boton">Agregar</button><button id="btnModificarPreparacion" class="btn btn-default boton">Modificar</button><button id="btnEliminarPreparacion" class="btn btn-default boton">Eliminar</button></div></div>';
 
 // Elemento con los botones de gestionar ingredientes.
 // id de botones:
 //     -btnAgregarIngrediente
 //     -btnModificarIngrediente
 //     -btnEliminarIngrediente
-var HTMLgestIngredinetes = '<div class="contenedor-chico"><div><p class="destacado">Gestionar Ingredientes</p></div><div><button id="btnAgregarIngrediente" class="btn btn-default boton">Agregar</button><button id="btnModificarIngrediente" class="btn btn-default boton">Modificar</button><button id="btnEliminarIngrediente" class="btn btn-default boton">Eliminar</button></div></div>';
-
-
+var HTMLgestIngredinetes = '<div class="contenedor-chico"><div><p class="destacado">Ingredientes</p></div><div><button id="btnAgregarIngrediente" class="btn btn-default boton">Agregar</button><button id="btnModificarIngrediente" class="btn btn-default boton">Modificar</button><button id="btnEliminarIngrediente" class="btn btn-default boton">Eliminar</button></div></div>';
 
 
 //

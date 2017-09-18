@@ -251,12 +251,26 @@ function fechaActual(){
 function demoFromHTML() {
     var doc = new jsPDF('p', 'pt');
     // var imgData = HTMLImgData;
-    doc.addImage(HTMLImgData, 'PNG', 0, 0, 595, 170);
+    // doc.addImage(HTMLImgData, 'PNG', 0, 0, 595, 170);
+    // var totalPagesExp = doc.putTotalPages;
     doc.autoTable(
         columns, rows, {
             margin: {top: 200},
             addPageContent: function(data) {
-            	doc.text(titulo, 180, 120);
+
+                // HEADER
+                doc.setFontSize(25);
+                doc.setTextColor(40);
+                doc.setFontStyle('normal');
+                doc.addImage(HTMLImgData, 'PNG', 0, 0, 595, 170);
+                doc.text(titulo, data.settings.margin.left + 180, 122);
+
+                // FOOTER
+                var str = "Página " + data.pageCount;
+                doc.setFontSize(10);
+                doc.text(str, data.settings.margin.left, doc.internal.pageSize.height - 10);
+
+
             }
         }
     );

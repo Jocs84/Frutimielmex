@@ -925,7 +925,7 @@ alimentacion = function(){
         padre = $(this).parent().parent();
         // Variable auxiliar para obtener los elementos padres del elemento clicleado
         // en el DOM
-        var nom = $(padre).children(':first-child').text();
+        nom = $(padre).children(':first-child').text();
         // LA VENTANA EMERGENTE APARECERÁ, YA QUE EL HTML ESTÁ CODIFICADO
         // PARA ESTO
     });
@@ -1532,7 +1532,7 @@ alimentacion = function(){
         $.ajax({
             type: "POST",
             url: "../php/buscarPreparacion.php",
-            data: $("#frmbuscPrep").serialize(),
+            data: $("#frmbuscElPrep").serialize(),
             success: function(data){
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
@@ -1552,12 +1552,64 @@ alimentacion = function(){
                         // Poner el id del alimento
                         rem = rem.replace("%IDALI%",data[i]["IdPreparacion"]);
                         // Poner la fecha de caducidad de la preparación
-                        rem = rem.replace("%FECHA%",data[i]["DiaPrep"] + "/" + data[i]["MesPrep"] + "/" + data[i]["AnioPrep"]);
-                        rem = rem.replace("%CLASS%","edElemPrep");
+                        rem = rem.replace("%FECHA%",pad(data[i]["DiaPrep"],2) + "/" + pad(data[i]["MesPrep"],2) + "/" + data[i]["AnioPrep"]);
+                        rem = rem.replace("%CLASS%","elElemPrep");
+                        rem = rem.replace("%MODAL%","modalPrep");
                         // insertar el alimento en el DOM
                         $("#insertarBusqueda").append(rem);
                     }
 
+                }
+            },
+            dataType: 'json'
+       });
+    });
+
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Obtener ID del registro a eliminar
+    // ♦ ♦  y mostrar ventana emergente.
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Una vez se elige el registro a eliminar a través de dar click
+    // al icono, y se desplegará una ventama emergente.
+    $(document).on('click', '.elElemPrep', function(e) {
+        e.preventDefault();
+        // Variable auxiliar para obtener los elementos padres del elemento clicleado
+        // en el DOM
+        padre = $(this).parent().parent();
+        // Variable auxiliar para obtener los elementos padres del elemento clicleado
+        // en el DOM
+        nom = $(padre).children(':first-child').text();
+        // LA VENTANA EMERGENTE APARECERÁ, YA QUE EL HTML ESTÁ CODIFICADO
+        // PARA ESTO
+    });
+
+
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // ♦ ♦  Envio de la información del registro
+    // ♦ ♦  a eliminar
+    // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
+    // Una vez se elige el registro a eliminar a través de dar click
+    // al icono, y se eliminará.
+    $(document).on('click', '#elimPrep', function(e) {
+        // AJAX que envia la información del registro a eliminar y recibe un JSON
+        // con la información de la operación
+        $.ajax({
+            type: "POST",
+            url: "../php/eliminarPorId.php",
+            // JSON con los siguientes valores:
+            //     • eliminar - será el ID del registro que se desea eliminar
+            //     • tabla - tabla a la que pertenece el registro
+            //     • elemento - campo dentro de la BD necesaria para filtrar registros
+            data: {"eliminar": nom, "tabla":"encabpreparacion", "elemento":"IdPreparacion"},
+            success: function(data){
+                if(data.estado == '2'){
+                    alert("No se eliminó");
+                    // $("#insertarBusqueda").children(':first-child').remove();
+                    // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
+                }else{
+                    $('#modalPrep').modal('hide');
+                    $(padre).remove();
                 }
             },
             dataType: 'json'
