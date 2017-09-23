@@ -181,9 +181,9 @@ alimentacion = function(){
             data: $("#frmAgrIng").serialize(),
             success: function(data){
                 if(data.estado == '2'){
-                    alert("Error al agregar ingrediente");
+                    insAlertError("agregar");
                 }else{
-                    alert("Se agregó ingrediente");
+                    insAlertExito("agregado");
                 }
             },
             dataType: 'json'
@@ -352,9 +352,9 @@ alimentacion = function(){
             data: $("#frmEdIng").serialize() + "&id=" + nom,
             success: function(data){
                 if(data.estado == '2'){
-                    alert("Error al editar alimento");
+                    insAlertError("modificar");
                 }else{
-                    alert("Se editó el alimento");
+                    insAlertExito("modificado");
                 }
             },
             dataType: 'json'
@@ -477,12 +477,11 @@ alimentacion = function(){
             data: {"eliminar": nom, "tabla":"ingredientes", "elemento":"IdIngrediente"},
             success: function(data){
                 if(data.estado == '2'){
-                    alert("No se eliminó");
-                    // $("#insertarBusqueda").children(':first-child').remove();
-                    // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
+                    insAlertError("eliminado");
                 }else{
                     $('#modalIngre').modal('hide');
                     $(padre).remove();
+                    insAlertExito("eliminado");
                 }
             },
             dataType: 'json'
@@ -604,10 +603,9 @@ alimentacion = function(){
             data: $("#frmAgrAlimento").serialize(),
             success: function(data){
                 if(data.estado == '2'){
-                    alert("Error al agregar alimento");
+                    insAlertError("agregar");
                 }else{
-                    alert("Se agregó alimento");
-
+                    insAlertExito("agregado");
                 }
             },
             dataType: 'json'
@@ -827,9 +825,9 @@ alimentacion = function(){
             data: $("#frmEdAlimento").serialize() + "&id=" + nom,
             success: function(data){
                 if(data.estado == '2'){
-                    alert("Error al editar alimento");
+                    insAlertError("modificar");
                 }else{
-                    alert("Se editó el alimento");
+                    insAlertExito("modificado");
                 }
             },
             dataType: 'json'
@@ -950,12 +948,12 @@ alimentacion = function(){
             data: {"eliminar": nom, "tabla":"alimentos", "elemento":"IdAlimento"},
             success: function(data){
                 if(data.estado == '2'){
-                    alert("No se eliminó");
-                    // $("#insertarBusqueda").children(':first-child').remove();
-                    // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
+                    insAlertError("eliminado");
                 }else{
                     $('#modalAlim').modal('hide');
                     $(padre).remove();
+                    insAlertExito("eliminado");
+
                 }
             },
             dataType: 'json'
@@ -1147,9 +1145,9 @@ alimentacion = function(){
             data: $("#frmAgrPreparacion").serialize(),
             success: function(data){
                 if(data.estado == '2'){
-                    alert("Error al agregar ingrediente");
+                    insAlertError("agregar");
                 }else{
-                    alert("Se agregó ingrediente");
+                    insAlertExito("agregado");
                     $("#insertar-gestion").empty();
                 }
             },
@@ -1235,7 +1233,7 @@ alimentacion = function(){
 
     // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
     // ♦ ♦  Envio de la información del formulario
-    // ♦ ♦  la búsqueda de la Preparación a eliminar
+    // ♦ ♦  la búsqueda de la Preparación a editar
     // ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦ ♦
     // Evento del boton Buscar Preparación, el cual manda los datos
     // al archivo buscarPorNombre.php, y después insertar los registros
@@ -1457,9 +1455,9 @@ alimentacion = function(){
             success: function(data){
                 if(data.estado == '2'){
                     //  Vacia el contenedor en caso de busquedas anteriores
-                    alert("No se modificó");
+                    insAlertError("modificar");
                 }else{
-                    alert("se modificó :D");
+                    insAlertExito("modificado");
                 }
             },
             dataType: 'json'
@@ -1604,12 +1602,11 @@ alimentacion = function(){
             data: {"eliminar": nom, "tabla":"encabpreparacion", "elemento":"IdPreparacion"},
             success: function(data){
                 if(data.estado == '2'){
-                    alert("No se eliminó");
-                    // $("#insertarBusqueda").children(':first-child').remove();
-                    // $(padre).parent().prepend(HTMLEliminarConf.replace("%MENSAJE%","no eliminado"));
+                    insAlertError("eliminado");
                 }else{
                     $('#modalPrep').modal('hide');
                     $(padre).remove();
+                    insAlertExito("eliminado");
                 }
             },
             dataType: 'json'
@@ -1626,6 +1623,12 @@ alimentacion = function(){
 // **************************************
 
 
+// **************************************
+// ***
+// *** FUNCIÓN PARA AGREGAR CEROS A LA IZQUIERDA
+// *** (Útil para el manejo de fechas)
+// ***
+// **************************************
 function pad (n, length) {
     var  n = n.toString();
     while(n.length < length)

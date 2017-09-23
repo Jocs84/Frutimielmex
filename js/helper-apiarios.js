@@ -83,8 +83,20 @@ var HTMLElementEncontradoEd = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%<
     // %CLASS% por la necesaria para manejar al elemento
 var HTMLElementEncontradoEl = '<tr><td>%IDALI%</td><td>%NOMBRE%</td><td>%FECHA%</td><td><a data-toggle="modal" data-target="#%MODAL%" class="%CLASS%" href=""><img src="../img/close.png" alt=""></a></td></tr>';
 
-
+// Alerta para búsqueda de elementos a eliminar/modificar
+// Cambiar:
+    // %MENSAJE% por el elemento buscado
 var HTMLAlertaNoElementos = '<div class="alert alert-warning" role="alert"><strong>¡No se encontró %MENSAJE%!</strong> Asegurate de que esté bien escrito.</div>'
+
+// Alerta informar el éxito de un una operación
+// Cambiar:
+    // %MENSAJE% por la acción realizada. Ej: Modificado, eliminado, agregado.
+var HTMLMensajeExito = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>¡Éxito!</strong> Tu regitro ha sido %MENSAJE% correctamente.</div>';
+
+// Alerta informar que una operación no pudo realizarse
+// Cambiar:
+    // %MENSAJE% por la acción no realizada. Ej: Modificar, eliminar, agregar.
+var HTMLMensajeError = '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>¡Oh, no!</strong> Tu regitro no se pudo %MENSAJE%.</div>';
 
 
 
@@ -275,30 +287,6 @@ var HTMLElementTablaIng = '<tr><td>%ID%</td><td>%NOMBRE%</td><td>%CANT%</td><td>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // **************************************
 // ***
 // *** ELEMENTOS PARA GESTIONAR ALIMENTACIÓN
@@ -309,53 +297,3 @@ var HTMLElementTablaIng = '<tr><td>%ID%</td><td>%NOMBRE%</td><td>%CANT%</td><td>
 // Variable que contiene toda la estructura para buscar la preparación a editar
 // *Se inserta en el el contenedor #insertar-gestion
 var HTMLEliminarPreparacion = '<div id="eliminarPreparacion"><div><p class="destacado mas-font">Eliminar preparación</p></div><form id="frmbuscElPrep" action="" method="post"><div class="form-group"><label class="sr-only" for="nombre">Buscar</label><input type="text" class="form-control" name="nombre" placeholder="Nombre del alimento preparado"></div><div class="form-group"><input type="submit" class = "btn btn-default boton" name="" value="Buscar"></div></form><table id="insBusq" class="table table-hover"></table></div>';
-
-
-
-
-
-
-
-
-//
-//
-// var HTMLEliminarPreparacion = '
-// <div id="eliminarAlimento">
-//     <div>
-//         <p class="destacado mas-font">Eliminar preparación</p>
-//     </div>
-//     <form action="" method="post">
-//         <div class="form-group">
-//             <label class="sr-only" for="buscarAli">Buscar</label>
-//             <input type="text" class="form-control" name="buscarAli" placeholder="Nombre">
-//         </div>
-//         <div class="form-group">
-//             <input type="submit" class = "btn btn-default boton" name="" value="Buscar">
-//         </div>
-//     </form>
-//     <table class="table table-striped">
-//         <thead>
-//             <td>Nombre</td>
-//             <td>Fecha prep</td>
-//             <td>Eliminar</td>
-//         </thead>
-//         <tbody id="insertarBusqueda">
-//             <tr>
-//                 <td>Jarabe 1</td>
-//                 <td>15/05/2017</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//             <tr>
-//                 <td>Jarabe más miel</td>
-//                 <td>18/05/2017</td>
-//                 <td><img src="../img/close.png" alt=""></td>
-//             </tr>
-//         </tbody>
-//     </table>
-// </div>
-// ';
-//
-//
-
-//
-//

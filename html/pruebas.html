@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../css/imprimir.css" media="print">
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/pruebas.js"></script>
+    <!-- JS BOOTSTRAP -->
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
     <title>Document</title>
 </head>
 <body>
 
-    <!-- <form id="" action="../php/buscarGeneral.php" method="POST"> -->
-    <form id="" action="../php/eliminarPorId.php" method="POST">
-        <div class="form-group">
-            <label class="sr-only" for="buscarAlimento">Buscar</label>
-            <input class="form-control" name="tabla" placeholder="Nombre del alimento" type="text" value="encabpreparacion">
-            <input class="form-control" name="eliminar" placeholder="eliminar" type="text" value="18">
-            <!-- <input class="form-control" name="tabla" placeholder="tabla" type="text" value="alimentos"> -->
-            <input class="form-control" name="elemento" placeholder="elemento" type="text" value="IdPreparacion">
-        </div>
-        <div class="form-group">
-            <input id="btnEnviar" class="btn btn-default boton" name="" value="Buscar" type="submit">
-        </div>
-    </form>
+    <button type="button" id="boton-pro" name="button"></button>
+
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>¡Oh, no!</strong> Tu regitro no se pudo eliminar.
+    </div>
 
 
 
