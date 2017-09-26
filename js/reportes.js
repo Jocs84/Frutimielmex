@@ -1,18 +1,17 @@
 
 // *********************************************************************************
 // ***
-// *** APIARIO.JS se encarga de manipular el DOM y efectos del archivo
-// *** APIARIOS.HTML.
+// *** REPORTES.JS se encarga de manipular el DOM y efectos del archivo
+// *** REPORTES.HTML, así como generar los reportes en PDF
 // *** Este archivo manipula lo siguiente:
-// ***     -Mostrar las diferentes opciones que se presentan en el menú de apiarios.
-// ***     -Mostrar información general (Detalles) sobre los apiarios como conjunto.
-// ***     -Mostrar las diferentes gestiones dentro del submenú de Alimentación
-// ***          ♦ Mostrar las diferentes gestiones de Ingredientes
-// ***          ♦ Mostrar las diferentes gestiones de Alimentos
-// ***          ♦ Mostrar las diferentes gestiones de Preparaciones
-// ***     -Mostrar las diferentes gestiones dentro del submenú de Medicación
-// ***     -Mostrar las diferentes gestiones dentro del submenú de Movilidad
-// ***     -Mostrar las diferentes gestiones dentro del submenú de Productividad
+// ***     -Mostrar reportes en navegador de:
+// ***          ♦ Apiarios
+// ***              • Generales
+// ***              • Alimentación
+// ***              • etc
+// ***          ♦ Ventas
+// ***          ♦ Reportes personalizados
+// ***     -Descargar reportes en formato PDF de todo lo anterior.
 // ***
 // *********************************************************************************
 
@@ -23,10 +22,31 @@
 // ***
 // **************************************
 
+// Para la generación de reportes en PDF.
+// Representa los renglones que tendrá la tabla del reporte.
+// Será un JSON
 var rows;
+
+// Para la generación de reportes en PDF.
+// Representa las columnas que tendrá la tabla del reporte.
+// Su estructura será:
+//      columns = [
+//           {
+//              title: "Titulo de la columna",
+//              dataKey: "Clave de este valor en el JSON rows"
+//           },
+//           ...
+//      ];
 var columns;
+
+// Titulo que aparecerá en el interior del reporte.
 var titulo;
+
+// Nombre del archivo con extención .pdf con el cual se descargará
+// dicho reporte
 var nombreArchivo;
+
+
 
 // **************************************
 // ***
@@ -50,9 +70,13 @@ $( document ).ready(function() {
         }
     });
 
+    // Cuando se de click al boton para imprimir (),
+    // se evitará el funcionamiento por default del botón, y se ejecutará
+    // la función imprimirReporte, que generará y descargará al ordenador
+    // el reporte en formato PDF.
     $(document).on('click','#btnImprimir',function(e){
         e.preventDefault();
-        demoFromHTML();
+        imprimirReporte();
 	});
 });
 
@@ -103,7 +127,7 @@ alimentos = function()  {
                         // insertar el ingrediente en el DOM
                         $("#insertarDatos").append(renglon);
                     }
-                    titulo = "Alimentos existentes"
+                    titulo = "Alimentos existentes \n" +  fechaActual() ;
                     columns = [
                         {title: "Nombre alimento", dataKey: "NombreAlimento"},
                         {title: "Consistencia", dataKey: "Consistencia"},
@@ -155,7 +179,7 @@ alimentos = function()  {
                         // insertar el ingrediente en el DOM
                         $("#insertarDatos").append(renglon);
                     }
-                    titulo = "Ingredientes existentes"
+                    titulo = "Ingredientes existentes \n" + fechaActual();
                     columns = [
                         {title: "Nombre ingrediente", dataKey: "NombreIngrediente"},
                         {title: "Precio", dataKey: "PrecioIngrediente"},
@@ -208,7 +232,7 @@ alimentos = function()  {
                         // insertar el ingrediente en el DOM
                         $("#insertarDatos").append(renglon);
                     }
-                    titulo = "Ingredientes existentes"
+                    titulo = "Ingredientes existentes \n" + fechaActual();
                     columns = [
                         {title: "Nombre ingrediente", dataKey: "NombreIngrediente"},
                         {title: "Precio", dataKey: "PrecioIngrediente"},
@@ -228,51 +252,51 @@ alimentos = function()  {
 }
 
 
-function pad (n, length) {
-    var  n = n.toString();
-    while(n.length < length)
-         n = "0" + n;
-    return n;
-}
-
-function fechaActual(){
-    var d = new Date();
-    var mes = d.getMonth()+1;
-    var dia = d.getDate();
-
-    var output = (dia < 10 ? '0' : '') + dia + '/' +
-        (mes < 10 ? '0' : '') + mes + '/' +
-        d.getFullYear() ;
-    return output;
-}
 
 
-
-function demoFromHTML() {
+// **************************************
+// ***
+// *** FUNCIÓN imprimirReporte()
+// *** Crea un objeto que después de
+// *** integrar todo lo que es necesario, se
+// *** genera un archivo en PDF, el cual
+// *** se descarga al navegador.
+// ***
+// **************************************
+function imprimirReporte() {
+    //Creación del objeto jsPDF (la librería utilizada)
     var doc = new jsPDF('p', 'pt');
-    // var imgData = HTMLImgData;
-    // doc.addImage(HTMLImgData, 'PNG', 0, 0, 595, 170);
-    // var totalPagesExp = doc.putTotalPages;
+    // inserción de la info que se almacenará en el
+    // PDF
     doc.autoTable(
+        // Se agrega las columnas y filas que ya se han establecido
+        // para la tabla
         columns, rows, {
+            //Margenes de la hoja
             margin: {top: 200},
+            // Se agrega el contenido extra que llevará el reporte
             addPageContent: function(data) {
 
-                // HEADER
+                // PARTE SUPERIOR DEL REPORTE
+                    // -Tamaño, color y estilo de letra
+                    // -Inserción de imagen de panal y logo
+                    // -Titulo del reporte
                 doc.setFontSize(25);
                 doc.setTextColor(40);
                 doc.setFontStyle('normal');
                 doc.addImage(HTMLImgData, 'PNG', 0, 0, 595, 170);
                 doc.text(titulo, data.settings.margin.left + 180, 122);
 
-                // FOOTER
+                // PARTE INFERIOR DEL REPORTE
+                    // -Número de página y tamaño de este texto
+                    // Posición de este texto
                 var str = "Página " + data.pageCount;
                 doc.setFontSize(10);
                 doc.text(str, data.settings.margin.left, doc.internal.pageSize.height - 10);
-
-
             }
         }
     );
+    // Se guarda genera el archivo .pdf y se le da un nombre,
+    // después se descarga al ordenador
     doc.save(nombreArchivo);
 }

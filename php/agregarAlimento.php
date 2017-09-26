@@ -16,14 +16,22 @@
         $token = strtok($fecha,"-");
         $data = array();
         $i = 0;
-        while ($token !== false){
-            $data[$i] =  $token;
-            $token = strtok("-");
-            $i++;
+
+        if ($fecha === "") {
+            $dia = 0;
+            $mes = 0;
+            $anio = 0;
+        }else{
+            while ($token !== false){
+                $data[$i] =  $token;
+                $token = strtok("-");
+                $i++;
+            }
+            $dia = $data[2];
+            $mes = $data[1];
+            $anio = $data[0];
         }
-        $dia = $data[2];
-        $mes = $data[1];
-        $anio = $data[0];
+
         $tipo = $_POST['tipo'];
         $extra = $_POST['extra'];
 
@@ -67,13 +75,6 @@
                     print json_encode($array);
                 }
             }
-
-            // $array = array(
-            //             'estado' => '1',
-            //             'mensaje' => 'Elemento agregado'
-            //         );
-            //         print json_encode($array);
-
         }else {
             //enviar respuesta con un JSON
             $array = array(
