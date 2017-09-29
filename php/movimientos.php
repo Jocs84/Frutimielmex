@@ -1,10 +1,27 @@
 <?php
-    /**
-    * Estructuras de
-    *   Busqueda
-    *   Eliminar
-    *   Agregar
-    */
+
+    // Archivo que contiene las siguientes funciones:
+    //     • obtenerEnum
+    //     • insertarAlimento
+    //     • insertarAlimentoArtificial
+    //     • insertarAlimentoNatural
+    //     • insertarIngrediente
+    //     • insertarEncabPreparacion
+    //     • insertarPreparacion
+    //     • insertarPreparacionMod
+    //     • buscarAlimePrep
+    //     • buscarGeneral
+    //     • buscarPorId
+    //     • buscarPorNombre
+    //     • buscarPreparacion
+    //     • editarAlimento
+    //     • editarIngrediente
+    //     • editarEncabPreparacion
+    //     • eliminarReg
+    //     • elimIngPreparacion
+    //
+    // Necesita del archivo database.php
+    //
     require 'database.php';
 
     class generar{
@@ -12,11 +29,19 @@
         }
 
 
-        /**
-         * Retorna los valores ENUM de una columna de una tabla dada
-         * @param Nombre de la tabla y nombre de la columna.
-         * @return array Datos del registro
-         */
+        // ********************************************
+        // *
+        // *   FUNCIONES BASICAS
+        // *
+        // ********************************************
+
+        //  **
+        //  * OBTENER LOS VALORES DEL ENUM DE UNA COLUMNA (GENERAL)
+        //  *
+        //  * @param $tabla, $busqueda
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function obtenerEnum($tabla,$busqueda){
             $consulta = "SHOW COLUMNS FROM " . $tabla . " LIKE '" . $busqueda . "'";;
             // $consulta = "DESCRIBE" . $tabla;
@@ -33,146 +58,26 @@
         }
 
 
-        /**
-         * Retorna todos registros de los alimentos
-         * @param
-         * @return array Datos del registro
-         */
-        public static function buscarAlimentoNombre($busqueda)
-        {
-            $consulta = "SELECT *
-                        FROM alimentos
-                        WHERE NombreAlimento
-                        LIKE  '%" . $busqueda . "%'";
-            try {
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute();
-                return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-
-
-        public static function buscarPorId($tabla,$campo,$busqueda)
-        {
-            $consulta = "SELECT *
-                        FROM `" . $tabla . "`
-                        WHERE `" . $campo ."`
-                        =  " . $busqueda;
-            try {
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute();
-                return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-        public static function buscarGeneral($tabla)
-        {
-            $consulta = "SELECT *
-                        FROM `" . $tabla . "`";
-            try {
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute();
-                return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-
-
-        /**
-         * Obtiene los campos de un usuario con un identificador
-         * determinado
-         *
-         * @param $NombreAlimento Identificador del Alimentos
-         * @return mixed
-         */
-        public static function obtenerAlimentost($NombreAlimento)
-        {
-
-            $likebusq = '%' . $NombreAlimento . '%';
-            // Consulta de la meta
-            $consulta = "SELECT NombreAlimento,
-                                DiaCadAli,
-                                MesCadAli,
-                                AnioCadAli
-                                FROM Alimentos
-                                WHERE NombreAlimento
-                                LIKE  " . $likebusq;
-
-            try {
-                // Preparar sentencia
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute(array($idUsuario));
-                // Capturar primera fila del resultado
-                $row = $comando->fetch(PDO::FETCH_ASSOC);
-                return $row;
-
-            } catch (PDOException $e) {
-                // Aquí puedes clasificar el error dependiendo de la excepción
-                // para presentarlo en la respuesta Json
-                return -1;
-            }
-        }
-
-
-
-        /**
-         * Actualiza un registro de la bases de datos basado
-         * en los nuevos valores relacionados con un identificador
-         *
-         * @param $id            identificador
-         * @param $username      nuevo titulo
-         * @param $password      nueva descripcion
-         */
-        public static function updateAlimento(
-            $id,$nombre,$consistencia,$unidadmed,$dia,$mes,$anio
-        )
-        {
-            // Creando consulta UPDATE
-            $consulta = "UPDATE `alimentos`
-                            SET `NombreAlimento`= '". $nombre ."',
-                            `Consistencia`='". $consistencia ."',
-                            `UnidadMedicion`='".$unidadmed."',
-                            `DiaCadAli`=". $dia .",
-                            `MesCadAli`= ". $mes .",
-                            `AnioCadAli`= ". $anio ."
-                            WHERE `IdAlimento`=  " . $id;
-
-            try {
-                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $sentencia->execute();
-                $json = json_encode($sentencia);
-                return $json;
-
-            } catch (PDOException $e) {
-                echo $e;
-                return false;
-            }
-        }
 
 
 
 
-        /**
-         * Insertar una nueva meta
-         *
-         * @param $titulo
-         * @return PDOStatement
-         */
+
+        // ********************************************
+        // *
+        // *   FUNCIONES PARA AGREGAR
+        // *
+        // ********************************************
+
+
+
+        //  **
+        //  * INSERTAR UN NUEVO ALIMENTO (GENERAL)
+        //  *
+        //  * @param $nombre, $consistencia, $unidadmed, $dia, $mes, $anio
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function insertarAlimento(
             $nombre,$consistencia,$unidadmed,$dia,$mes,$anio
         )
@@ -190,21 +95,26 @@
                     (NULL ,  '". $nombre."',  '". $consistencia."',
                     '". $unidadmed."',  ". $dia.",  ". $mes.",  ". $anio.")";
 
-
             try {
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
                 // Ejecutar sentencia preparada
                 $sentencia->execute();
                 $json = json_encode($sentencia);
                 return $json;
-
             } catch (PDOException $e) {
                 echo $e;
                 return false;
             }
-
         }
 
+
+        //  **
+        //  * INSERTAR UN NUEVO ALIMENTO (ARTIFICIAL)
+        //  *
+        //  * @param $extra
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function insertarAlimentoArtificial(
             $extra
         ){
@@ -212,7 +122,6 @@
             $busca = Database::getInstance()->getDb()->prepare($consulta);
             $busca->execute();
             $j = $busca->fetch(PDO::FETCH_ASSOC);
-            // $j = json_encode($busca);
 
             $id = $j['IdAlimento'];
             // Sentencia INSERT
@@ -224,15 +133,20 @@
                 $sentencia->execute();
                 $json = json_encode($sentencia);
                 return $json;
-
             } catch (PDOException $e) {
                 echo $e;
                 return false;
             }
-
         }
 
 
+        //  **
+        //  * INSERTAR UN NUEVO ALIMENTO (NATURAL)
+        //  *
+        //  * @param $extra
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function insertarAlimentoNatural(
             $extra
         ){
@@ -251,66 +165,20 @@
                 $sentencia->execute();
                 $json = json_encode($sentencia);
                 return $json;
-
             } catch (PDOException $e) {
                 echo $e;
                 return false;
             }
-
         }
 
 
-
-        /**
-         * Eliminar el registro con el identificador especificado
-         *
-         * @param
-         * @return
-         */
-        public static function eliminarReg($tabla,$elemento,$registro){
-            // Sentencia DELETE
-            $consulta = "DELETE FROM `" . $tabla . "` WHERE `" . $elemento . "` =" . $registro;
-
-            // Preparar la sentencia
-            // $sentencia = Database::getInstance()->getDb()->prepare($comando);
-
-            // return $sentencia->execute(array($id));
-            try {
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute();
-                //Retorna el numero de filas afectadas con el último movimiento
-                return $comando->rowCount();
-
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-         * Insertar una nueva meta
-         *
-         * @param $titulo
-         * @return PDOStatement
-         */
+        //  **
+        //  * INSERTAR UN NUEVO INGREDIENTE
+        //  *
+        //  * @param $nombre, $unidadmed, $precio, $dia,$mes, $anio
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function insertarIngrediente(
             $nombre,$unidadmed,$precio,$dia,$mes,$anio
         )
@@ -331,75 +199,12 @@
                             '". $dia  . "',
                             '". $mes . "',
                             '". $anio . "')";
-
             try {
                 $sentencia = Database::getInstance()->getDb()->prepare($comando);
                 // Ejecutar sentencia preparada
                 $sentencia->execute();
                 $json = json_encode($sentencia);
                 return $json;
-
-            } catch (PDOException $e) {
-                echo $e;
-                return false;
-            }
-
-        }
-
-
-
-        /**
-         * Retorna todos registros de los alimentos
-         * @param
-         * @return array Datos del registro
-         */
-        public static function buscarIngredienteNombre($busqueda)
-        {
-            $consulta = "SELECT *
-                        FROM ingredientes
-                        WHERE NombreIngrediente
-                        LIKE  '%" . $busqueda . "%'";
-            try {
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $comando->execute();
-                return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                return false;
-            }
-        }
-
-
-
-        /**
-         * Actualiza un registro de la bases de datos basado
-         * en los nuevos valores relacionados con un identificador
-         *
-         * @param $id            identificador
-         * @param $username      nuevo titulo
-         * @param $password      nueva descripcion
-         */
-        public static function updateIngrediente(
-            $id,$nombre,$unidadmed,$precio,$dia,$mes,$anio
-        ){
-            // Creando consulta UPDATE
-            $consulta = "UPDATE `ingredientes` SET
-                        `NombreIngrediente`= '". $nombre ."',
-                        `PrecioIngrediente`= '". $precio ."',
-                        `UnidadMedida`= '". $unidadmed ."',
-                        `DiaCadIng`= ". $dia .",
-                        `MesCadIng`= ". $mes .",
-                        `AnioCadIng`= ". $anio ."
-                        WHERE `IdIngrediente` = " . $id;
-
-            try {
-                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
-                // Ejecutar sentencia preparada
-                $sentencia->execute();
-                $json = json_encode($sentencia);
-                return $json;
-
             } catch (PDOException $e) {
                 echo $e;
                 return false;
@@ -408,44 +213,18 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-         * Insertar una nueva meta
-         *
-         * @param $titulo
-         * @return PDOStatement
-         */
+        //  **
+        //  * INSERTAR UNA NUEVA PREPARACIÓN - TABLA encabpreparacion
+        //  *
+        //  * @param $idAlimento, $idEmpleado, $diaPrep, $mesPrep, $anioPrep,
+        //  *        $diaCadPrep, $mesCadPrep, $anioCadPrep
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function insertarEncabPreparacion(
             $idAlimento,$idEmpleado,$diaPrep,$mesPrep,$anioPrep,
             $diaCadPrep,$mesCadPrep,$anioCadPrep
-        )
-        {
+        ){
             // Sentencia INSERT
             $comando = "INSERT INTO `encabpreparacion`
                         (`IdPreparacion`,
@@ -474,15 +253,20 @@
                 $sentencia->execute();
                 $json = json_encode($sentencia);
                 return $json;
-
             } catch (PDOException $e) {
                 echo $e;
                 return false;
             }
-
         }
 
 
+        //  **
+        //  * INSERTAR INGREDIENTES DE PREPARACIÓN - TABLA preparacion
+        //  *
+        //  * @param $idIngrediente, $cantIngrediente
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function insertarPreparacion(
             $idIngrediente,$cantIngrediente
         ){
@@ -490,19 +274,49 @@
             $busca = Database::getInstance()->getDb()->prepare($consulta);
             $busca->execute();
             $j = $busca->fetch(PDO::FETCH_ASSOC);
-            // $j = json_encode($busca);
 
             $id = $j['IdPreparacion'];
             // Sentencia INSERT
-
             $comando = "INSERT INTO `preparacion`
                         (`IdPreparacion`, `IdIngrediente`, `CantIngrediente`) VALUES ";
+
+            for ($i=0; $i < count($idIngrediente); $i++) {
+                if($i != 0){$comando = $comando . ",";}
+                $comando = $comando . "(". $id .",". $idIngrediente[$i] .",". $cantIngrediente[$i] .")";
+            }
+
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+        }
+
+
+        //  **
+        //  * INSERTAR INGREDIENTES DE PREPARACIÓN - TABLA preparacion
+        //  * (Edición)
+        //  *
+        //  * @param $idPreparacion, $idIngrediente, $cantIngrediente
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function insertarPreparacionMod(
+            $idPreparacion,$idIngrediente,$cantIngrediente
+        ){
+            $comando = "INSERT INTO `preparacion`
+                            (`IdPreparacion`, `IdIngrediente`, `CantIngrediente`) VALUES ";
 
             for ($i=0; $i < count($idIngrediente); $i++) {
                 if($i != 0){
                     $comando = $comando . ",";
                 }
-                $comando = $comando . "(". $id .",". $idIngrediente[$i] .",". $cantIngrediente[$i] .")";
+                $comando = $comando . "(". $idPreparacion .",". $idIngrediente[$i] .",". $cantIngrediente[$i] .")";
             }
             // return $comando;
             try {
@@ -524,6 +338,101 @@
 
 
 
+
+
+
+
+        // ********************************************
+        // *
+        // *   FUNCIONES PARA BUSCAR
+        // *
+        // ********************************************
+
+
+        //  **
+        //  * BUSCAR LOS ALIMENTOS EN UNA PREPARACION
+        //  *
+        //  * @param $busqueda
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function buscarAlimePrep($busqueda)
+        {
+            $consulta = "SELECT `IdPreparacion`,
+                                `IdIngrediente`,
+                                `NombreIngrediente`,
+                                `CantIngrediente`
+                        FROM `preparacion` INNER JOIN  `ingredientes`
+                        USING(`IdIngrediente`)
+                        WHERE `IdPreparacion` =" . $busqueda;
+
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+        //  **
+        //  * BUSQUEDA GENERAL - Cualquier tabla ;)
+        //  *
+        //  * @param $tabla
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function buscarGeneral($tabla)
+        {
+            $consulta = "SELECT *
+                        FROM `" . $tabla . "`";
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+        //  **
+        //  * BUSQUEDA POR ID - Cualquier tabla ;)
+        //  *
+        //  * @param $tabla, $campo, $busqueda
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function buscarPorId($tabla,$campo,$busqueda)
+        {
+            $consulta = "SELECT *
+                        FROM `" . $tabla . "`
+                        WHERE `" . $campo ."`
+                        =  " . $busqueda;
+            try {
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $comando->execute();
+                return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+
+        //  **
+        //  * BUSQUEDA POR NOMBRE - Cualquier tabla ;)
+        //  *
+        //  * @param $busqueda, $tabla, $columna
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function buscarPorNombre($busqueda,$tabla,$columna)
         {
             $consulta = "SELECT *
@@ -543,12 +452,13 @@
 
 
 
-
-        /**
-         * Retorna todos registros de los alimentos
-         * @param
-         * @return array Datos del registro
-         */
+        //  **
+        //  * BUSQUEDA DE PREPARACION
+        //  *
+        //  * @param $busqueda
+        //  * @return PDOStatement
+        //  *
+        //  **
         public static function buscarPreparacion($busqueda)
         {
             $consulta = "SELECT `IdPreparacion`,
@@ -580,39 +490,95 @@
 
 
 
-        /**
-         * Retorna todos registros de los alimentos
-         * @param
-         * @return array Datos del registro
-         */
-        public static function buscarAlimePrep($busqueda)
+
+
+
+
+        // ********************************************
+        // *
+        // *   FUNCIONES PARA EDITAR
+        // *
+        // ********************************************
+
+
+        //  **
+        //  * EDITAR REGISTRO DE ALIMENTO
+        //  *
+        //  * @param $id ,$nombre ,$consistencia, $unidadmed, $dia, $mes, $anio
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function editarAlimento(
+            $id,$nombre,$consistencia,$unidadmed,$dia,$mes,$anio
+        )
         {
-            $consulta = "SELECT `IdPreparacion`,
-                                `IdIngrediente`,
-                                `NombreIngrediente`,
-                                `CantIngrediente`
-                        FROM `preparacion` INNER JOIN  `ingredientes`
-                        USING(`IdIngrediente`)
-                        WHERE `IdPreparacion` =" . $busqueda;
+            // Creando consulta UPDATE
+            $consulta = "UPDATE `alimentos`
+                            SET `NombreAlimento`= '". $nombre ."',
+                            `Consistencia`='". $consistencia ."',
+                            `UnidadMedicion`='".$unidadmed."',
+                            `DiaCadAli`=". $dia .",
+                            `MesCadAli`= ". $mes .",
+                            `AnioCadAli`= ". $anio ."
+                            WHERE `IdAlimento`=  " . $id;
 
             try {
-                $comando = Database::getInstance()->getDb()->prepare($consulta);
+                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
                 // Ejecutar sentencia preparada
-                $comando->execute();
-                return $comando->fetchAll(PDO::FETCH_ASSOC);
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
 
             } catch (PDOException $e) {
+                echo $e;
                 return false;
             }
         }
 
 
 
+        //  **
+        //  * EDITAR REGISTRO DE INGREDIENTE
+        //  *
+        //  * @param $id, $nombre, $unidadmed, $precio, $dia, $mes, $anio
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function editarIngrediente(
+            $id,$nombre,$unidadmed,$precio,$dia,$mes,$anio
+        ){
+            // Creando consulta UPDATE
+            $consulta = "UPDATE `ingredientes` SET
+                        `NombreIngrediente`= '". $nombre ."',
+                        `PrecioIngrediente`= '". $precio ."',
+                        `UnidadMedida`= '". $unidadmed ."',
+                        `DiaCadIng`= ". $dia .",
+                        `MesCadIng`= ". $mes .",
+                        `AnioCadIng`= ". $anio ."
+                        WHERE `IdIngrediente` = " . $id;
 
+            try {
+                $sentencia = Database::getInstance()->getDb()->prepare($consulta);
+                // Ejecutar sentencia preparada
+                $sentencia->execute();
+                $json = json_encode($sentencia);
+                return $json;
 
+            } catch (PDOException $e) {
+                echo $e;
+                return false;
+            }
+        }
 
-
-        public static function modificarEncabPreparacion(
+        //  **
+        //  * EDITAR REGISTRO DE ENCABPREPARACION
+        //  *
+        //  * @param $idPreparacion ,$idAlimento, $idEmpleado, $diaPrep,
+        //  *         $mesPrep, $anioPrep, $diaCadPrep, $mesCadPrep, $anioCadPrep
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function editarEncabPreparacion(
             $idPreparacion,$idAlimento,$idEmpleado,$diaPrep,$mesPrep,$anioPrep,
             $diaCadPrep,$mesCadPrep,$anioCadPrep
         )
@@ -644,41 +610,58 @@
 
 
 
-        public static function insertarPreparacionMod(
-            $idPreparacion,$idIngrediente,$cantIngrediente
-        ){
-            $comando = "INSERT INTO `preparacion`
-                            (`IdPreparacion`, `IdIngrediente`, `CantIngrediente`) VALUES ";
 
-            for ($i=0; $i < count($idIngrediente); $i++) {
-                if($i != 0){
-                    $comando = $comando . ",";
-                }
-                $comando = $comando . "(". $idPreparacion .",". $idIngrediente[$i] .",". $cantIngrediente[$i] .")";
-            }
-            // return $comando;
+
+
+
+
+
+
+
+
+
+        // ********************************************
+        // *
+        // *   FUNCIONES PARA ELIMINAR
+        // *
+        // ********************************************
+
+
+        //  **
+        //  * ELIMINAR REGISTRO POR ID
+        //  *
+        //  * @param $tabla,$elemento,$registro
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function eliminarReg($tabla,$elemento,$registro){
+            // Sentencia DELETE
+            $consulta = "DELETE FROM `" . $tabla . "` WHERE `" . $elemento . "` =" . $registro;
+
             try {
-                $sentencia = Database::getInstance()->getDb()->prepare($comando);
+                $comando = Database::getInstance()->getDb()->prepare($consulta);
                 // Ejecutar sentencia preparada
-                $sentencia->execute();
-                $json = json_encode($sentencia);
-                return $json;
+                $comando->execute();
+                //Retorna el numero de filas afectadas con el último movimiento
+                return $comando->rowCount();
 
             } catch (PDOException $e) {
-                echo $e;
                 return false;
             }
-
         }
 
 
-        /**
-         * Eliminar el registro con el identificador especificado
-         *
-         * @param
-         * @return
-         */
-        public static function elimPreparacion($idPreparacion,$idIngrediente){
+
+
+
+        //  **
+        //  * ELIMINAR INGREDIENTES DE LA TABLA PREPARACION
+        //  *
+        //  * @param $idPreparacion, $idIngrediente
+        //  * @return PDOStatement
+        //  *
+        //  **
+        public static function elimIngPreparacion($idPreparacion,$idIngrediente){
             // Sentencia DELETE
             $consulta = "DELETE FROM `preparacion`
                             WHERE (`IdPreparacion`,`IdIngrediente`)
@@ -706,6 +689,9 @@
                 return false;
             }
         }
+
+
+
 
 
 
