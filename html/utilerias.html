@@ -12,13 +12,20 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <!-- CSS PERSONALIZADO -->
     <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/ppal.css">
+    <link rel="stylesheet" href="../css/apiarios.css">
 
     <!-- JAVASCRIPT -->
+    <!-- JS JQUERY -->
+    <script src="../js/jquery-3.2.1.js"></script>
     <!-- JS BOOTSTRAP -->
-    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../js/utilidades.js"></script>
+    <script src="../js/helper-apiarios.js"></script>
+    <script src="../js/helper-usuarios.js"></script>
+    <script src="../js/usuarios.js"></script>
+    <script src="../js/apiario.js"></script>
 
-    <title>Inicio - Frutimielmex</title>
+    <title>Apiarios - Frutimielmex</title>
 </head>
 <body>
 
@@ -30,7 +37,6 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <!-- <li class="active"><a href="#">Home</a></li> -->
                 <li><a href="apiarios.html">Apiarios</a></li>
                 <li><a href="#">Producción</a></li>
                 <li><a href="reportes.html">Reportes</a></li>
@@ -45,44 +51,21 @@
         <div class="col-md-3">
             <div class="cont-titulo">
                 <img src="../img/apiario.png" alt="" class="ico-titulo">
-                <a href="apiarios.html" class="titulo">Apiarios</a>
+                <a href="utilerias.html" class="titulo">Utilerías</a>
             </div>
             <div class="opciones">
-                <a href="">Detalles</a>
-                <a href="">Alimentación</a>
-                <a href="">Medicación</a>
-                <a href="">Movilidad</a>
-                <a href="">Productividad</a>
+                <a id="opc-usuarios" href="">Usuarios</a>
+
             </div>
         </div>
 
-        <div class="col-md-3 col-md-offset-1">
-            <div class="cont-titulo">
-                <img src="../img/honey.png" alt="" class="ico-titulo">
-                <a href="apiarios.html" class="titulo">Producción</a>
-            </div>
-            <div class="opciones">
-                <a href="">Barrilles</a>
-                <a href="">Menudeo</a>
-                <a href="">Subproductos</a>
-                <a href="" class="subprod">Polen</a>
-                <a href="" class="subprod">Propóleo</a>
-                <a href="" class="subprod">Cera</a>
-            </div>
-        </div>
+        <div id ="opc-contenedor" class="col-md-8 col-md-offset-1">
 
-        <div class="col-md-3 col-md-offset-1">
-            <div class="cont-titulo">
-                <img src="../img/reporte.png" alt="" class="ico-titulo">
-                <a href="reportes.html" class="titulo">Reportes</a>
-            </div>
-            <div class="opciones">
-                <a href="">Venta barriles</a>
-                <a href="">Cosecha anual</a>
-                <a href="">Generar reporte personalizado</a>
-            </div>
+
         </div>
     </div>
+
+
 
 
 </body>
