@@ -54,4 +54,21 @@ $( document ).ready(function() {
         $("#opc-contenedor").append("<h2>MUAJAJA</h2>");
     });
 
+        // Muestra las acciones a realizar cuando se de click a la opción
+        // MOVILIDAD
+        $(document).on('click','#opc-movilidad',function(e){
+            e.preventDefault();
+            $("#opc-contenedor").empty();
+            movilidad();
+        });
+
+        //Muestra las acciones a realizar cuando se da click en la opción
+        // USUARIOS
+        $(document).on('click','#opc-usuarios',function(e){
+            e.preventDefault();
+            $("#opc-contenedor").empty();
+            usuarios();
+        });
+
+
 });
